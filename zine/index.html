@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>節典元年</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; background-color: #1c1917; overscroll-behavior-y: none; }
+
+    body {
+      background: #fff;
+      color: #1e1e1e;
+      font-family: 'Noto Serif TC', Georgia, '宋體', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ──────────────────────────────────────── */
+    .hero {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      animation: hero-pan 32s ease-in-out infinite alternate;
+    }
+    @keyframes hero-pan {
+      0%   { object-position: right center; }
+      100% { object-position: left center; }
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .hero-title-img {
+      height: 62vh;
+      width: auto;
+      display: block;
+      opacity: 0;
+      transition: opacity 1.8s ease;
+      mix-blend-mode: multiply;
+    }
+    .hero-title-img.on { opacity: 1; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    .scroll-hint.on { opacity: 0.35; }
+    .scroll-hint__bar {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(#333 40%, transparent);
+      animation: drop 2s ease-in-out infinite;
+    }
+    @keyframes drop {
+      0%   { transform: translateY(-26px); opacity: 0; }
+      35%  { opacity: 1; }
+      100% { transform: translateY(26px); opacity: 0; }
+    }
+
+    /* ── SLIDES ────────────────────────────────────── */
+    .slides-wrapper {
+      position: relative;
+      height: 400vh;
+    }
+    .slides-pin {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: #fff;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+      pointer-events: none;
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ── SLIDE 1 ─── 011 + 獻給文字 ───────────────── */
+    .s1-inner {
+      font-size: clamp(0.88rem, 1.3vw, 1rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.8rem;
+    }
+    .s1-img {
+      width: 12em;
+      display: block;
+    }
+    .s1-text {
+      text-align: center;
+      font-size: 1em;
+      letter-spacing: 0.22em;
+      font-weight: 300;
+      line-height: 2.8;
+      color: #1e1e1e;
+    }
+    .text-line { display: block; }
+    .char {
+      display: inline-block;
+      opacity: 0;
+    }
+    .slide-1.animate-chars .char {
+      animation: charIn 0.45s ease forwards;
+    }
+    @keyframes charIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── SLIDE 2 ─── 022 frame + 021 title + 序文 ─── */
+    .s2-inner {
+      position: absolute;
+      inset: 0;
+    }
+    .s2-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .s2-title {
+      position: absolute;
+      top: calc(4rem + 3%);
+      left: 4%;
+      height: 15%;
+      width: auto;
+      display: block;
+      z-index: 2;
+    }
+    .s2-text {
+      position: absolute;
+      bottom: 8%;
+      right: 5%;
+      width: 52%;
+      z-index: 2;
+      font-size: clamp(0.78rem, 1.05vw, 0.9rem);
+      line-height: 2.25;
+      letter-spacing: 0.04em;
+      font-weight: 300;
+      color: #1e1e1e;
+    }
+    .sentence {
+      display: block;
+      margin-bottom: 1.1rem;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+    }
+    .sentence:last-child { margin-bottom: 0; }
+    .sentence.on { opacity: 1; }
+
+    /* ── SLIDE 3 ─── 003 → index.html ─────────────── */
+    .slide-3 {
+      background-color: #fff;
+      transition: opacity 0.7s ease, background-color 1.3s ease;
+    }
+    .slide-3.dark { background-color: #111; }
+    .slide-3.dark .enter-hint { color: #eee; }
+    .slide-3.dark .enter-img { filter: invert(1); }
+    .enter-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      text-decoration: none;
+      color: #1e1e1e;
+    }
+    .enter-img {
+      height: 44vh;
+      width: auto;
+      display: block;
+      animation: breathe 3.2s ease-in-out infinite;
+      transition: filter 1.3s ease;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.022); }
+    }
+    .enter-hint {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      font-weight: 300;
+      opacity: 0.4;
+      animation: blink 2.6s ease-in-out infinite;
+      transition: color 1.3s ease;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 0.12; }
+    }
+
+    /* ── RESPONSIVE: slide 2 小螢幕 ───────────────── */
+    @media (max-width: 640px) {
+      .s2-text {
+        width: 66%;
+        font-size: clamp(0.68rem, 1.85vw, 0.82rem);
+        line-height: 2.1;
+      }
+    }
+
+  </style>
+  <style>
+    /* ── Site nav (injected) ─────────────────────── */
+    .site-nav {
+      font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: #FDFBF7; border-bottom: 1px solid #e2ddd6;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: transform 0.38s ease, opacity 0.38s ease, box-shadow 0.38s ease;
+    }
+    .site-nav.nav-hero-hide { transform: translateY(-110%); opacity: 0; pointer-events: none; box-shadow: none; }
+    .site-nav.nav-hero-hide.nav-peek { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .site-nav__inner {
+      max-width: 80rem; margin: 0 auto; padding: 0 1rem;
+      display: flex; justify-content: space-between; align-items: center; height: 4rem;
+    }
+    .site-nav__logo img { height: 2.25rem; width: auto; object-fit: contain; display: block; }
+    .site-nav__desktop { display: none; align-items: center; gap: 1.75rem; font-size: 0.9rem; }
+    @media (min-width: 768px) { .site-nav__desktop { display: flex; } }
+    .site-nav__link {
+      color: #C8102E; font-weight: 500; text-decoration: none;
+      transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__link:hover { color: #a00d24; }
+    .site-nav__dd { position: relative; }
+    .site-nav__dd-btn {
+      display: flex; align-items: center; gap: 0.25rem;
+      background: none; border: none; cursor: pointer; font-size: 0.9rem;
+      color: #44403c; transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__dd-btn:hover { color: #C8102E; }
+    .site-nav__dd-menu {
+      display: none; position: absolute; right: 0; top: calc(100% + 8px);
+      min-width: 10rem; background: #FDFBF7;
+      border: 1px solid #e8e2d9; border-radius: 0.75rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12); padding: 0.5rem 0; z-index: 300;
+    }
+    .site-nav__dd-menu.open { display: block; }
+    .site-nav__dd-menu button {
+      display: block; width: 100%; text-align: left;
+      padding: 0.6rem 1.1rem; font-size: 0.875rem; color: #3a3028;
+      background: none; border: none; cursor: pointer;
+      transition: background .15s, color .15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__dd-menu button:hover { background: #fff5f0; color: #C8102E; }
+    .site-nav__hamburger {
+      display: flex; background: none; border: none; cursor: pointer;
+      color: #44403c; padding: 0.5rem; transition: color 0.15s;
+    }
+    .site-nav__hamburger:hover { color: #C8102E; }
+    @media (min-width: 768px) { .site-nav__hamburger { display: none; } }
+    .site-mobile-nav { display: none; border-top: 1px solid #f0ead8; background: #FDFBF7; }
+    .site-mobile-nav.open { display: block; }
+    .site-mobile-nav__inner { padding: 1rem 1rem 1.25rem; }
+    .site-mobile-nav__section {
+      font-size: 0.72rem; color: #a8a29e; letter-spacing: 0.12em;
+      padding: 0.5rem 0 0.25rem; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-mobile-nav__btn {
+      display: block; width: 100%; text-align: left; padding: 0.45rem 0.5rem;
+      font-size: 0.875rem; color: #57534e; background: none; border: none;
+      cursor: pointer; transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-mobile-nav__btn:hover { color: #C8102E; }
+    .site-mobile-nav__primary {
+      color: #C8102E !important; font-weight: 500;
+      border-bottom: 1px solid #f0ead8; margin-bottom: 0.5rem; padding-bottom: 0.75rem;
+    }
+    /* ── Site footer (injected) ──────────────────── */
+    .site-footer {
+      background: #1c1917; color: #a8a29e;
+      padding: 4rem 1rem; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-footer__inner {
+      max-width: 56rem; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .site-footer__logo { height: 3rem; width: auto; object-fit: contain; margin-bottom: 1.25rem; opacity: 0.8; display: block; }
+    .site-footer__tagline { font-size: 0.875rem; color: #78716c; margin-bottom: 0.5rem; }
+    .site-footer__sub { font-size: 0.75rem; color: #57534e; margin-bottom: 2rem; }
+    .site-footer__links { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
+    .site-footer__link {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: #a8a29e; text-decoration: none; font-size: 0.875rem; transition: color 0.15s;
+    }
+    .site-footer__link:hover { color: #fbbf24; }
+    .site-footer__link--fb:hover { color: #93c5fd; }
+    .site-footer__link svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+    .site-footer__copy {
+      width: 100%; border-top: 1px solid #292524;
+      padding-top: 1.5rem; font-size: 0.75rem; color: #57534e;
+    }
+  </style>
+</head>
+<body>
+<!-- ── Site navigation (injected) ───────────────── -->
+<nav class="site-nav" id="main-nav">
+  <div class="site-nav__inner">
+    <a href="../index.html" class="site-nav__logo" aria-label="首頁">
+      <img src="../assets/上元春鬧活動標準字（黑）.png" alt="上元春鬧"
+           onerror="this.outerHTML='&lt;span style=&quot;font-weight:700;font-size:1.1rem;color:#1c1917&quot;&gt;上元春鬧&lt;/span&gt;'">
+    </a>
+    <div class="site-nav__desktop">
+      <a href="../2027.html" class="site-nav__link">丁未計畫書</a>
+      <div class="site-nav__dd" id="dd-wrapper">
+        <button class="site-nav__dd-btn" onclick="toggleDD()">
+          歷年活動
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="site-nav__dd-menu" id="dd-menu">
+          <button onclick="location.href='../2021.html'">2021 辛丑上元</button>
+          <button onclick="location.href='../2022.html'">2022 壬寅上元</button>
+          <button onclick="location.href='../2023.html'">2023 癸卯上元</button>
+          <button onclick="location.href='../2024.html'">2024 甲辰上元</button>
+          <button onclick="location.href='../2025.html'">2025 乙巳上元</button>
+          <button onclick="location.href='../2026.html'">2026 丙午上元</button>
+        </div>
+      </div>
+      <div class="site-nav__dd" id="dd2-wrapper">
+        <button class="site-nav__dd-btn" onclick="toggleDD2()">
+          年秊・刊物
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="site-nav__dd-menu" id="dd2-menu">
+          <button onclick="location.href='../節一元/index.html'">節・一元</button>
+          <button onclick="location.href='index.html'">癸卯集</button>
+        </div>
+      </div>
+    </div>
+    <button class="site-nav__hamburger" onclick="toggleMobileMenu()" aria-label="選單">
+      <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="site-mobile-nav" id="mobile-nav">
+    <div class="site-mobile-nav__inner">
+      <button class="site-mobile-nav__btn site-mobile-nav__primary" onclick="location.href='../2027.html'; closeMobileMenu();">丁未上元計畫書</button>
+      <p class="site-mobile-nav__section">歷年活動</p>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2021.html'; closeMobileMenu();">2021 辛丑上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2022.html'; closeMobileMenu();">2022 壬寅上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2023.html'; closeMobileMenu();">2023 癸卯上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2024.html'; closeMobileMenu();">2024 甲辰上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2025.html'; closeMobileMenu();">2025 乙巳上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2026.html'; closeMobileMenu();">2026 丙午上元</button>
+      <p class="site-mobile-nav__section">年秊・刊物</p>
+      <button class="site-mobile-nav__btn" onclick="location.href='../節一元/index.html'; closeMobileMenu();">節・一元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='index.html'; closeMobileMenu();">癸卯集</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── HERO ────────────────────────────────────────── -->
+<section class="hero">
+  <img class="hero-bg" src="assets/001.png" alt="">
+  <div class="hero-overlay">
+    <img id="heroTitle" class="hero-title-img" src="assets/002.png" alt="">
+  </div>
+  <div class="scroll-hint" id="scrollHint">
+    <div class="scroll-hint__bar"></div>
+  </div>
+</section>
+<div aria-hidden="true" style="height:100vh;display:block;pointer-events:none;"></div>
+
+<div style="position:relative;z-index:1;background:#fff;">
+<!-- ── SLIDES ──────────────────────────────────────── -->
+<div class="slides-wrapper" id="slidesWrapper">
+  <div class="slides-pin" id="slidesPin">
+
+    <!-- Slide 1: 011 + 獻給當代的城市人 -->
+    <div class="slide slide-1" id="slide1">
+      <div class="s1-inner">
+        <img class="s1-img" src="assets/011.png" alt="">
+        <div class="s1-text" id="s1text"></div>
+      </div>
+    </div>
+
+    <!-- Slide 2: 022 frame + 021 title + 02序 text -->
+    <div class="slide slide-2" id="slide2">
+      <div class="s2-inner">
+        <svg class="s2-frame" viewBox="0 0 820 520" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="44" width="816" height="474" fill="none" stroke="#c8231e" stroke-width="20" vector-effect="non-scaling-stroke"/>
+        </svg>
+        <img class="s2-title" src="assets/021.png" alt="序">
+        <div class="s2-text">
+          <span class="sentence">「節祭，到底是什麼東西？」</span>
+          <span class="sentence">「所以，做這個可以幹嘛？」</span>
+          <span class="sentence">這一年以來，這些的問題不曾少過，想要好好的面對大眾說話，可總是不知道對方是隨口問問還是認真好奇，說太少覺得無法傳達，說太多又怕對方意興闌珊，每每不知從何談起。</span>
+          <span class="sentence">於是寫了這樣的一本冊子，復述我們所做的事情，傳遞我們的理念，同時，也想要和正在閱讀的你，建立起一點點的連結。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: 003 → page1.html -->
+    <div class="slide slide-3" id="slide3">
+      <a href="page1.html" class="enter-link">
+        <img src="assets/003.png" alt="節典元年" class="enter-img">
+        <span class="enter-hint">點擊進入</span>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  // Hero entrance
+  setTimeout(() => document.getElementById('heroTitle').classList.add('on'), 700);
+  setTimeout(() => document.getElementById('scrollHint').classList.add('on'), 1700);
+
+  // Build char-by-char spans for slide 1
+  const s1textEl = document.getElementById('s1text');
+  const s1lines  = ['獻給當代的城市人', '與', '尚未出生的孩子們'];
+  let ci = 0;
+  s1lines.forEach(line => {
+    const div = document.createElement('div');
+    div.className = 'text-line';
+    [...line].forEach(ch => {
+      const sp = document.createElement('span');
+      sp.className = 'char';
+      sp.textContent = ch;
+      sp.style.animationDelay = `${ci * 0.09}s`;
+      div.appendChild(sp);
+      ci++;
+    });
+    s1textEl.appendChild(div);
+    ci += 3; // pause between lines
+  });
+
+  // Slide scroll logic
+  const wrapper   = document.getElementById('slidesWrapper');
+  const slides    = document.querySelectorAll('.slide');
+  const sentences = document.querySelectorAll('.sentence');
+  let slide2Ready = false;
+
+  function updateSlides() {
+    const scrolled    = Math.max(0, -wrapper.getBoundingClientRect().top);
+    const totalScroll = wrapper.offsetHeight - window.innerHeight;
+    const progress    = totalScroll > 0 ? Math.min(scrolled / totalScroll, 1) : 0;
+
+    // Slide 2 spans 1/3–2/3 of total progress; each sentence appears at an evenly-spaced scroll threshold
+    const segStart = 1 / slides.length;
+    const segSize  = 1 / slides.length;
+    const n        = sentences.length;
+    sentences.forEach((s, i) => {
+      if (progress >= segStart + segSize * (i + 1) / (n + 1)) s.classList.add('on');
+    });
+    if (progress >= segStart + segSize * n / (n + 1)) slide2Ready = true;
+
+    let activeIdx = Math.min(Math.floor(progress * slides.length), slides.length - 1);
+    if (activeIdx >= 2 && !slide2Ready) activeIdx = 1;
+
+    slides.forEach((s, i) => s.classList.toggle('active', i === activeIdx));
+  }
+
+  // Trigger slide 1 char animation when slides section first enters viewport
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      setTimeout(() => document.getElementById('slide1').classList.add('animate-chars'), 200);
+    }
+  }, { threshold: 0.05 }).observe(document.getElementById('slidesPin'));
+
+  window.addEventListener('scroll', updateSlides, { passive: true });
+  updateSlides();
+
+  // Slide 3: background darkens only when hovering the 003 image
+  const slide3El   = document.getElementById('slide3');
+  const enterImgEl = slide3El.querySelector('.enter-img');
+  enterImgEl.addEventListener('mouseenter', () => slide3El.classList.add('dark'));
+  enterImgEl.addEventListener('mouseleave', () => slide3El.classList.remove('dark'));
+</script>
+
+
+<!-- ── Site footer (injected) ────────────────────── -->
+<footer class="site-footer" style="position:relative;z-index:1;">
+  <div class="site-footer__inner">
+    <img src="../assets/上元春鬧活動標準字（白）.png" alt="上元春鬧"
+         class="site-footer__logo"
+         onerror="this.outerHTML='&lt;p style=&quot;font-size:1.25rem;font-weight:700;color:#e7e5e4;margin-bottom:1.25rem&quot;&gt;上元春鬧&lt;/p&gt;'">
+    <p class="site-footer__tagline">保留傳統脈絡，注入當代靈魂</p>
+    <p class="site-footer__sub">年秊節祭・蟬雨越讀</p>
+    <div class="site-footer__links">
+      <a href="https://www.instagram.com/niennien.jieji/" target="_blank" rel="noopener" class="site-footer__link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        年秊節祭 IG
+      </a>
+      <a href="https://www.facebook.com/semishigurebooks/" target="_blank" rel="noopener" class="site-footer__link site-footer__link--fb">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        蟬雨越讀 FB
+      </a>
+    </div>
+    <div class="site-footer__copy">
+      © <span id="footer-year"></span> 上元春鬧籌備小組 · 年秊節祭
+    </div>
+  </div>
+</footer>
+</div><!-- /page-content-wrap -->
+<script src="../shared.js"></script>
+</body>
+</html>

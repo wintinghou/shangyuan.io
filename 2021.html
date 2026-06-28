@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2021 辛丑上元 - 上元春鬧</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav-sans fixed top-0 left-0 right-0 z-50 bg-[#FDFBF7] border-b border-stone-200 shadow-sm" id="main-nav">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center" aria-label="首頁">
+        <img src="assets/上元春鬧活動標準字（黑）.png"
+             alt="上元春鬧" class="h-9 w-auto object-contain max-w-[140px]"
+             onerror="this.outerHTML='<span class=&quot;text-lg font-bold text-stone-900&quot;>上元春鬧</span>'">
+      </a>
+
+      <!-- Desktop menu -->
+      <div class="hidden md:flex items-center gap-7 text-[0.9rem]">
+        <a href="2027.html" class="text-[#C8102E] font-medium hover:text-[#a00d24] transition-colors" style="font-family:'Noto Sans TC'">丁未計畫書</a>
+        <div class="relative ml-2" id="dd-wrapper">
+          <button onclick="toggleDD()" class="flex items-center gap-1 hover:text-[#C8102E] transition-colors text-stone-700">
+            歷年活動
+            <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="ddmenu" id="dd-menu">
+            <button onclick="location.href='2021.html'">2021 辛丑上元</button>
+            <button onclick="location.href='2022.html'">2022 壬寅上元</button>
+            <button onclick="location.href='2023.html'">2023 癸卯上元</button>
+            <button onclick="location.href='2024.html'">2024 甲辰上元</button>
+            <button onclick="location.href='2025.html'">2025 乙巳上元</button>
+            <button onclick="location.href='2026.html'">2026 丙午上元</button>
+          </div>
+        </div>
+        <div class="relative" id="dd2-wrapper">
+          <button onclick="toggleDD2()" class="flex items-center gap-1 hover:text-[#C8102E] transition-colors text-stone-700">
+            年秊・刊物
+            <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div id="dd2-menu">
+            <button onclick="location.href='節一元/index.html'">節・一元</button>
+            <button onclick="location.href='zine/index.html'">癸卯集</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-stone-700 hover:text-[#C8102E]" aria-label="選單">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-nav">
+    <div class="px-4 py-4 border-t border-stone-100 bg-[#FDFBF7]">
+      <div class="mb-2 pb-2 border-b border-stone-100 pl-2">
+        <button onclick="location.href='2027.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-[#C8102E] font-medium hover:text-[#a00d24]">丁未上元計畫書</button>
+      </div>
+      <p class="py-2 text-xs text-stone-400 tracking-widest">歷年活動</p>
+      <div class="space-y-0.5 pl-2">
+        <button onclick="location.href='2021.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2021 辛丑上元</button>
+        <button onclick="location.href='2022.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2022 壬寅上元</button>
+        <button onclick="location.href='2023.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2023 癸卯上元</button>
+        <button onclick="location.href='2024.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2024 甲辰上元</button>
+        <button onclick="location.href='2025.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2025 乙巳上元</button>
+        <button onclick="location.href='2026.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2026 丙午上元</button>
+      </div>
+      <p class="py-2 text-xs text-stone-400 tracking-widest mt-2">年秊・刊物</p>
+      <div class="space-y-0.5 pl-2">
+        <button onclick="location.href='節一元/index.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">節・一元</button>
+        <button onclick="location.href='zine/index.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">癸卯集</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main>
+<div id="page-xinzhou">
+
+  <!-- 1. Hero carousel -->
+  <div class="xz-cs-wrap" id="xz-carousel-wrap">
+    <div class="xz-cs-overlay"></div>
+    <div class="xz-cs-content px-4 text-center">
+      <h1 class="text-white text-4xl md:text-6xl font-bold tracking-widest drop-shadow-2xl" style="text-shadow:0 2px 16px rgba(0,0,0,.7)">2021 辛丑上元</h1>
+      <p class="text-white/70 mt-3 tracking-[0.3em] text-sm" style="font-family:'Noto Sans TC'">節・一元年度計畫</p>
+    </div>
+    <div id="xz-cs-dots" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10"></div>
+  </div>
+  <div class="xz-cs-spacer" aria-hidden="true"></div>
+
+  <div class="page-content-wrap">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 space-y-20">
+
+    <!-- 2. 活動概覽 -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">OVERVIEW</p>
+          <h2 class="section-title text-2xl">活動概覽</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        <!-- poster -->
+        <div class="rounded-2xl overflow-hidden bg-stone-50">
+          <img src="assets/歷年活動封面圖（海報）/辛丑上元.jpg" alt="辛丑上元封面"
+               class="w-full object-contain" style="max-height:520px;"
+               onerror="this.parentElement.style.display='none'">
+        </div>
+        <!-- info -->
+        <div>
+          <p class="leading-[2.2] text-stone-700 mb-6">
+            2021辛丑上元，由高雄「蟬雨越讀」獨立書店主辦，是莊逸軒發起的「《節・一元》年度計畫」的其中一環。
+          </p>
+          <div class="space-y-3 text-[0.92rem] text-stone-600" style="font-family:'Noto Sans TC'">
+            <div class="flex gap-3"><span class="shrink-0 text-[#C8102E] font-semibold w-20">藝術統籌</span><span>莊逸軒</span></div>
+            <div class="flex gap-3"><span class="shrink-0 text-[#C8102E] font-semibold w-20">籌備期</span><span>2020年12月 ─ 2021年2月27日</span></div>
+            <div class="flex gap-3"><span class="shrink-0 text-[#C8102E] font-semibold w-20">活動時間</span><span>2021年2月27日（農曆正月十六）下午五時前進</span></div>
+            <div class="flex gap-3">
+              <span class="shrink-0 text-[#C8102E] font-semibold w-20">活動路線</span>
+              <span>蟬雨越讀 →（經三餘書店）→ 七号閱覽室 →（經逍遙園）→ 乙木 →（經愛河左岸）→ 廢墟Bar →（經堀川商場）→ 野無境 → 入駁二歸返</span>
+            </div>
+            <div class="flex gap-3"><span class="shrink-0 text-[#C8102E] font-semibold w-20">成果</span><span>正日踩街約40人參與</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 節・一元 -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">THEME</p>
+          <h2 class="section-title text-2xl">節・一元</h2>
+        </div>
+      </div>
+      <!-- intro block -->
+      <div class="xz-intro-block mb-8">
+        <p>「節‧一元」文化實驗計畫，是蟬雨越讀第一年進行的活動，內容主要觸及藝術、哲學、心理、民俗、歷史等範疇，目的是藉由書店作為一個實踐知識的場域，讓人知道知識可以變成行動、可以「超越」。並藉由時間（節）的形式，重新界定、認識、創造自己與城市的相處方式。具體而言，我們步行遶境於城市，穿梭巷又與沿著海濱，試著跟居民互動、傳遞想法，藉由種種儀式、民俗文化，互相交換、感受生命的況味並思索人生難題。這本小冊子作為一個簡短回顧，同時提供了簡單的活動介紹，希望更多⼈可以了解這⼀年的故事，提供更多思考碰撞的機會。</p>
+      </div>
+      <!-- essay -->
+      <div class="bg-white/70 border border-stone-100 rounded-2xl p-8 shadow-sm space-y-4 reveal-children">
+        <h3 class="font-bold text-stone-800 text-lg mb-4">書店第一年計畫：節・一元 ──逸軒</h3>
+        <div class="xz-quote">我們住在都市裡頭，日日觀看著百種文化在同一個櫥窗裡，那裡歌頌著全球化的偉大，同時隱藏著對土地實存的謀殺。<span class="xz-quote-closing">❞</span><span class="xz-source">　　——《計畫：繞無境之境》</span></div>
+        <p class="leading-[2.1] text-stone-700">一年前，我帶著學生做了一場學習的實驗活動，說要以「遶境」的形式，從書店走到旗津，模擬廟會行列，感受踏足城市土地的味道。當時我握著掛上旗幟的長竿，引領隊伍，穿越了中央公園，走上了高雄橋，在駁二舉行過火儀式，偶遇雷陣雨，抵達沙岸時已一身狼狽。然而，途中聽著學生敲著不諧音律的鼓與鑼，看他們扛著沒有神明的自製神轎，旁觀者看來雖然不成體統，我卻找到了一種自由。</p>
+        <p class="leading-[2.1] text-stone-700">在城市長大，總有一種觀念：一個人是自由。所有和他人的過度瓜葛都是一種累贅，尤其像是廟會團體，那種太強調地緣、信仰的連結，對當代而言毋寧是一種落後的表現。如此活在一種偏見中，直到意識到一種像寒流襲捲的虛無，才停止對個人主義的無限上綱。為了找尋化解的方法，參加了幾場遶境，才明白了人與人強烈鍵結下活生生的感動，便也想加入團體中，想在汗水與肩酸後共享服務神明的榮光。然而觀賞再多場遶境，我畢竟不屬於那裡，我沒有那樣的出生，沒有可被認同的背景，我是個徹徹底底的城市孩子，習慣科學而無法不懷疑神明，日常是超商和網路，假日則是遠遊和商場。城市只是一個砲台，永遠用來發射，從來沒教導駐守與留戀。</p>
+        <p class="leading-[2.1] text-stone-700">所以感到一種自由，是明白了人有創造命運外經驗的可能，提著長竿的我，作為行列的前頭，學會了想像另一種生存狀態，我開始相信祭典的目的不是為了服務神明，而在於奠定人與人連結的方式，儘管高度資本社會下充滿疏離，藏在人的深處的某種溫情，並不會因此消滅。</p>
+        <div class="xz-quote">有一首詩提了兩個問題：「江畔何人初見月？江月何年初照人？」他因而思考，如果中秋節最早的開始僅僅是一個人抬頭的偶然驚呼：「天啊！月亮怎麼這麼美！」那節慶就能回到很單純的狀態……。<span class="xz-quote-closing">❞</span><span class="xz-source">　　——《林泉街人》</span></div>
+        <p class="leading-[2.1] text-stone-700">活動結束後，書店正好開幕，被交代要籌辦活動以豐富書店的內容，想了些關於藝術、文學的題目，但耳根子卻還自動播放著遶境時的鑼鼓喧天，使我不斷在心裏默問：自己所感受到的，只是一次性的幻想，還是可守護的真實？</p>
+        <p class="leading-[2.1] text-stone-700">翻起了前幾年寫的小說《林泉街人》，那是一個關於主角為了尋根而嘗試重新過節的故事。但寫的其實是自己對文化的糾結與迷惘。突然想著，書店既然作為一個實際存在的場所，而小說莫大的浪漫不正是將其中的理念、幻想、追求化為現實？帶著想實驗文字的衝動，對照起當時月份，即將中秋，很快地下了一個決定：與書店同步出發，要開始過節了！</p>
+        <div class="xz-quote">節日的「節」，是調節的「節」。<span class="xz-quote-closing">❞</span><span class="xz-source">　　——《計畫：節‧一元》</span></div>
+        <p class="leading-[2.1] text-stone-700">雖然說是「過節」，但立足點卻不在傳統的文獻，而在書店的藏書，其中又以當代思潮為首要。方法上雖自認為是結構主義式的，但缺乏認證所以可能只是種思考遊戲，至少確定跟既定觀念上的「過節」有很大的落差。比方中秋以月亮循環的意象，討論古今中外貫穿的詩情象徵，並連結了人內在的自然性，表現人與月亮的對話關係……。那時候做的轎子命名為月轎，塗上紅漆，放入婚儀的意象，在午夜零時跟幾個志同道合的夥伴，抬著月巫（某夥伴的妹妹），走過技擊館，直至中正公園，大夥便在草地上，配合著簡單舞步，喚醒了別於烤肉歡笑，一種莊嚴而寧靜的賞月方式，如今回想，那確實成為此生之中，對月亮最美麗的記憶，而這竟然是可能創造的。</p>
+        <p class="leading-[2.1] text-stone-700">後來又經過了重九、下元、冬至，思考了關於極限、命運等問題。在上元的時候有一次突破，推著三台高達四公尺的燈車，走至鹽埕，途中拜訪七号閱覽室、乙木、廢墟Bar、野無境等高雄文藝相關場所，抱持著一種串連的心態，希望文藝可以互相來往，以創造出屬於美、生命、熱情的城市風景，雖然高雄常被認為是文化沙漠，但所謂的絲路不也是從沙漠中走出來的？帶著天真而樂觀的心情，也確實吸引了比往常還要多的人參與，行列第一次加入了來自不同地方的人，形成了更加豐富的群體，有人吹著嗩吶，有人彈著三弦唱歌，有人賣力地獨舞，有人向路人大喊上元節快樂。即使還不成氣候，卻看到了夢想的藍圖：在中正二路大道上，人們推著精緻奪目的燈車，跳舞與唱歌，延續過年的喜悅，卻不僅於家族，而能同樂於街坊鄰居，以自己的手點亮整條街區。讓未來出生的孩子，即使離家在遠，也多一個年年驕傲故鄉而願意歸來的理由。</p>
+        <div class="xz-quote">在「過節＝調節」的公式下，「人」不是指個體的、實存的人，而是抽象的、大寫的人，如此夾帶著一點哲思術語，相對於個人主義式的創作與崇尚主觀的自由。但一年下來，原來最大的困難是讓別人瞭解「這是什麼」。<span class="xz-quote-closing">❞</span><span class="xz-source">　　——《節‧一元計畫小節》</span></div>
+        <p class="leading-[2.1] text-stone-700">又過了清明、端午、七夕、盂蘭，探討了祖先、避邪、星空、死亡等哲思。「節‧一元」終於劃下句點，然而很難說是順利結束，畢竟一路上遇到太多預料外的難題，以致本末倒置，將處理書店的精力全部拿來處理活動，使書店經營慘澹，且持續無聞（這也是為什麼後來決定「再次開幕」的理由），同時也就成為了「節．一元」計畫最大的敗筆：節慶本身以「人的參與」為基礎，但偏偏最缺乏的就是人！</p>
+        <p class="leading-[2.1] text-stone-700">這一年，很多理念想要傳遞，是為了回到書店作為知識實踐場域的根本，但確實操之過急，總是按耐不住心中那想要脫韁的馬，常常奔到一個地方後，才驚覺空山，雖有幽蘭但渺無人煙。計畫結束後的三個月間，持續反省與再思量開始的問題：自己所感受到的，只是一次性的幻想，還是可守護的真實？</p>
+        <p class="leading-[2.1] text-stone-700">過程讓答案積累，成為了一匹裝上鞍的馬，嘶吼著要引領至更遠的地方。在此階段得到的結論是要再作一次上元，為此寫下了這篇不知道算不算回顧的文，不止希望更多人可以了解，更希望能願意參與、協助——即使只是一個單純想過節的願望，一個對未來想像風景的渴求，或僅僅一次想雪恥的任性。</p>
+        <p class="leading-[2.1] text-stone-700 font-medium">不論如何，最後還是說一聲：「節」是值得守護的真實。因為「節」是城市的反省、是虛無的回聲、是人與人走向純粹的途徑。而「節」需要人步伐的參與、需要人眼神的見證、需要人聲音的傳遞。我們都應該嘗試如何活得更美更真實。</p>
+      </div>
+    </section>
+
+    <!-- 4. 創作內容 -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">ARTWORK</p>
+          <h2 class="section-title text-2xl">創作內容</h2>
+        </div>
+      </div>
+      <div class="ys-gallery-outer" onclick="openXzArtLightbox(event)">
+        <div class="ys-gallery-track" id="xz-art-gallery-track">
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/燕尾脊.png" alt="燕尾脊" data-src="assets/插圖/辛丑/燕尾脊.png">
+            <figcaption>燕尾脊</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/燈車屋頂結構.png" alt="燈車屋頂結構" data-src="assets/插圖/辛丑/燈車屋頂結構.png">
+            <figcaption>燈車屋頂結構</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/【高雄上元燈綵圖】佚軒 作.jpg" alt="【高雄上元燈綵圖】佚軒 作" data-src="assets/插圖/辛丑/【高雄上元燈綵圖】佚軒 作.jpg">
+            <figcaption>【高雄上元燈綵圖】佚軒 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/【道的海】佚軒 作.jpg" alt="【道的海】佚軒 作" data-src="assets/插圖/辛丑/【道的海】佚軒 作.jpg">
+            <figcaption>【道的海】佚軒 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/【思想的祝福】舍弱 作.jpg" alt="【思想的祝福】舍弱 作" data-src="assets/插圖/辛丑/【思想的祝福】舍弱 作.jpg">
+            <figcaption>【思想的祝福】舍弱 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/【生何歡死何懼】朝露 作.jpg" alt="【生何歡死何懼】朝露 作" data-src="assets/插圖/辛丑/【生何歡死何懼】朝露 作.jpg">
+            <figcaption>【生何歡死何懼】朝露 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/【大儺】ame 作.jpg" alt="【大儺】ame 作" data-src="assets/插圖/辛丑/【大儺】ame 作.jpg">
+            <figcaption>【大儺】ame 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/隊伍圖.png" alt="隊伍圖" data-src="assets/插圖/辛丑/隊伍圖.png">
+            <figcaption>隊伍圖</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/燈車尺寸圖.png" alt="燈車尺寸圖" data-src="assets/插圖/辛丑/燈車尺寸圖.png">
+            <figcaption>燈車尺寸圖</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/燈車完整圖.png" alt="燈車完整圖" data-src="assets/插圖/辛丑/燈車完整圖.png">
+            <figcaption>燈車完整圖</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/燈車設計圖.png" alt="燈車設計圖" data-src="assets/插圖/辛丑/燈車設計圖.png">
+            <figcaption>燈車設計圖</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure">
+            <img src="assets/插圖/辛丑/燈綵圖草稿.png" alt="燈綵圖草稿" data-src="assets/插圖/辛丑/燈綵圖草稿.png">
+            <figcaption>燈綵圖草稿</figcaption>
+          </figure>
+          <!-- duplicate for seamless loop -->
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/燕尾脊.png" alt="燕尾脊" data-src="assets/插圖/辛丑/燕尾脊.png">
+            <figcaption>燕尾脊</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/燈車屋頂結構.png" alt="燈車屋頂結構" data-src="assets/插圖/辛丑/燈車屋頂結構.png">
+            <figcaption>燈車屋頂結構</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/【高雄上元燈綵圖】佚軒 作.jpg" alt="【高雄上元燈綵圖】佚軒 作" data-src="assets/插圖/辛丑/【高雄上元燈綵圖】佚軒 作.jpg">
+            <figcaption>【高雄上元燈綵圖】佚軒 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/【道的海】佚軒 作.jpg" alt="【道的海】佚軒 作" data-src="assets/插圖/辛丑/【道的海】佚軒 作.jpg">
+            <figcaption>【道的海】佚軒 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/【思想的祝福】舍弱 作.jpg" alt="【思想的祝福】舍弱 作" data-src="assets/插圖/辛丑/【思想的祝福】舍弱 作.jpg">
+            <figcaption>【思想的祝福】舍弱 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/【生何歡死何懼】朝露 作.jpg" alt="【生何歡死何懼】朝露 作" data-src="assets/插圖/辛丑/【生何歡死何懼】朝露 作.jpg">
+            <figcaption>【生何歡死何懼】朝露 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/【大儺】ame 作.jpg" alt="【大儺】ame 作" data-src="assets/插圖/辛丑/【大儺】ame 作.jpg">
+            <figcaption>【大儺】ame 作</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/隊伍圖.png" alt="隊伍圖" data-src="assets/插圖/辛丑/隊伍圖.png">
+            <figcaption>隊伍圖</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/燈車尺寸圖.png" alt="燈車尺寸圖" data-src="assets/插圖/辛丑/燈車尺寸圖.png">
+            <figcaption>燈車尺寸圖</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/燈車完整圖.png" alt="燈車完整圖" data-src="assets/插圖/辛丑/燈車完整圖.png">
+            <figcaption>燈車完整圖</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/燈車設計圖.png" alt="燈車設計圖" data-src="assets/插圖/辛丑/燈車設計圖.png">
+            <figcaption>燈車設計圖</figcaption>
+          </figure>
+          <figure class="ys-gallery-figure" aria-hidden="true">
+            <img src="assets/插圖/辛丑/燈綵圖草稿.png" alt="燈綵圖草稿" data-src="assets/插圖/辛丑/燈綵圖草稿.png">
+            <figcaption>燈綵圖草稿</figcaption>
+          </figure>
+        </div>
+      </div>
+      <!-- 燈箱 -->
+      <div id="xz-art-lightbox" class="ys-lightbox" style="display:none;" onclick="closeXzArtLightbox()">
+        <button class="ys-lightbox-close" onclick="event.stopPropagation();closeXzArtLightbox()">✕</button>
+        <img id="xz-art-lightbox-img" src="" alt="" style="background:#fff;">
+      </div>
+    </section>
+
+    <!-- 4. 創作論述 -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">DISCOURSE</p>
+          <h2 class="section-title text-2xl">創作論述</h2>
+        </div>
+      </div>
+      <!-- intro block -->
+      <div class="xz-intro-block mb-6">
+        <p>當我們試圖祝福一個人的時候，其實是在相信自己也能成為讓對方飽滿的一份力量，那是一種信念，是相信生命還能在儘管空腹的時候也能因為想起些什麼而滿足地微笑的信念。如此也會想起花的祝福，如蔣勳老師曾說道：「在現實生活裡，花看起來如此脆弱，沒有力量，但是有沒有可能，花會成為救贖一個社會的重要力量？」</p>
+      </div>
+      <div class="xz-essay-nav">
+        <div class="xz-essay-list" id="xz-essay-list"></div>
+        <div class="xz-essay-body" id="xz-essay-body">
+          <p class="text-stone-400 text-sm text-center mt-12" style="font-family:'Noto Sans TC'">← 點選左側文章標題</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 共同創作者視角 -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">COLLABORATORS</p>
+          <h2 class="section-title text-2xl">共同創作者視角</h2>
+        </div>
+      </div>
+      <div class="xz-essay-nav">
+        <div class="xz-essay-list" id="xz-collab-list"></div>
+        <div class="xz-essay-body" id="xz-collab-body">
+          <p class="text-stone-400 text-sm text-center mt-12" style="font-family:'Noto Sans TC'">← 點選左側創作者姓名</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 跋 -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">AFTERWORD</p>
+          <h2 class="section-title text-2xl">跋</h2>
+        </div>
+      </div>
+      <div class="bg-white/70 border border-stone-100 rounded-2xl p-8 shadow-sm" id="xz-ba-content"></div>
+    </section>
+
+  </div>
+  </div><!-- /page-content-wrap -->
+</div>
+</div><!-- /page-xinzhou -->
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="bg-stone-900 text-stone-400 py-16">
+  <div class="max-w-4xl mx-auto px-4 flex flex-col items-center text-center">
+    <img src="assets/上元春鬧活動標準字（白）.png" alt="上元春鬧"
+         class="h-12 w-auto object-contain mb-5 opacity-80"
+         onerror="this.outerHTML='<p class=\'text-xl font-bold text-stone-200 mb-5\'>上元春鬧</p>'">
+    <p class="text-stone-500 text-sm mb-2" style="font-family:'Noto Sans TC'">保留傳統脈絡，注入當代靈魂</p>
+    <p class="text-stone-600 text-xs mb-8" style="font-family:'Noto Sans TC'">年秊節祭・蟬雨越讀</p>
+    <div class="flex gap-6 mb-8">
+      <a href="https://www.instagram.com/niennien.jieji/" target="_blank" rel="noopener"
+         class="flex items-center gap-2 text-stone-400 hover:text-amber-300 transition-colors text-sm" style="font-family:'Noto Sans TC'">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        年秊節祭 IG
+      </a>
+      <a href="https://www.facebook.com/semishigurebooks/" target="_blank" rel="noopener"
+         class="flex items-center gap-2 text-stone-400 hover:text-blue-300 transition-colors text-sm" style="font-family:'Noto Sans TC'">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        蟬雨越讀 FB
+      </a>
+    </div>
+    <div class="w-full border-t border-stone-800 pt-6 text-xs text-stone-600" style="font-family:'Noto Sans TC'">
+      © <span id="footer-year"></span> 上元春鬧籌備小組 · 年秊節祭
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══ 辛丑 DATA ═══ -->
+<script>
+const XINZHOU_PHOTOS = ["IMG_0023.jpg", "IMG_0030.jpg", "IMG_0031.jpg", "IMG_0037.jpg", "IMG_0041.jpg", "IMG_0042.jpg", "IMG_0072.jpg", "IMG_0073.jpg", "IMG_0081.jpg", "IMG_0083.jpg", "IMG_0092.jpg", "IMG_0154.jpg", "IMG_0159.jpg", "IMG_0210.jpg", "IMG_0229.jpg", "IMG_0262.jpg", "IMG_0290.jpg", "IMG_0299.jpg", "IMG_0326.jpg", "IMG_0332.jpg", "IMG_0335.jpg", "IMG_0339.jpg", "IMG_0347.jpg", "IMG_0350.jpg", "IMG_0354.jpg", "IMG_0355.jpg", "IMG_0359.jpg", "IMG_0408.jpg", "IMG_0420.jpg", "IMG_9886.jpg", "IMG_9909.jpg", "IMG_9944.jpg", "IMG_9947.jpg", "S__28311588.jpg", "S__28311590.jpg", "上元春鬧 (1).jpg", "上元春鬧.JPG"];
+
+// 辛丑上元 創作論述 articles
+// BUILD:XINZHOU_ESSAYS_START
+const XINZHOU_ESSAYS = [
+  {id:"e1", title:"關於上元01", date:"2021/01/06",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid026yKmaAK2S2zFJ6QdY48np2pgDkHX4kCNZMyFuYn9uyBjaVrvPB5DHRCNsoBW29t8l",
+    content:`如果只用過去時代的邏輯解釋過去的東西，那勢必只會產生類型化的結果吧。也就是「民藝」僅會淪落為一種類型，用電影來講，就像是古裝戲和驚悚片、色情片、警匪片、浪漫愛情片並列於節目表上，只剩下喜好的差異，並且隔著屏幕，不跟生活發生關係。如此被隔絕在「人民」外的「民藝」，失去了「民」，怎麼還能成立？所以是否必須重新思考「民」本身顛撲不破的現代意義，才有可能真正去談它呢？
+
+然而即使用「現代」的方式去重新談過去的東西，也未必能夠抵抗類型化所帶來極強大「先入為主」的印象，但也只能如此相信：作為存在於民間的某種秩序，是今天處於虛無的世代們必須持續回頭張望的，那是關於如何建立「自己秩序」的重要參考，也就是民藝有必須回望、重新評估價值的理由了。
+
+以楊柳青年畫的例子來說，年畫的四大主題：生活民俗、門灶神祖、文史故事、戲齣雜畫，是否正好反映了普遍人性中的四種需求？用現代語彙來說，那分別呼應著「現實生活限制性的體認與感知」、「未來與超越性力量的追求與信仰」、「過去本源的提醒與歷史借鏡」、「對比現實的永恆性想像與欲望的補償」。
+
+如此民藝不僅反映了一個時代的生活秩序，同時也提供了自己生活的參照，得以試問自己：現在哪些東西相互取代了？又或者生活中是否有某個空格沒有被填補？民藝畢竟能夠別於被語言壟斷的自我認識方式，轉而以一種集體的現象去表達「人是什麼？」的問題。人畢竟同時屬於個人也屬於集體，在當代不斷鼓催個性展現時，是不是有種平衡的需求，藏在民藝裡等待挖掘？
+
+把一個被過於「簡單化」而顯得「落伍」的藝術形式重新理論化、複雜化，究竟只是使得民藝更遠離人們，還是讓民藝多了個可以回歸於人手上的可能？相信這條思辨的路需要的更多是實踐而不是早下結論，離上元有將近兩個月的準備時間，可以花比較多時間沈澱點東西。便決定從漢聲出版的年畫開始，試著去探索那曾風靡數百年的民俗美麗。
+
+對西元而言又是新的一年了，生活中一直存在著督促人「開始些什麼」的日子，這沒什麼不好，畢竟人一不小心就又懶惰了。讓我們開始實驗上元吧。`},
+
+  {id:"e2", title:"美的覺醒｜關於上元02", date:"2021/01/08",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid0GsfKDDMxA9SX7cnZdYzDWoGwZQBcZT7njTVQLYjYb3Ej823z8QT4BT5RceVLWDfXl",
+    content:`在一個城市的繁華裡，好像有那麼多的物質，這麼多樣複雜的人際關係。可是，我看到了更多寂寞和孤獨，更多繁華背後那難以言說、無法滿足的心靈荒涼。這時我寧可走到山裡去，去看一個春天盛放的花朵，感受到那些花都變很大的祝福。
+
+一直問著自己：「現在是不是時候了？」、「現在是不是時候了？」……。關於談論一些被理所當然化後逐漸失去內容的事物，像是「祝福」。
+
+準備上元，首要面對了一個問題：什麼是自古流傳的「天官賜福」？
+
+說到「福」，在這片島嶼上尤其不陌生，從送壽桃到領壓歲錢、從擺飾元寶到貼春聯，從老宅到廟宇，處處可見到象徵福的葫蘆與蝙蝠裝飾。那無非都是一種祝福，期望著未來能順遂、能發財、能平安……，有時候祝福自己，有時候則祝福他人。家家戶戶，如此冀求著。其實現在變得陌生了，而且還是非常非常地陌生。
+
+第一次聽到「花又不能吃，買來又麻煩」的時候，還只是不懂事理的孩童時代。但回首才發現，那樣的觀念已經深化在整個生活的環境中，作為「祝福」意象的花朵，嚴然比不上一包可以解饞的洋芋片，大概是因為「祝福」不能吃，但是洋芋片可以。
+
+好像是慢慢上高中以後吧。朋友之間的生日禮物漸漸變成一頓頓的請客，泛黃的生日卡上面寫著「祝你平安」的字句鎖在某個年頭，是不是長大了以後什麼都應該自己承擔，所以就不需要祝福了？我們的社會越來越走向物質文化，那些不能放入嘴巴的東西雖然沒有毒，但也沒有營養成分，還可能變成環保人士批判的垃圾，所以還是吃頓好料吧！如此一來，「祝福」在這個時代是不是開始失去了意義，我們還有機會找回它的價值嗎？
+
+當在蔣勳老師的書裡讀到有關花與祝福的字句時，某種奇妙的溫熱感鼓在眼角，彷彿要漲溢作眼淚卻遲遲沒淌下，心裡想著那是怎樣的感覺，隨著如流湧現的與花之間記憶，忽然有了點領悟。祝福其實是讓生命可以飽滿的方式。而生命如何飽滿？其實就如花朵盛放一般，生命不會因為吃飽就富足，而是因為有過如花朵盛放的燦爛的經驗，才始能擁有真正富足的可能。
+
+當我們試圖祝福一個人的時候，其實是在相信自己也能成為讓對方飽滿的一份力量，那是一種信念，是對於自己與對方之間「情」的重量的信念，是相信生命還能在儘管空腹的時候也能因為想起些什麼而滿足地微笑的信念……
+
+祝福無非是將人與人之間的關係，由自然的功利提升至精神的門檻，由當下的時間推至對無法掌控未來的期望，那讓人趨向於美的本身，其實也就是「美滿」的「滿」的本身……
+
+──我站在梅花的面前發呆，我開始覺得所謂的美，其實是因為它呼喚起我們生命非常底層你努力活下來的記憶。
+──花朵燦爛地開放，之後枯萎、凋零了，我們用「凋謝」來形容花朵開完的過程。漢字裡形容花開完了以後，稱做「花謝了」。「感謝」的「謝」，意思是說，我完成了我自己，我的生命完成了，當我告別人間的時候，其實沒有任何遺憾。
+──在現實生活裡，花看起來如此脆弱，沒有力量，但是有沒有可能，花會成為救贖一個社會的重要力量？
+
+上元想要尋找純粹的祝福，想要歸返對美的信賴，想要實踐擺在牆頭十年「美的覺醒」的語言，在今年一個世界充滿噩耗的開始時，我們能不能多一點祝福的語言，不要用功利衡量，大膽地、安靜地為這個世界祈福——那其實是為了處在安全地帶的自己，能多一點人性的尊貴，也是物質在全面浸染精神前的一道防衛吧。`},
+
+  {id:"e3", title:"刻版", date:"2021/01/10",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid02J4gTg5TMTVJbHhuctArJtSXv4odLWMDx76BaKuotVjYF2WFPsaJd7JrxbxCSbQ5Cl",
+    content:`幾日覺得光看年畫不夠，便決定直接刻印年畫，一刻，印象深刻，才知道「深刻」這個常用詞的意義，在於將注意力集中於刀鋒，屏氣凝神，得維持一定的力量卻不能過頭，小心翼翼，一刀一劃，手腕配合線稿曲折，兩三秒可以平塗完成的框框得花上數倍的時間才能削成，如此「深刻」其實很真實，在記憶裡、在印象裡，深刻的故事勢必不只是平塗下的滑順與五顏六色的堆疊，而是有刀尖削去後對喪失的了解以及看到表層底下世界的驚豔。「深刻」將生命化為凹凸不平卻不再只是單一面向的立體，多了陰影卻也因為陰影而突顯原本平面的價值，殘留的與削去的，過程中彼此錯綜複雜，最後卻能聯手印出一個秩序的答案。讀著李澤厚老師強調的工藝實踐的價值，不由自主地肅然起敬，覺得巨大的隱喻在手工裡，匠人們的精神已經提升到怎樣的高度——或說能深刻到什麼地步，嚴然超出想像。
+
+途中想著手動的複製與機械的複製的差別，當用影印機嗯嗯嘰嘰地列出一張畫作與以手動版畫沾染料的手工之間到底差在哪裡？那些人情有無的老生常談已經聽了很多了，像是「手工比較有溫度」之類的，說真的，還是情願接受這句話，並且想試著延展出日常生活中人的關係性可以擴大的可能。如果以「完全手繪」與「影印複製」的概念套入人際，不正是「與最重要的人的關係」以及跟「無數陌生人之間的關係」嗎？然而在這之間「還不到推心置腹但也不錯的朋友到街坊鄰居等等」，其實佔了很大的位置，但有什麼樣的形式可填補這個空位？
+
+因而私想，刻版其實是一種人情擴展方式吧。一種手動的可複製性，不似機械式極端無限制的生產，也沒有唯一一張作品下可能包含的期待的沈重，讓人情可以從專一的對象擴大到認識範圍內更多的可能，同時也保留了手工實踐的用心而不淪落為「誰都可以」的複製無重量。也許歌頌得有點誇張，但無非是希望可以打破一點對「刻版」麻煩、耗時間、早該被時代取代的「刻板印象」，能夠體感更多生活習以為常的存在的背後可能性，以去感受這個世界實然深刻的更多面向。`},
+
+  {id:"e4", title:"關於上元03", date:"2021/01/22",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid02DfTVVgH9hTBeJEiVmAbfgzuRmd85zDpEvJMYM4kmYYwCSLj8N3AhqV1iKiVTzJNul",
+    content:`全世界都熠熠生輝。到超市買東西的客人看起來是那麼耀眼。四下奔跑的孩子們看起來也如此地耀眼。狗兒、低垂的稻穗、電線桿，就連小石頭看起來都耀眼無比……。——宮澤賢治《銀河鐵道之夜》
+
+記憶在軀幹、在手掌、在腳趾裡、在牙齦齒根，在每一絲每一絲頭髮裡。眼、耳、鼻、舌、身，幾世幾劫，氣味、溫度、痛癢、聲音、甘苦，所有記憶都存在，隨肉身通過一次又一次的生死……。——蔣勳《肉身供養》
+
+傳說的傳說，已經不可考。燈節來自燃燈供佛、祭天官還是鬧社火，在巨大的歷史洪流下，相信什麼往往變成了個人主觀的事，不應該強迫一個人接受另一個人價值觀，也已經是公認事實。但如果強迫的不是改換而是開闊，為得是像開混沌七竅，殺死曾經無明、混沌的自己，那能不能讓思維多一點強迫的可能性？
+
+燈不同於火，燈是被馴化的火。燈畢竟沒有火的激情與狂暴，在古時也許就是托在小碟子上，以小棉布撕成燈芯，沾點酥油，以示光明。在佛的語境中，燈意味著「明」，也就是智慧。禪宗著名的傳燈錄，便以燈為譬喻，意味將智慧傳下去，更多的是隱喻而非了當的說明，其實也說著「明」是一種領悟，而不是答案的背誦。
+
+常說無明，說一念無明，說無始無明。私而言，無明不是單純的無知，而是明明「知道」卻無法按著「知道」走的痛苦，有人說那是一種癡的表現，也有人說是不明白「空」的愚笨，但更簡單來說，或許就是各種心結、恐懼、愛恨交錯而成的停滯不前吧。那種每次「知道」卻又「做不到」後的悔恨，那每次在選擇當下呆然無語的挫折，或許十二因緣列「無明」為首位，有其最劇痛的道理。
+
+上元燃燈，今天多不是為了供佛，毋寧更多為的是美觀與娛樂，但這段歷史交織著而成的，確實豐富的人類記憶，不管供佛與否，還是那單純的點燈，其中對光明的渴望，那因為無明的受難，更早更早，文明之前，人們在荒蕪中便已經開始了尋覓。那是當我們再次凝視燈火時，能夠溯源到記憶深處的，第一次脫離夜央猛獸潛伏窺伺的恐懼的歡喜與安心，也是投向未來，作為追尋的信念：那呈現在眼前的世界，一切都變得耀眼，如光一般，非此亦非比——無礙也無量的世界。`},
+
+  {id:"e5", title:"仿朱仙鎮門神年畫", date:"2021/01/24",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid028wBcFHdynhgbfW2JLd4SHb8ZSmkY4wB3uYeSjt1ZnZCbA6HdSmz46XcN3HPscPNjl",
+    content:`幾年前，跟著篆刻老師小朴圃去了一趟北京，那時候仍對於華文化懞懞懂懂，只因為喜歡那位老師就答應同行，結果上了飛機後才發現錢包跟機艙外相呼應，只有幾個銅板盪來盪去。心裡尷尬，卻也不好意思多說，往後老師一行人購物的時候，草草逛後便待至門又等候，畢竟怕被裡面的物品刺激慾念，弄得心神蕩漾，更加責怪自己的冒失。
+
+結果一被問為什麼站在店又，還是苦笑地誠實招供，老師大笑而不語，事後悄悄地問要借多少，心裡感動，唸了個含蓄的數字，收到後小心地收進錢包裡，往後的日子細細打量，發現所有的選擇都變回孩童時的格外珍惜。
+
+行程最後一天到了北京潘家園，一處收賣古物的集散地，琳琅滿目，超過了自己以往的常識，晃了幾圈，毫無頭緒，想說用剩下的錢買幾顆印石，也夠滿意了。然而目光卻被一家舊書攤吸引，主人無心招客，坐著發呆，地攤上除了仿宋印刷的古書外，盡是散亂著的圖紙。蹲下，隨意翻看，不知道畫的是什麼，多是簡陋線條勾勒的人形並配合著誇張的動作，像單張的漫畫格子，每幅應該都有一個劇情，但基本上毫無頭緒。
+
+後來將剩下的幾個錢換了幾張圖畫，沒做多想，只覺得那些粗糙的線條帶著幾分真實，成為一種召喚，但還無法由語言定位。回去以後，收在櫃子裡，之後一年一年就過去了。近日因為上元，讀了年畫，除了漢聲的書，亦從友人家借了幾本年畫的介紹，當翻到開封一帶的年畫時，覺得似曾相識，回憶變得鮮明，才知道兩年前邂逅的真面目，是稱之為年畫之祖的「朱仙鎮年畫」。
+
+朱仙鎮的年畫大致可以用幾點來概括，分別是線條粗獷、形象誇張、構圖飽滿、色彩豔麗，不似楊柳青年畫的精緻，也沒有綿竹年畫的柔美。朱仙鎮年畫不對寫實要求，在意的是神情與意思的傳遞，所以比例可大可小，可如立體派超越單一視角，並且用色大膽，紅配綠、藍搭黃，強烈地凸顯出民間個性活潑的生命力，說不定連法國的野獸派都將歎為觀止。
+
+不管說什麼，覺得不可思議，如此緣分，哪年的伏筆，開始與開始在暗處相連。所以選了張朱仙鎮門神的圖臨摹，刻畫間，期望虛空的維度能化作腳下實存的土地，踩著踩著，逐漸踏實。`},
+
+  {id:"e6", title:"上元雜記01", date:"2021/01/29",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid02hSrQn3Pmnj7EyDUdJoKEzzXkZNMi3e72PhgKBHse6gyk31e1WF7zW5DxLdFcw7rJl",
+    content:`最近開始準備上元，咿咿嗡嗡喀喀咚咚，不重新註明正在營業中，還真的會讓人以為還在施工。看中庭的地板一片狼籍，木屑刮起小颱風，店員都在切木頭，不知道來客感到荒謬不荒謬？
+
+把超越書本的實踐當作表演對象，但在他人的眼裡大概就是習以為常的「反正就是在做工」吧。確實是在做工，但其實也是在表演，如此表演是一種真實，將世界跟遊戲的斷裂試著拉近一點。當然，無法要求別人怎麼看待，畢竟諸多吵雜的干擾很難合理化，所以還是得說一聲抱歉：最近書店噪音較多，請多見諒。
+
+自說自話，但確實因為這樣第一次使用起圓鋸，以前常看工人們使用，覺得刀鋒銳利不敢碰，帶著切小指的恐懼嘗試，強烈的實感烙印心中，使得回家看書時，那將字句一個接著一個讀下去的動態過程和切割過程重合，使得每一行讀過去都浮現了圓鋸電動的銳利刀聲，栩栩如生。然而面對黑格爾的美學卻沒有切割木頭般的快與狠，幻覺中的刀依然快速轉動，文字還是砍不動，甚至構成干擾，閱讀不能，如此心中哭笑不得，但確實有趣極了。
+
+不管如何，至二月二十七前為準備期，對讀書讀到卡彈的人不妨來書店走走，也許將施工當表演看，會多一層新的啟發。`},
+
+  {id:"e7", title:"上元雜記02", date:"2021/02/05",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid0CVCfGzq54Sbjs5jKnqT9StsGKp4ECrsYu67NPrnoWRwZuu7irookG1vdaf6cwcXnl",
+    content:`幾日敲打切鑽，慢慢建構出形狀，左鄰右舍正好也在施工，工人們爾時探頭來望，一臉微妙，畢竟看著一群素人班門弄斧，又不知道在蓋什麼東西，覺得奇怪也是理所當然的吧。
+
+傍晚告一段落，總算是將燈籠的骨架完成，看了日曆，驚覺今天為小年，又稱祭灶，古來是灶王爺回天庭打一家人小報告的日子。為此，人們會準備甜食在灶旁，以「糖塞」灶王爺的嘴，以求灶王爺能夠在天帝前多說好話，好讓一家人新年後可以得到更多福報。如此作為「媚神」的習俗，無非是人類的文明從對諸神的恐懼到了能有更多嬉戲的可能性，也就意味著人的地位的提升與對世界掌握的進步，但當然，在今天而言，祭灶又似乎漸漸被文明忘記，作為迷信，人們不再遵循。
+
+謠傳過去乞丐們還會在這一天「跳灶王」，以一種歡樂的形式一邊跳舞、媚人言語，唱著「灶王老爺您姓張，一碗涼水三炷香，今年日子過得苦，明年再請您吃糖」，在貧窮的生活中，求點錢以過個好年。
+
+到底，一種歡笑的習俗，如此可愛的想法，其實已經脫離神明對於自由的威脅，而是一種富有想像力的生活方式，並且帶了一點社會的關懷，如此在過年前因爲「付出」而換得某種奇妙的心靈富足，是否是為了鋪陳那曾經最受期待的日子？
+
+可惜忙著準備上元，沒有時間祭灶了，在此閒談一下，便關上螢幕，繼續努力。`},
+
+  {id:"e8", title:"上元雜記03ｘ預告", date:"2021/02/18",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid0ieK1iAJbfTniDth8Cg3zDXJfYsi65S3PZDLpwV2QQ6gw1Wm6KcAxTNRbXzw753Msl",
+    content:`今天是人日。據說是記念人誕生的日子，前一天是馬，後一天是穀，創造者為女媧，嘰嘰呱呱，最近過於繁忙，已經無暇顧及。在上元準備開始前，曾妄想這段時間能形成更完整的活動體系，從臘八開始，到小年祭灶，再經人日，以上元為高潮，由龍抬頭收尾，讓那些比較深層的想法可以一層一層融貫其中，成為更豐富的文化圖景。現在看起來，臘八祭灶都過去，人日當天還是焦頭爛額，只能說，如果想要展望，未來真的還很長。
+
+燈籠持續製作中，是畫壞、釘錯、材料短缺、被砸傷，磕磕絆絆，試行錯誤，活動內容才正開始計劃，預計將重啟遶境的概念，由蟬雨出發，試著連結其他的文藝場域，祈福與交流，讓燈節的意義依然存在，並嘗試創造一條不一樣的文化路徑，成為一處美的風景的可能。為此，感謝目前願意支持的文藝夥伴們：七号閱覽室、乙木、廢墟Bar、野無境，蟬雨將於這兩天公布活動資訊，還敬請期待！
+
+說起來，最近聽到前輩笑談，曾經辦遶境時做了一艘大船，結果一出巡就斷成兩半，看著十四尺高的燈籠搖搖晃晃，心中預想著哭笑不得的可能，反正就繼續做吧，還剩不到十天，依然加油著。`},
+
+  {id:"e9", title:"關於上元04", date:"2021/02/07",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid02aUEE3vTgLoSUEWCFDyLvmZSHMKSgkmTJRe53icVyy9d3FoJEArdnQcF2LFZosfR5l",
+    content:`一直在掙扎的問題有一：就是文化的界線到底在哪？譬如說「西化」是一種進步的象徵還是種崇洋媚外？又或者「中國化」是一種追本溯源還是統戰議題？而本土化是指對這片土地上的一切重視的話，將閩南人、客家人、外省人、原住民通通混為「本土」一談又如何適從？
+
+這樣的問題已經爭論很久了，人們掛在嘴邊輕易批判，說你太不接地氣或者太過崇國外，但如果只是「感覺上」那勢必很荒誕，因為「本土化」、「西化」、「中國化」都是被理性劃分出來的詞彙，屬於「理性」的領域而非「感覺的」，為此不再細細思量，如何輕易下判斷？
+
+幾年前去了一趟青森，在哪裡見識了當地夏天祭典的「ねぶた祭り」（中譯：睡魔祭），正好同年去了一趟嘉義的全台灣燈會，兩邊都是以燈籠為主體，卻有著強烈至極的對比。
+
+打著將台灣傳統節俗推至國際的元宵燈會，動員了全國性的總戰力，處處是絢麗的科技與玲瑯滿目的各式花燈，記得古今中外，從西遊記到聖經，還有很多巨大的不知道什麼很亮的東西，人身在其中，沒有對比，就覺得「燈會」就是這樣，歌頌著規格越高的燈光技術，配著路邊的夜市攤子吃吃喝喝，一年又一年，沒有懷疑。
+
+所以讚嘆也憤恨。是因為看到另一處的燈會，人們推著為數不多，但是極度精緻的燈籠，上面盡是傳說與古典小說的情節，有三途川也有水滸傳，都是他們文化脈絡下流傳百年的存有。如此人們賣力地、驕傲地，繞著城市中心走著，而跟在巨大燈籠後面的，是一群又一群，戴著花飾，跳著舞的男男女女，他們配合著鼓聲、笛聲，歡快地舞動著、大笑著，全場有著更豐富的人間相，是賣力打鼓，是高聲指揮，是揮汗推車，是一旁叫好。在那裡燈是主角，人也是主角，人與自己創造物在一起，相輔相成，各自發著光，因而聚匯出更動人閃爍的光。
+
+回首，再高的科技也成了灰暗的風景，因爲「人」不在裡頭。而再豐富的主題也成為無法記憶的窗外一閃，畢竟沒有真正對「傳統」、「祖」的尊重。終於，自己在台灣燈會的記憶中，只有一片雜亂的燈光效果而沒有具體的感動與印象。
+
+回到一開始的問題，一直在衝突的，到底什麼崇洋（這裡的是東洋日本）？到底什麼是本土？一想，其實根本就沒有這樣的問題，有的只是：什麼是人性的，什麼不夠人性的而已。如此又又聲聲說的本土若是讓科技主導而物化百姓，如果是迷信神靈而輕視生命自由，那這樣的接地氣接的只是遲滯與落後，同樣的，如果崇洋是導向名牌主義、大作主義，因而忽視、甚至鄙視自己的潛力與周圍實存的種種，那這樣的崇洋必須批判。
+
+這次的上元，無疑吸收著曾在日本所見所聞的種種，雖然同時也試著尋找在地的元素，以盡可能不失對土地的踏尋，但知道這樣的嘗試還有很長的路要走。只希望那種種搞錯問題重點的誤會可以越來越少，以能持續思考著「人性的」「更人性的」的問題，畢竟，也只有在此基礎上，可以談什麼是「吸收學習」、什麼是「劃界阻隔」。要知道，絕對沒有任何文化問題可以輕易下定奪，我們需要持續經歷，持續反省，持續前進，切不可劃地自限，抑或無限度地逾越界線，思維與行動才有成長的可能性。`},
+
+  {id:"e10", title:"關於上元05", date:"2021/02/10",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid032ZfNxVaTgic3P9KAAoDjfMxYGipiy6RtPQpG8w7n4K7k9MhVMpwHqSPS4PkJfYxTl",
+    content:`明天就是除夕了。常常覺得巨大的暈眩，是因為很多記憶成了蜃氣樓，那些以為顛撲不破的，也都如摧枯拉朽般，輕易地物換星移。年節的記憶，離家不遠處的年攤，牛舌餅與龍鬚糖，爆竹的聲音，人來人往，表演魔術與雜技……，種種雲煙成雨，滴落後蒸發，卻開始沙漠化。
+
+想將一切過往重新梳理，讓那些已經近乎於混亂的記憶能夠真正「除舊佈新」。為此只能重新溯源，去尋找在被唯我論以及金錢商販染色前的年。
+
+如果每個地區都有一個可以稱為「最核心」的傳統節俗的話，阿美族有豐年祭，達悟族有飛魚祭，北港有媽祖遶境，京都有祇園祭，那自己所在的高雄市中心，這個「核心」會是什麼？私想，大概是農曆新年吧。
+
+過去，常常用「除舊佈新」作為年節的核心，所以大掃除、買新衣、吃大餐並不陌生，然而已經不陌生到連不是過年的時間也都在掃地、買新衣、吃大餐，為此，如果將除舊佈新視為年節核心，是否只是徒增一個商業買賣的理由？那跟平常的吃喝玩樂又有何實質的不同？
+
+有一種說法，從除夕到元宵，前期稱為「閉門過年」，象徵著人倫上的家族意義，而後期為「元宵鬧夜」，也就是將家族擴展到社會性。前者，在家庭還是完整的前提上，基本多還是維持「團聚」的意義，然而後者卻越來越不被重視，年假畢竟集中於前者，甚至成為了家庭旅遊的黃金期，人山人海在度假勝地相會，卻誰也不會認識誰，社會意義幾乎消滅。
+
+然而，真正的社會性意義，並非只是一套人們共同遵守的規則與法律，更是對於共同想像、相信、信仰等精神性部分的持續。畢竟以小家庭的單位而言，一位一等親的死亡很可能撼動一組家庭，但卻不會撼動整個社會，社會只要還保有一套核心的精神性，那就能制衡個人沈淪於喪失的絕望。
+
+禮記・樂記提到「大樂與天地同和，大禮與天地同節」，自古在中國經典之中，很多「天地人」的討論，但到底「天地人」分別意味著什麼？卻一直沒有確切的說詞。
+
+讀史作檉老師的文章，他說，天地人正確的關係應該是天人地，天意味著不可言說的自然，合於萬物，是一切生命之所以生生不息的根本。而地指的是人的創造物，包含器物工具、房屋農舍、社會制度等，所以人即介於自然與社會之間，站其獨特的位置，調和著，也衝突著。
+
+不久前去了漢聲巷，正好遇見了創辦人黃永松老師，私問他怎麼看這塊土地文化的未來，他說，要先知道島嶼天地人之間特殊性，比如這塊土地更遠更遠，人類開始前，板塊之間，種種奇妙的消長變化。因而黃老師說，天指的是時間，地指的是空間，人在天地之下，抬頭仰望。
+
+如此，「大樂與天地同和」的天地便是「天人地」之間的平衡，探討著如何在天然本性與人倫制度之間找到自由的真誠，也就是如何建築在理性的「和」之上，尋回感性的「樂」。同時，「大禮與天地同節」的天地指的便是「天地人」之間的關係，要人在時間與空間的基本限制下，制衡理性的無限連結與感性的被動受限，這裏的禮便是為理，而節，則是竹節的節。所以，一個是如何「平衡」，一個是如何「劃界」。如此能理解「執其兩端，用其中於民」，中庸之道的原始意義：在天地間把守極端，於每次下判斷時尋找中間的最適選擇。
+
+上元節，將此思維作為整個節慶計畫的中心，橫以參與社會，縱則謝天祈福，為此發展創作，想要建立一種文化圖像，讓過節過年，能追本溯源，有更多人性空間，有更多新的思維可能。知道距離遙遠，今天依然妄想土地有一天能擁有驕傲的文化風景，嘰嘰喳喳，那就作為新年的願望吧。感謝讀到這裡，祝各位新年快樂。`},
+
+  {id:"e11", title:"辛丑上元正日", date:"2021/02/26",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid0qeaBk5vDCURyTnk134tZu6XUYwQyLgzhdDm3pr5NV7LE8g81Mv3eAfb8D7UEE8A7l",
+    content:`正月十五，今為上元正日，為明天的活動如火如荼準備中，每次都以為下次會更從容，但依然處在各種問題中，這邊解決了，另一邊又出問題，帶著不安與期待，望著滿月，天氣正佳，還願人們有個美好的上元。`},
+
+  {id:"e12", title:"辛丑上元春鬧後記", date:"2021/03/01",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid0a9moptovsv17HGNimBLvx28GVQ8dycvz2rJ3GZskEDU2aSPAZSdGUBnfFfwizUV2l",
+    content:`上元春鬧
+
+沿著落霞而逐漸顯著的燈籠，找尋著步調，在一個逐漸遺棄節慶燈火的城市中，聲嘶力竭，實驗著新舊平衡，實驗著藝術理想，實驗著美的可能。
+
+兩個月前，說要為城市帶來美，又氣多少狂妄，畢竟「美」常常淪為主觀上自爽的說詞，身為一個創作東西的人，不管結果如何，都可以「旁觀人哪裡懂」來糖塞他人，並且說服自己。尤其是強調起思想的作業以來，「美」更是變得不足與外人道也。信念跟現實持續衝突，已經很習慣說起：無可奈何。
+
+然而在側車道上，立著的燈籠，高達十四尺，前後三座，以光相連，形成了短語排比。圖畫高達九尺，宣紙透著燈火，紅橙黃綠藍，多了一層生命力的渲染，紅可以重新命名為光染紅，藍可以是光染藍，黑線與顯像後的紙張原色強烈對比，前擋的紋樣與斗拱，中國結與剪紙，紅色燈籠高高掛著「不畏風雨」與「樂盡天真」，和著鑼鼓旋律，嗩吶弦樂，彷彿與車聲宣戰「真實的人在這！」，路上人顏微笑，奔跑舞蹈，哪裡是劇場哪裡是舞台，界分可以忘得徹底，以鬧醒上元沈寂許久的春芽，讓時間與空間，可以一起前行。如此元素，不知道夠不夠編列為一首詩？
+
+喊著「上元節快樂」，苓雅到鹽埕，大街與小巷，拜訪文藝場域，應答著，探出頭來的人們，笑著跟著，逐漸可以相信「美」不再閉鎖於想像之中，那畢竟很真實，有人，有聲音，有氣味，有光與影的變化。在雜亂的，不斷建築高聳，不斷擴充車流，不斷拆毀傳統，不斷增加分立的大荒城市中，幾乎已經成為恐懼的，人與環境的隔絕，人與人的疏離，人與自己的陌生。只相信我們隊伍微小，卻還保有一份驕傲，一份感動，一份愛，在聲色失速之中，成為唯一真實的幻象。
+
+所以，未必需要如此無奈，「美」是帶有可能的，那是把分裂的種種縫合的可能，包含誤解、尷尬、憎惡、夢囈、異常、虛無、飄離、偽裝、卑微、疼痛……，也許接縫笨拙，但終於是完整而能再次溫暖的，為此試著再一次引頸期盼，不只下一次上元的月滿，還有日常每一天光的潛在。
+
+一路上，風與震動撕破了圖繪與字畫，宣紙畢竟很薄弱，禁不起強風與太顛簸的道路，但破了就再補吧，補完了就繼續上路，即使補不了，還是走吧。知道還有很多不足，很多未達成的理想，很多悔恨與不安、懷疑與恐懼，但路還在前方，可能性還未枯竭，那就繼續走吧，繼續度量與世界的距離，繼續理解這個天地，繼續活著，繼續相信自己仍有以美祝福他人的潛力。
+
+感謝這次參與的朋友們，尤其一起苦力製作燈籠的夥伴們，今天依然祝福：願人們皆有堅強的意志，能夠迎愛真實。`},
+
+  {id:"e13", title:"上元雜記04", date:"2021/03/03",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid02E1Yyvy9gX1dADXg43323KQ5WoEiSe9ce1H7obgC5enboQQnquqQyQfR1FsKE48xbl",
+    content:`辛丑上元已過，留下的東西很多已經殘破，唯一完整的也許是記憶，關於在街道上的驕傲，生命力的釋放，在春鬧大字旁很美的月亮。
+
+幾日收拾，將燈籠重新接上了燈，擺置於書店門又，仰頭看著，很多破洞，裂的誇張，但不似瑕疵，更像戰士的標記。
+
+忘記是哪一年開始，對於觀賞，開始將焦點從「觀看的對象」轉移到「觀看的方式」，等到意識到這點時，已經對於多數的展覽感到疲倦，覺得再驚世駭俗的作品，都因為封閉於展場而瀰漫出同種的乏味。
+
+這種想法也許奢侈，卻很真實，所以持續反思：「一般」的展示方式，真的是對「作品」最好的對待方式嗎？
+
+去了青森以後，開始相信藝術的展現不應該被侷限於靜止，藝術應該是跟實存的人在一起，如此藝術會發光，人也會發光。
+
+當然，現在又回到「一般的展示方式」，作品擺在書店，安安靜靜，少了汗水，也少了喧囂，但總是會看著而想起，在街路上行進的記憶，推著的力道、奔跑的喘息、敲擊的樂音，那讓作品多出了一份生動，很直接而深刻，帶著想像的潛力，能夠接近妄想中的文化風景。
+
+近期都會將作品擺在門又，如果有機會來欣賞的人，不管有沒有參加上元春鬧，都希望可以試著在腦中構境出路上行燈的景象。不止為作品本身想像，也試著為自己想像，那推的人，光與燈，那更多可能，創造與行動，還有接下去的年復一年……，如此，也許文化真的能從底端蔓延出去，而不依靠政策規定，讓故事豐富，土地扎實，人能驕傲而寫實。`},
+
+  {id:"e14", title:"上元雜記05・作品介紹", date:"2021/03/06",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid02e77ZgWVarv3cBo5tuGkJv6RUfBGjfrae1py2MCLeJoFHTvzo89TBZArE5Ni2d7l",
+    content:`本來應該在開始前介紹的作品，總因為進度的延遲而只好延到事後，這個時代什麼東西都褪色得太快，常常擔心事情過去後馬上就被遺忘，想要一個完整的、脈絡清晰的被理解，已經是件很困難的事了。不管如何，還是希望能夠傳遞更多關於創作的種種，包含創作者們自身的想法，所以近期會公佈一些創作相關的資訊，有機會還請閱覽。
+
+──
+
+【生何歡死何懼】朝露 作
+
+邊題：敢存遠誌，敢為人先。若你心有熱血，可敢揮棒齊天。踏南天碎凌霄，生何歡死何懼。
+
+一、初生之犢不畏虎。繪畫時，希望新的一年，能喚醒每個透過我的畫作，也看見自己內在的孫悟空，無所畏懼的勇敢追求及對想像的解放。
+
+二、透過山海經裡的奇珍異獸提醒與祝福，有巴蛇吞象，見某獸能無憂、開心等意涵，杠官箱能有避瘟疫的祝福，這些約莫是我想給觀畫者的祝福。
+
+──
+
+【思想的祝福】舍弱 作
+
+邊題：痛楚、拉扯、破碎，現實與理想的碰撞、矛盾，以及所有想堅持的。只能選擇，對於那些被遺落的，只能深深說著對不起，繼續走向自己相信的路，帶著撕裂般痛苦走向成長，只因我相信那些被放棄的選擇並非放棄，而是自由，以及對自己的祝福。最深的祝福，使毛蟲能蛻變為飛蝶，使寒蟬能甦醒而鳴叫。最深的祝福，是對重生的期盼，期盼著我們能享受痛苦，撕裂後脫殼，羽化，或飛翔，或爬行，或游水。就這麼一次次循環，邁向完整，直至，死亡。──辛丑年元宵前夕於返家途中真切感觸痛苦所發。
+
+正月十五，上元節，是天官賜福的日子，「祝福」是上元節中，不可獲缺的元素。來到新的一年，更有「一元復始，萬象更新」一句話，我想以「思想的祝福和自我的重生」作為主題來創作。首先整個畫面可以看到70格畫著人頭的格子，那上面的人是經過挑選的，是我認為在我生命中佔有影響力的人，或是我好奇他的思想、作為，想進一步探索他的偉人們。對於他們的好奇與感動是對於我自己思想上的祝福，透過閱讀他們，得以更完整自己的思維，堅強自己的心志。而我將他們的眼睛替換掉，成為我的眼睛，只因我相信眼睛能傳達出一個人的靈魂、一個人的內心深處，所以這象徵著他們將成為我靈魂的一部分，幫助我完整自己。
+
+燈籠中央有個明顯的圖案，那是羅丹的兩座雕像：行走的人和沈思者組合而成的剪影，旨在代表我希望自己完成的自我，是從沈思者蛻變為行動的人，是個思行合一，在兩方面都達成一定成就的人；我更以拼貼的方式填滿圖像，如蛋殼一般的質感，希望傳達出赫曼・赫塞於《徬徨少年時》所說：「一隻鳥要誕生，必要先摧毀他的世界。」以必經的痛苦、毀滅砥礪自己面對成長的態度，在蛋殼的束縛下，重生。`},
+
+  {id:"e15", title:"上元雜記06・作品介紹（續）", date:"2021/03/07",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid02jh952b9oVgTbin2yJjRCXCizty4n97hhxkjKWwZ3hveZqn4NxvdAKTieX6TznBuVl",
+    content:`【大儺】ame 作
+
+邊題：甲作食杂，胇胃食虎，雄伯食魅，騰簡食不祥，攬諸食咎，伯奇食夢，強梁、祖明共食，磔死寄生，委隨食觀，錯斷食巨，窮奇、騰根共食蠱。
+
+以《後漢書・禮儀志》中對大儺儀式的敘述做想像，描繪出驅鬼儀式中藉由百二十侲子合倡鬼歌所具現化的力量在後方支持著方相氏率領十二鬼神食盡一切惡鬼的場景。
+
+雖說想像是虛假的，但想像力最豐富的不也同時是生活最真實的人嗎？所以，今夜我們驅鬼，驅逐潛伏在城市中蒙蔽人們想像力的瘴氣。今夜我們也當鬼，當城市人眼中搗亂秩序的鬼。魑魅魍魎快跑吧，十二鬼神要來了。女不急去，後者為糧！願你我能夠在去除蒙蔽之物後，取回想像的能力。
+
+──
+
+【道的海】佚軒 作
+
+邊題：無法僅以文字呈現（草書寫太魯閣族曲）
+
+哪裡的海都存在著道，海之子不可以忘記。那由超越極限的自然所述說，不需要寫實，也無法寫實，變化不斷在發生，月、海、石，各自各自時間，若在其中，人無法也不需要偉大。
+
+──
+
+【高雄上元燈綵圖】佚軒 作
+
+邊題：東風夜放花千樹。更吹落、星如雨。寶馬雕車香滿路。鳳簫聲動，玉壺光轉，一夜魚龍舞。蛾兒雪柳黃金縷。笑語盈盈暗香去。眾裏尋他千百度。驀然回首，那人卻在，燈火闌珊處。
+
+18年雪中，在金澤看到邱志傑的個展，裡頭展出一幅圖，名為「邱註上元燈綵計劃」，那時候第一次為風情畫所吸引，別於注重個人氣質的肖像畫，「人群」透露出另一種美，不是熱鬧，而是文化流長的韻味。
+
+後來有一天，朋友跟我說台北也有一處人的風景，我興奮地問是什麼，他說是台北橋的「機車瀑布」。不知道為何，總覺得悵然若失，如果這就是一個城市的「人的風景」，那到底應該驕傲，還是應該慚愧，慚愧「便利性」凌駕於創造美的能力，正如路不再屬於人行，而是車行。
+
+所以決定畫一幅完全的理想風景，把所有的期待、怨懟、夢囈、憤恨、愛惜、祝福都噴灑都消化的風景，那便是書店附近的大路終於在上元一天能還給人的風景。在那裡，街上人們提著各式燈籠，伴隨著傳統的技藝、美術，舞龍燈與鯉魚燈、盒仔獅與福建獅、七爺與八爺、客家藍衫與漢代楚服、跑旱船與踩高蹺、十二婆姐與三太子、彌勒佛與土地公、兩艘王船點著燈，滿載的不是除瘟的神靈，而是美與祝福的心情。
+
+讓理想更膨大吧，不要怕被別人說好高騖遠。肉身如此渺小但夢想可以浩瀚，所以把書店設計的燈籠也畫上去，不是三座，而是綿延不斷的一座接著一座，燕仔尾頂到雙龍戲塔，驕傲的字句，巨大的鼓，舉著竿燈，人們跳著舞，踩踏著街道，到處閃亮著的除了燈籠還有笑容。在此看不見任何汽車與招牌，終於成為主角的是「人群」，也是每個個人的力量，沒有便利性和機械性，只有緣與緣的相遇，一夜魚龍舞，夢想著如此上元。
+
+今天外視不成的，但藉由內視可以把它畫出來，如此希冀的風情畫，傳遞出去，成為信念之人的可能性，也許有一天也會成為寫實畫吧。十年、三十年、一百年……，燈火傳遞，上元燈綵，美麗又驕傲地一年又一年，在這座城市，這片土地，貫穿世代的記憶裡。`},
+
+  {id:"e16", title:"關於上元・終", date:"2021/03/11",
+    url:"https://www.facebook.com/semishigurebooks/posts/pfbid0N8MiftiG9mzRDjKaxPk6728GvgfDVF69f1nMQxN5eeiBVQK31tgUemoM99R6wyaDl",
+    content:`驚蟄已過，很快就是清明了。爛在家裡一陣，突然意識到下的節慶在背後催促，既是期盼又是焦慮。回首向來，上元的經驗確實寫實了不少揉雜的思緒，看著從冬至以後開始的思考軌跡，很多的提問，很多的自答，但到底實踐能夠檢驗多少語言的真假？狂妄與自棄、真實領悟與假裝釋然、寄託與拒絕等待、信仰與虛華、無知盜用與切身拾獲……，不知道，不知道，不敢太快下結論，所以還是繼續問著：
+
+── 把一個被過於「簡單化」而顯得「落伍」的藝術形式重新理論化、複雜化，究竟只是使得民藝更遠離人們，還是讓民藝多了個可以回歸於人手上的可能？（關於上元01）
+── 「祝福」在這個時代是不是開始失去了意義，我們還有機會找回它的價值嗎？（關於上元02）
+── 那屬於人類從來不該被遺棄的「創造力」，今天還在我的手上嗎？
+── 關於那分裂卻不自知的審美，該如何重新整合？如何開始能看見差異的個人？如何找到量化下的獨一無二的生存方式？
+── 到底，我們離美的社會是更近了？還是更遠了呢？
+── 一直在掙扎的問題有一：就是文化的界線到底在哪？（關於上元04）
+── 然而，什麼才是這個文化脈絡下共同的精神？（關於上元05）
+
+辛丑年上元結束，春天已來，將美與祝福的題目收到又袋裡，人們各自回到各自的日常，工作與上學，但名為「如何度量自己與世界之間距離」的題目依然在耳邊滴滴咕咕。畢竟，我們在一個井裡，即使掙脫出去看見了大海，也得再建造一個井，以安放自己。
+
+待二月二龍抬頭以後，就是百五寒食與三月三上巳，時間確實存在著，真實地存在著。`}
+];
+// BUILD:XINZHOU_ESSAYS_END
+
+// 辛丑上元 共同創作者
+// BUILD:XINZHOU_COLLAB_START
+const XINZHOU_COLLAB = [
+{name:"龔育誼",title:"",content:`總算熬到了活動當天，直到最後一刻都還拿著鑽子、梯子和大家鏗鏗誆誆地，一點也沒趕上表定時間，在六點半才總算出發。鼓聲低鳴開道，鑼鈸鏗鏘，最後嗩吶聲一飛衝天，如箭矢般劃開了空氣，抽走我們與周遭事物之間的連貫性，形成了一道看不見的結界，讓整個行進隊伍像是一條大魚般在街上開始游動。當我跟著音樂洪流將吸入的空氣藉由震動又腔中的嗩吶吹嘴發出巨響，而那聲巨響又匯入音樂洪流中的那一刻，我終於感覺自己屬於這個在街上推著巨大花燈的隊伍了。鳳簫聲動，玉壺光轉，一夜魚龍舞。一切如在夢中進行，腳下不覺疲勞，精神像是被打了雞血似的亢奮，出發前的懷疑與不安被音樂及燈光麻醉，只能仰望著高聳的花燈，走路，和對著路人大聲祝福。`},
+
+{name:"謝廷威",title:"以美拓展十七年人生對城市的夢想",content:`因為喜歡創作的緣故，我參加了節‧一元計畫。原本是想讓自己多創作一點，同時多思考、多實踐一點，那時的我相信不斷的創造能夠使自己成長。
+
+經過了一兩次活動，漸漸的，我發現自己的態度有所轉變，我慢慢地，建築出了自己的信仰。
+
+身為一個高中生，我在創作初期遇到課業與活動失衡的狀態，在高一的第一次段考大大挫敗。在那之後，重陽節的活動上，我在風箏上畫了切・格瓦拉的頭像，期許自己發起一場「對自己的革命」。到了上元，我開始在社群書寫、分享活動大大小小的事，想要以文字的力量產生影響，讓周遭的人開始面對所謂文化、所謂藝術、所謂生命、以及所謂「一位高中生的夢想」。
+
+我因此多了一個創作的動力，想在節慶時刻，讓高雄的街道有其無可取代的人文美景，一群人推著自己做的燈籠，充滿著笑容，在夜空下點亮城市。
+
+不只是想讓城市美麗，我在創作的同時，也在對「身為台灣人這件事」做更進一步的探索。生活只有課業、升學、工作、賺錢的都市小孩，要如何訴說自家的故事、家鄉的故事？我發現自己對家鄉的印象是空白的，為此，我在書房的牆上寫下「找尋文化」四字，在活動中期盼能夠更溯源找尋這片土地的文化，甚至是建立新的文化秩序。
+
+創作著，原本小小的創作的渴望，轉變成了一種信仰，一種相信創作能慢慢改變世界的信仰。經過了一年，我希望這股力量能夠繼續擴大，期望有更多人能夠共同參與，共同感動，我想讓街道充滿令人感動的畫面，並邀請正在閱讀的你，一起成為有意識的，美的使者。`},
+
+{name:"朝露",title:"書店帶來的滋養",content:`人生進入下半場的我，對於書店的成立，覺得是件非常可貴的事。精神文化的糧食是看不見的信仰，而誠如小王子所說，看不見的最珍貴。所以抱持著學習與協助的態度，支持這份理念。書店第一年決定開啟節一元的創作，以看見這塊土地的文化。雖認同這樣的概念，但創作離我非常遙遠，節慶文化亦是，沒有豐厚的知識基底，也沒有美學創作的概念，卻和書店一起走了一年。
+
+這一年來，我與父母和孩子三代間有著微妙的變化，個人在琴、書、畫方面多了一份堅持而稍有成長。書店的「節‧一元」活動，認識人為何要調節、產生節慶之原由。也是一種尋根，重新認識「我是誰？」的旅程並與過去的自己相遇，同時發現與父母連結彼此生命的臍帶開始微微發光，不再只是日常的問候，而多了更多話題。
+
+平日裡，繪畫的學習只是一種藝術的素養，亦僅臨摹且有老師在旁可詢問繪畫技巧，有繪畫能力但從沒嘗試自行創作。然而今年上元節，花了近一週，竟然完成了200公分高的燈籠畫作，有不受制約的孫悟空、不可思議的山海經、並穿插著老鼠娶親，三公尺高的燈籠點亮時，真的好美，推著燈籠在城市中行走，喊著元宵節快樂，為彼此祈福，今年的元宵節是我生命中最美的一篇，我相信亦為高雄這座城市增添美學風景，有著文化的流轉。
+
+一路下來，中秋、七夕、中元、下元、上元、重陽、清明、端午……父母成了我在創作過程諮詢的活字典，孩子也參與成年禮七夕祭典，在這一年因為書店節‧一元，微妙串起三代間的互動關係，冬至立下練月琴的九九消寒圖也自律地完成，包含與夥伴互相學習，皆成為生活中最溫暖的實踐。`}
+];
+// BUILD:XINZHOU_COLLAB_END
+
+const XINZHOU_BA = `作為書店店員，過程中常有人會問「你們」是什麼？
+
+但參加成員大多不是書店成員，讓我常常找不到回答方式，就胡亂說「就認識的」、「就以前朋友」、「算志同道合的人」，回想起來，確實沒有一個框架能夠安置這樣一群曾經合作的人。發起活動時過於單純，想要佚名地像是千年來在鄉野中傳唱的詩歌，誰也不知道創作者是誰，回到節的精神。但如今個人主義高漲，重視姓名帶來的聲望功能，對佚名的詩意也只能背地裏夢囈半斤，關於那樣一個藝術回歸人人手上，不受姓名牽拖，不被功用綑綁的時代，還是離得好遠好遠。
+
+試圖讓書店擁有地緣的意義，只要存在於「空間」就有機會一起共事，所以邀約就是又頭的承諾罷了，沒有契約的拘束，也沒有過高的門檻，參與和退出，來來去去。也或許成敗皆在此，因為沒有穩定要負擔的團隊，不用諂媚商業、委曲求全，卻也少了一份長久的目標，無法共創經濟的立足點，也就弱化了時代的話語權。
+
+對於書店是什麼？蟬雨越讀可以做為一個團隊名嗎？還是僅作為一處空間，負責醞釀事件，和讓事件發生？
+
+累積了這樣的文件，讓書店經歷這樣的事件，混亂中還在摸索答案。但人們如此相聚，付出與協力，雪泥鴻爪，回首向來，確實難得。最終還是得好好地感謝，這一年一起有過製作的每個獨立的名字：謝廷威、朝露、楊詠欣老師、龔育誼、歐子玄、王康峻、洪歆婷、劉姿妤、謝子秦、黃柏淯、林政諺、劉大寬、孫皓廷、劉翊辰、張凱婷、賴又睿、賴妍希、鄭皓允、梁倍滏、梁倍逢、曾瓘淇、楊潔琳、陳慧升……。
+
+同時感謝所有曾經參與的人們，不管只是隨意相行，是挑根竹竿或敲聲鑼鼓，對我而言都是難能可貴的相遇，都是支撐「節」未來亦有實現一天的動力。也祝福任何未來可能會發生的，不管是關於「節」，還是更多的可能，皆能成為建構更美時代的事件，持續挑戰與展演。由衷感謝讀到這裡，期待下次相遇。
+
+──逸軒`;
+
+</script>
+
+<!-- ═══ 辛丑 JS ═══ -->
+<script src="shared.js"></script>
+<script>
+// ── 辛丑上元 Page ──────────────────────────────────────────────────────────
+let xzInited = false;
+let xzCarIdx = 0;
+let xzCarTimer = null;
+
+
+function initXzPage() {
+  if (!xzInited) {
+    xzInited = true;
+    initXzCarousel();
+    renderXzEssayList();
+    renderXzCollabList();
+    renderXzBa();
+    if (XINZHOU_ESSAYS.length) openXzEssay(0);
+    if (XINZHOU_COLLAB.length) openXzCollab(0);
+    initXzArtGallery();
+  }
+}
+
+function initXzCarousel() {
+  const wrap = document.getElementById('xz-carousel-wrap');
+  if (!wrap || XINZHOU_PHOTOS.length === 0) return;
+  const shuffled = [...XINZHOU_PHOTOS].sort(() => Math.random() - 0.5);
+  const picks = shuffled.slice(0, Math.min(6, shuffled.length));
+  picks.forEach((fname, i) => {
+    const div = document.createElement('div');
+    div.className = 'xz-cs-slide ' + (i === 0 ? 'xz-cs-active' : 'xz-cs-inactive');
+    const img = document.createElement('img');
+    img.src = 'assets/歷年上元照片/辛丑上元照片/' + fname;
+    img.className = 'w-full h-full object-cover';
+    img.alt = '辛丑上元照片';
+    div.appendChild(img);
+    wrap.insertBefore(div, wrap.firstChild);
+  });
+  const dotsWrap = document.getElementById('xz-cs-dots');
+  picks.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = i === 0 ? 'w-6 h-2 rounded-full bg-amber-400 transition-all' : 'w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-all';
+    dot.onclick = () => xzGoSlide(i);
+    dotsWrap.appendChild(dot);
+  });
+  xzCarTimer = setInterval(() => xzGoSlide((xzCarIdx + 1) % picks.length), 4000);
+}
+
+function xzGoSlide(n) {
+  const slides = document.querySelectorAll('.xz-cs-slide');
+  const dots = document.querySelectorAll('#xz-cs-dots button');
+  slides.forEach((s, i) => { s.className = 'xz-cs-slide ' + (i === n ? 'xz-cs-active' : 'xz-cs-inactive'); });
+  dots.forEach((d, i) => { d.className = i === n ? 'w-6 h-2 rounded-full bg-amber-400 transition-all' : 'w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-all'; });
+  xzCarIdx = n;
+  clearInterval(xzCarTimer);
+  const len = document.querySelectorAll('.xz-cs-slide').length;
+  xzCarTimer = setInterval(() => xzGoSlide((xzCarIdx + 1) % len), 4000);
+}
+
+function renderXzEssayList() {
+  const list = document.getElementById('xz-essay-list');
+  if (!list) return;
+  list.innerHTML = XINZHOU_ESSAYS.map((e, i) =>
+    `<div class="xz-essay-list-item" id="xz-eli-${i}" onclick="openXzEssay(${i})">
+       <div class="font-medium leading-snug">${e.title}</div>
+       <div class="text-[0.75rem] text-stone-400 mt-0.5" style="font-family:'Noto Sans TC'">${e.date}</div>
+     </div>`
+  ).join('');
+}
+
+function renderXzParagraphs(content, essayList) {
+  const paras = content.split(/\n\n+/).map(p => p.trim()).filter(p => p);
+  return paras.map(p => {
+    // Pure separator line (only dashes) → skip
+    if (/^[──—─]+$/.test(p)) return '';
+    // Quote line starting with ── or ——
+    if (p.startsWith('──') || p.startsWith('——')) {
+      const body = p.replace(/^[──—─]+\s*/, '');
+      // Check if it contains a citation like （關於上元0X）
+      const citeMatch = body.match(/（(關於上元\d+|美的覺醒｜關於上元\d+)）$/);
+      if (citeMatch && essayList) {
+        const citeTitle = citeMatch[1];
+        const targetIdx = essayList.findIndex(e => e.title === citeTitle || e.title.endsWith(citeTitle));
+        const citeFull = body.replace(citeMatch[0], '');
+        const citeLink = (targetIdx >= 0 && citeTitle !== '關於上元05')
+          ? `<a class="xz-quote-cite-link" onclick="openXzEssay(${targetIdx})" href="#" title="跳轉至${citeTitle}">（${citeTitle}）</a>`
+          : `<span class="xz-source">（${citeTitle}）</span>`;
+        return `<div class="xz-quote">${citeFull.replace(/\n/g,'<br>')}<span class="xz-quote-closing">❞</span><span class="xz-source">　　${citeLink}</span></div>`;
+      }
+      // Extract trailing source citation 《...》 at end
+      const srcMatch = body.match(/[（《]([^）》]+)[）》]\s*$/);
+      if (srcMatch) {
+        const text = body.slice(0, body.lastIndexOf(srcMatch[0])).trimEnd();
+        const src = srcMatch[0];
+        return `<div class="xz-quote">${text.replace(/\n/g,'<br>')}<span class="xz-quote-closing">❞</span><span class="xz-source">　　——${src}</span></div>`;
+      }
+      return `<div class="xz-quote">${body.replace(/\n/g,'<br>')}<span class="xz-quote-closing">❞</span></div>`;
+    }
+    // 【作品名】作者 作 → small heading
+    if (/^【[^】]+】/.test(p) && /作$/.test(p.split('\n')[0])) {
+      const lines = p.split('\n');
+      const heading = lines[0];
+      const rest = lines.slice(1).join('\n');
+      return `<h4 class="font-semibold text-stone-700 text-[0.95rem] mt-5 mb-1 border-l-2 border-[#C8102E] pl-2">${heading}</h4>${rest ? `<p>${rest.replace(/\n/g,'<br>')}</p>` : ''}`;
+    }
+    // Numbered headings or 【 】 headings
+    if (/^[一二三四五六七八九十]+[、\.\s]/.test(p)) {
+      return `<p class="font-semibold text-stone-800 mt-3 leading-[2.1]">${p.replace(/\n/g,'<br>')}</p>`;
+    }
+    return `<p>${p.replace(/\n/g,'<br>')}</p>`;
+  }).join('');
+}
+
+function openXzEssay(idx) {
+  document.querySelectorAll('#xz-essay-list .xz-essay-list-item').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  const e = XINZHOU_ESSAYS[idx];
+  const body = document.getElementById('xz-essay-body');
+  const html = renderXzParagraphs(e.content, XINZHOU_ESSAYS);
+  const urlHtml = e.url ? `<div class="mt-6 pt-4 border-t border-stone-100">
+      <a href="${e.url}" target="_blank" rel="noopener" class="xz-source-link">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        查看原始貼文
+      </a>
+    </div>` : '';
+  body.innerHTML = `
+    <h3 class="font-bold text-stone-800 text-xl mb-1">${e.title}</h3>
+    <p class="text-sm text-stone-400 mb-5" style="font-family:'Noto Sans TC'">${e.date}</p>
+    ${html}${urlHtml}`;
+  body.scrollTop = 0;
+}
+
+function renderXzCollabList() {
+  const list = document.getElementById('xz-collab-list');
+  if (!list) return;
+  list.innerHTML = XINZHOU_COLLAB.map((c, i) =>
+    `<div class="xz-essay-list-item" id="xz-cli-${i}" onclick="openXzCollab(${i})">
+       <div class="font-medium leading-snug">${c.title || c.name}</div>
+       ${c.title ? `<div class="text-[0.75rem] text-stone-400 mt-0.5" style="font-family:'Noto Sans TC'">${c.name}</div>` : ''}
+     </div>`
+  ).join('');
+}
+
+function openXzCollab(idx) {
+  document.querySelectorAll('#xz-collab-list .xz-essay-list-item').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  const c = XINZHOU_COLLAB[idx];
+  const body = document.getElementById('xz-collab-body');
+  const paras = c.content.split(/\n\n+/).map(p => p.trim()).filter(p => p);
+  const html = paras.map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+  const heading = c.title ? `<h3 class="font-bold text-stone-800 text-xl mb-1">${c.title}</h3><p class="text-sm text-stone-400 mb-5" style="font-family:'Noto Sans TC'">${c.name}</p>` : `<p class="text-sm text-stone-400 mb-5" style="font-family:'Noto Sans TC'">${c.name}</p>`;
+  body.innerHTML = heading + html;
+  body.scrollTop = 0;
+}
+
+function renderXzBa() {
+  const el = document.getElementById('xz-ba-content');
+  if (!el) return;
+  const paras = XINZHOU_BA.split(/\n\n+/).map(p => p.trim()).filter(p => p);
+  el.innerHTML = paras.map(p => {
+    if (/^[──—]+逸軒/.test(p)) {
+      return `<p class="leading-[2.2] text-stone-600 mb-4 text-right" style="font-family:'Noto Sans TC'">${p.replace(/\n/g,'<br>')}</p>`;
+    }
+    return `<p class="leading-[2.2] text-stone-700 mb-4">${p.replace(/\n/g,'<br>')}</p>`;
+  }).join('');
+  const children = Array.from(el.children);
+  children.forEach(c => c.classList.add('reveal'));
+  requestAnimationFrame(() => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          children.forEach((c, i) => setTimeout(() => c.classList.add('visible'), i * 130));
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    obs.observe(el);
+  });
+}
+
+
+function initXzArtGallery() {
+  const track = document.getElementById('xz-art-gallery-track');
+  if (!track) return;
+  const outer = track.parentElement;
+  let paused = false, pos = 0, halfW = 0;
+  outer.addEventListener('mouseenter', () => { paused = true; });
+  outer.addEventListener('mouseleave', () => { paused = false; });
+  function computeHalfW() {
+    const figs = Array.from(track.querySelectorAll('.ys-gallery-figure')).slice(0, 12);
+    if (!figs[0] || figs[0].offsetWidth === 0) return 0;
+    const gap = parseFloat(getComputedStyle(track).gap) || 16;
+    return figs.reduce((s, f) => s + f.offsetWidth, 0) + gap * 12;
+  }
+  function tick() {
+    if (!paused) {
+      if (!halfW) halfW = computeHalfW();
+      if (halfW > 0) {
+        pos += 0.55;
+        if (pos >= halfW) pos -= halfW;
+        track.style.transform = 'translateX(-' + pos.toFixed(2) + 'px)';
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+function openXzArtLightbox(e) {
+  const img = e.target.closest('img');
+  if (!img || !img.dataset.src) return;
+  document.getElementById('xz-art-lightbox-img').src = img.dataset.src;
+  document.getElementById('xz-art-lightbox-img').alt = img.alt;
+  document.getElementById('xz-art-lightbox').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeXzArtLightbox() {
+  document.getElementById('xz-art-lightbox').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', initXzPage);
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+properties:
+  note.name:
+    displayName: position
+views:
+  - type: table
+    name: 表格
+    order:
+      - file.name
+      - date
+      - author
+      - title
+      - name
+      - note.note
+      - 日期
+      - 名稱
+      - datetime
+      - id
+      - loc
+      - seq
+      - url
+    sort:
+      - property: file.name
+        direction: ASC
+      - property: title
+        direction: DESC
+      - property: date
+        direction: ASC
+      - property: datetime
+        direction: ASC
+      - property: 名稱
+        direction: ASC
+    columnSize:
+      note.名稱: 89
+      note.id: 82

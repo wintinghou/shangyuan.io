@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>節・一元｜蟬雨越讀文化實驗計畫</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* ── Hero ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      width: 100%; height: 100vh;
+      overflow: hidden;
+    }
+    .hero-bg {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+      animation: hero-pan 28s ease-in-out infinite alternate;
+    }
+    @keyframes hero-pan {
+      0%   { object-position: center top; }
+      100% { object-position: center bottom; }
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 55%;
+      background: linear-gradient(transparent, rgba(0,0,0,0.82));
+      z-index: 5; pointer-events: none;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-bottom: 14vh;
+      z-index: 10; pointer-events: none;
+    }
+    .hero-title {
+      text-align: center; color: #fff;
+      opacity: 0; transition: opacity 1.8s ease;
+    }
+    .hero-title.on { opacity: 1; }
+    .hero-title__main {
+      display: block;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 700; letter-spacing: 0.15em;
+      font-family: 'Noto Serif TC', serif;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+    }
+    .hero-title__sub {
+      display: block; margin-top: 1rem;
+      font-size: clamp(0.72rem, 1.4vw, 0.92rem);
+      font-weight: 400; letter-spacing: 0.35em;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%); z-index: 20;
+      opacity: 0; transition: opacity 1.4s ease;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    }
+    .scroll-hint.on { opacity: 0.4; }
+    .scroll-hint__bar {
+      width: 1px; height: 52px;
+      background: linear-gradient(#fff 40%, transparent);
+      animation: drop 2s ease-in-out infinite;
+    }
+    .scroll-hint__label {
+      font-size: 0.65rem; letter-spacing: 0.3em;
+      color: #fff; font-family: 'Noto Sans TC', sans-serif; font-weight: 300;
+    }
+    @keyframes drop {
+      0%   { transform: translateY(-26px); opacity: 0; }
+      35%  { opacity: 1; }
+      100% { transform: translateY(26px); opacity: 0; }
+    }
+
+    /* ── Reader ─────────────────────────────────────── */
+    .reader-wrapper { position: relative; }
+    .reader-pin {
+      position: sticky; top: 64px; height: calc(100vh - 64px);
+      overflow: hidden; background: #0a0a0a;
+    }
+    .reader-stage { position: absolute; inset: 0; overflow: hidden; }
+    .spread {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px 32px;
+      background: radial-gradient(ellipse at center, #1c1c1c 0%, #0a0a0a 100%);
+      will-change: transform;
+    }
+    .spread-inner {
+      display: flex; align-items: stretch; gap: 0;
+      box-shadow: 0 6px 40px rgba(0,0,0,.75), 0 20px 80px rgba(0,0,0,.5);
+    }
+    .page-img { display: block; }
+
+    /* ── 漂浮頁碼 ──────────────────────────────────── */
+    #pageCounter {
+      position: absolute; top: 16px; right: 20px; z-index: 10;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      padding: 4px 10px; border-radius: 999px;
+      opacity: 0; transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    /* ── 進度條 ─────────────────────────────────────── */
+    #navProgress {
+      height: 2px; background: #ede9e0;
+      opacity: 0; transition: opacity 0.4s ease;
+    }
+    #progressFill {
+      height: 100%; background: #C8102E;
+      transition: width 0.3s ease; width: 0%;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION（上元春鬧格式）═══ -->
+<nav class="nav-sans fixed top-0 left-0 right-0 z-50 bg-[#FDFBF7] border-b border-stone-200 shadow-sm" id="main-nav">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo -->
+      <a href="../index.html" class="flex items-center" aria-label="首頁">
+        <img src="../assets/上元春鬧活動標準字（黑）.png"
+             alt="上元春鬧" class="h-9 w-auto object-contain max-w-[140px]"
+             onerror="this.outerHTML='<span class=&quot;text-lg font-bold text-stone-900&quot;>上元春鬧</span>'">
+      </a>
+
+      <!-- Desktop menu -->
+      <div class="hidden md:flex items-center gap-7 text-[0.9rem]">
+        <a href="../2027.html" class="text-[#C8102E] font-medium hover:text-[#a00d24] transition-colors" style="font-family:'Noto Sans TC'">丁未計畫書</a>
+        <div class="relative ml-2" id="dd-wrapper">
+          <button onclick="toggleDD()" class="flex items-center gap-1 hover:text-[#C8102E] transition-colors text-stone-700">
+            歷年活動
+            <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="ddmenu" id="dd-menu">
+            <button onclick="location.href='../2021.html'">2021 辛丑上元</button>
+            <button onclick="location.href='../2022.html'">2022 壬寅上元</button>
+            <button onclick="location.href='../2023.html'">2023 癸卯上元</button>
+            <button onclick="location.href='../2024.html'">2024 甲辰上元</button>
+            <button onclick="location.href='../2025.html'">2025 乙巳上元</button>
+            <button onclick="location.href='../2026.html'">2026 丙午上元</button>
+          </div>
+        </div>
+        <div class="relative" id="dd2-wrapper">
+          <button onclick="toggleDD2()" class="flex items-center gap-1 hover:text-[#C8102E] transition-colors text-stone-700">
+            年秊・刊物
+            <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div id="dd2-menu">
+            <button onclick="location.href='index.html'" style="color:#C8102E;font-weight:500">節・一元</button>
+            <button onclick="location.href='../zine/index.html'">癸卯集</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-stone-700 hover:text-[#C8102E]" aria-label="選單">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-nav">
+    <div class="px-4 py-4 border-t border-stone-100 bg-[#FDFBF7]">
+      <div class="mb-2 pb-2 border-b border-stone-100 pl-2">
+        <button onclick="location.href='../2027.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-[#C8102E] font-medium hover:text-[#a00d24]">丁未上元計畫書</button>
+      </div>
+      <p class="py-2 text-xs text-stone-400 tracking-widest">歷年活動</p>
+      <div class="space-y-0.5 pl-2">
+        <button onclick="location.href='../2021.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2021 辛丑上元</button>
+        <button onclick="location.href='../2022.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2022 壬寅上元</button>
+        <button onclick="location.href='../2023.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2023 癸卯上元</button>
+        <button onclick="location.href='../2024.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2024 甲辰上元</button>
+        <button onclick="location.href='../2025.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2025 乙巳上元</button>
+        <button onclick="location.href='../2026.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2026 丙午上元</button>
+      </div>
+      <p class="py-2 text-xs text-stone-400 tracking-widest mt-2">年秊・刊物</p>
+      <div class="space-y-0.5 pl-2">
+        <button onclick="location.href='index.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-[#C8102E] font-medium">節・一元</button>
+        <button onclick="location.href='../zine/index.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">癸卯集</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 閱讀進度條 -->
+  <div id="navProgress">
+    <div id="progressFill"></div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <img class="hero-bg" src="svgs/節一元_1.svg" alt="">
+  <div class="hero-overlay">
+    <div class="hero-title" id="heroTitle">
+      <span class="hero-title__main">節・一元</span>
+      <span class="hero-title__sub">蟬雨越讀・文化實驗計畫</span>
+    </div>
+  </div>
+  <div class="scroll-hint" id="scrollHint">
+    <div class="scroll-hint__bar"></div>
+    <span class="scroll-hint__label">向下捲動</span>
+  </div>
+</section>
+
+<!-- ═══ READER ═══ -->
+<div class="reader-wrapper" id="readerWrapper">
+  <div class="reader-pin">
+    <div id="pageCounter">1 / 16</div>
+    <div class="reader-stage" id="readerStage"></div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER（上元春鬧格式）═══ -->
+<footer class="bg-stone-900 text-stone-400 py-16">
+  <div class="max-w-4xl mx-auto px-4 flex flex-col items-center text-center">
+    <img src="../assets/上元春鬧活動標準字（白）.png" alt="上元春鬧"
+         class="h-12 w-auto object-contain mb-5 opacity-80"
+         onerror="this.outerHTML='<p class=\'text-xl font-bold text-stone-200 mb-5\'>上元春鬧</p>'">
+    <p class="text-stone-500 text-sm mb-2" style="font-family:'Noto Sans TC'">保留傳統脈絡，注入當代靈魂</p>
+    <p class="text-stone-600 text-xs mb-8" style="font-family:'Noto Sans TC'">年秊節祭・蟬雨越讀</p>
+    <div class="flex gap-6 mb-8">
+      <a href="https://www.instagram.com/niennien.jieji/" target="_blank" rel="noopener"
+         class="flex items-center gap-2 text-stone-400 hover:text-amber-300 transition-colors text-sm" style="font-family:'Noto Sans TC'">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        年秊節祭 IG
+      </a>
+      <a href="https://www.facebook.com/semishigurebooks/" target="_blank" rel="noopener"
+         class="flex items-center gap-2 text-stone-400 hover:text-blue-300 transition-colors text-sm" style="font-family:'Noto Sans TC'">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        蟬雨越讀 FB
+      </a>
+    </div>
+    <div class="w-full border-t border-stone-800 pt-6 text-xs text-stone-600" style="font-family:'Noto Sans TC'">
+      © <span id="footer-year"></span> 上元春鬧籌備小組 · 年秊節祭
+    </div>
+  </div>
+</footer>
+
+<script src="../shared.js"></script>
+<script>
+// ── 資料 ──────────────────────────────────────────
+const PAGES = [1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31];
+
+// 封面單頁，封面後插入空白左頁（null），其餘兩兩並排 → 16 個 spread
+function buildSpreads() {
+  const s = [[0]];
+  s.push([null, 1]);
+  for (let i = 2; i < PAGES.length; i += 2) {
+    s.push(i + 1 < PAGES.length ? [i, i + 1] : [i]);
+  }
+  return s;
+}
+const SPREADS = buildSpreads();
+const NS = SPREADS.length; // 16
+
+function svgSrc(n) { return `svgs/節一元_${n}.svg`; }
+
+// ── DOM refs ──────────────────────────────────────
+const pageCounter   = document.getElementById('pageCounter');
+const navProgress   = document.getElementById('navProgress');
+const progressFill  = document.getElementById('progressFill');
+let counterTimer    = null;
+const readerWrapper = document.getElementById('readerWrapper');
+const readerStage   = document.getElementById('readerStage');
+
+// ── Wrapper 高度（NS × vh）────────────────────────
+function setWrapperHeight() {
+  readerWrapper.style.height = (NS * window.innerHeight) + 'px';
+}
+setWrapperHeight();
+
+// ── 尺寸計算（SVG 無固有尺寸，需 JS 計算）────────
+const RATIO = 1772 / 2481;
+
+function calcPageSize(count) {
+  const pin    = readerStage.parentElement;
+  const availH = pin.clientHeight - 48;
+  const availW = pin.clientWidth  - (count === 2 ? 32 : 64);
+  const pageW  = availW / count;
+  const wByH   = availH * RATIO;
+  const w      = wByH <= pageW ? wByH : pageW;
+  return { w: Math.floor(w), h: Math.floor(w / RATIO) };
+}
+
+// ── A/B 緩衝 ──────────────────────────────────────
+function makeSpreadEl() {
+  const el = document.createElement('div');
+  el.className = 'spread';
+  return el;
+}
+
+function renderSpread(el, spreadIdx) {
+  const indices = SPREADS[spreadIdx];
+  const count   = indices.length;
+  const { w, h } = calcPageSize(count);
+  el.innerHTML = '';
+
+  const inner = document.createElement('div');
+  inner.className = 'spread-inner';
+
+  indices.forEach(pageIdx => {
+    if (pageIdx === null) {
+      const blank = document.createElement('div');
+      blank.style.cssText = `width:${w}px;height:${h}px;background:#ffffff;`;
+      inner.appendChild(blank);
+      return;
+    }
+    const img = document.createElement('img');
+    img.className = 'page-img';
+    img.alt = '';
+    img.src = svgSrc(PAGES[pageIdx]);
+    img.style.cssText = `width:${w}px;height:${h}px;`;
+    inner.appendChild(img);
+  });
+
+  el.appendChild(inner);
+}
+
+const bufA = makeSpreadEl();
+const bufB = makeSpreadEl();
+readerStage.appendChild(bufA);
+readerStage.appendChild(bufB);
+
+let cur = bufA;
+let nxt = bufB;
+let currentSpread = 0;
+let busy = false;
+
+const DUR  = 380;
+const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+
+// ── UI 更新 ───────────────────────────────────────
+function showCounter(idx) {
+  pageCounter.textContent = `${idx + 1} / ${NS}`;
+  pageCounter.style.opacity = '1';
+  clearTimeout(counterTimer);
+  counterTimer = setTimeout(() => { pageCounter.style.opacity = '0'; }, 3000);
+}
+
+function updateUI(idx) {
+  showCounter(idx);
+  progressFill.style.width = `${((idx + 1) / NS) * 100}%`;
+}
+
+// ── Slide 切換 ────────────────────────────────────
+function slideTo(newIdx, dir, instant) {
+  if (newIdx === currentSpread) return;
+
+  if (instant || busy) {
+    cur.style.transition = 'none';
+    cur.style.transform  = 'translateX(0)';
+    cur.style.opacity    = '0';
+    renderSpread(cur, newIdx);
+    cur.offsetWidth; // force reflow
+    cur.style.transition = `opacity ${DUR}ms ${EASE}`;
+    cur.style.opacity    = '1';
+    currentSpread = newIdx;
+    updateUI(currentSpread);
+    return;
+  }
+
+  busy = true;
+  nxt.style.transition = 'none';
+  nxt.style.transform  = `translateX(${dir > 0 ? 100 : -100}%)`;
+  renderSpread(nxt, newIdx);
+  nxt.offsetWidth;
+
+  cur.style.transition = `transform ${DUR}ms ${EASE}`;
+  nxt.style.transition = `transform ${DUR}ms ${EASE}`;
+  cur.style.transform  = `translateX(${dir > 0 ? -100 : 100}%)`;
+  nxt.style.transform  = 'translateX(0)';
+
+  setTimeout(() => {
+    [cur, nxt] = [nxt, cur];
+    currentSpread = newIdx;
+    updateUI(currentSpread);
+    nxt.style.transition = 'none';
+    nxt.style.transform  = 'translateX(100%)';
+    busy = false;
+  }, DUR);
+}
+
+// ── 捲動進度 → 跨頁索引 ──────────────────────────
+function getScrollSpreadIndex() {
+  const rect = readerWrapper.getBoundingClientRect();
+  const scrolled = Math.max(0, -rect.top);
+  const totalScroll = readerWrapper.offsetHeight - window.innerHeight;
+  if (totalScroll <= 0) return 0;
+  const progress = Math.min(scrolled / totalScroll, 1);
+  return Math.round(progress * (NS - 1));
+}
+
+// ── 主捲動監聽 ────────────────────────────────────
+let ticking = false;
+
+window.addEventListener('scroll', () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    const scrollY = window.scrollY;
+    const vh      = window.innerHeight;
+
+    const readerTop = readerWrapper.offsetTop;
+    const readerH   = readerWrapper.offsetHeight;
+    const inReader  = scrollY >= readerTop - 4 && scrollY < readerTop + readerH - vh + 4;
+
+    if (inReader) {
+      navProgress.style.opacity = '1';
+      const newIdx = getScrollSpreadIndex();
+      if (newIdx !== currentSpread) {
+        const jump = Math.abs(newIdx - currentSpread) > 2;
+        slideTo(newIdx, newIdx > currentSpread ? +1 : -1, jump);
+      }
+    } else {
+      navProgress.style.opacity = '0';
+      pageCounter.style.opacity = '0';
+      clearTimeout(counterTimer);
+    }
+
+    ticking = false;
+  });
+}, { passive: true });
+
+// ── Resize ────────────────────────────────────────
+window.addEventListener('resize', () => {
+  setWrapperHeight();
+  renderSpread(cur, currentSpread);
+});
+
+// ── 初始化 ────────────────────────────────────────
+cur.style.transform = 'translateX(0)';
+nxt.style.transform = 'translateX(100%)';
+renderSpread(cur, 0);
+updateUI(0);
+
+setTimeout(() => document.getElementById('heroTitle').classList.add('on'),  700);
+setTimeout(() => document.getElementById('scrollHint').classList.add('on'), 1700);
+</script>
+
+</body>
+</html>

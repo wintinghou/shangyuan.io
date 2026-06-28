@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>當我們重新談起節</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #000;
+      color: #c8bfb0;
+      font-family: 'Noto Serif TC', Georgia, '宋體', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      flex: 0 0 68%;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-left img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .hero-right {
+      flex: 0 0 40%;
+      margin-left: -8%;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* bottom fade to black */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 28%;
+      background: linear-gradient(transparent, #000);
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* title overlay */
+    .hero-title {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 2.2s ease;
+    }
+    .hero-title.on { opacity: 1; }
+    .hero-title img {
+      height: 68vh;
+      width: auto;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    .scroll-hint.on { opacity: 0.4; }
+    .scroll-hint__bar {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(transparent, #fff 40%, transparent);
+      animation: drop 2s ease-in-out infinite;
+    }
+    @keyframes drop {
+      0%   { transform: translateY(-26px); opacity: 0; }
+      35%  { opacity: 1; }
+      100% { transform: translateY(26px);  opacity: 0; }
+    }
+
+    /* ── TEXT SECTIONS ─────────────────────────────────── */
+    .text-wrap {
+      padding: 8rem 0 7rem;
+      display: flex;
+      justify-content: center;
+    }
+    .text-body { width: min(640px, 88vw); }
+
+    .p {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 1s ease, transform 1s ease;
+      margin-bottom: 2.6rem;
+      font-size: clamp(0.93rem, 1.35vw, 1.06rem);
+      line-height: 2.4;
+      letter-spacing: 0.05em;
+      font-weight: 300;
+      color: #c8bfb0;
+    }
+    .p:last-child { margin-bottom: 0; }
+    .p.on { opacity: 1; transform: none; }
+
+    /* ── IMAGE CAROUSEL (041) ──────────────────────────── */
+    .carousel-041 { margin: 2rem 0 4rem; overflow: hidden; height: 52vh; }
+    .carousel-041 img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      animation: pan-041 26s ease-in-out infinite alternate;
+    }
+    @keyframes pan-041 {
+      0%   { object-position: left center; }
+      100% { object-position: right center; }
+    }
+
+    /* ── IMAGE FULL (051) ───────────────────────────────── */
+    .full-wrap { padding-top: 1rem; padding-bottom: 0; }
+    .full-img {
+      opacity: 0;
+      transition: opacity 3s ease;
+    }
+    .full-img.on { opacity: 1; }
+    .full-img img { width: 100%; display: block; }
+
+    /* ── BACK / NEXT NAV (固定底部) ────────────────────── */
+    .back-nav {
+      position: fixed;
+      bottom: 1.6rem;
+      left: 1.8rem;
+      z-index: 100;
+      transition: opacity 0.6s ease;
+    }
+    .next-nav {
+      position: fixed;
+      bottom: 1.6rem;
+      right: 1.8rem;
+      z-index: 100;
+      transition: opacity 0.6s ease;
+    }
+    .back-nav.scroll-hidden,
+    .next-nav.scroll-hidden { opacity: 0; pointer-events: none; }
+    .back-btn, .next-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #c8bfb0;
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .back-btn:hover, .next-nav-btn:hover { opacity: 1; }
+    .back-btn span, .next-nav-btn span { font-size: 1rem; }
+
+  </style>
+  <style>
+    /* ── Site nav (injected) ─────────────────────── */
+    .site-nav {
+      font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: #FDFBF7; border-bottom: 1px solid #e2ddd6;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: transform 0.38s ease, opacity 0.38s ease, box-shadow 0.38s ease;
+    }
+    .site-nav.nav-hero-hide { transform: translateY(-110%); opacity: 0; pointer-events: none; box-shadow: none; }
+    .site-nav.nav-hero-hide.nav-peek { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .site-nav__inner {
+      max-width: 80rem; margin: 0 auto; padding: 0 1rem;
+      display: flex; justify-content: space-between; align-items: center; height: 4rem;
+    }
+    .site-nav__logo img { height: 2.25rem; width: auto; object-fit: contain; display: block; }
+    .site-nav__desktop { display: none; align-items: center; gap: 1.75rem; font-size: 0.9rem; }
+    @media (min-width: 768px) { .site-nav__desktop { display: flex; } }
+    .site-nav__link {
+      color: #C8102E; font-weight: 500; text-decoration: none;
+      transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__link:hover { color: #a00d24; }
+    .site-nav__dd { position: relative; }
+    .site-nav__dd-btn {
+      display: flex; align-items: center; gap: 0.25rem;
+      background: none; border: none; cursor: pointer; font-size: 0.9rem;
+      color: #44403c; transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__dd-btn:hover { color: #C8102E; }
+    .site-nav__dd-menu {
+      display: none; position: absolute; right: 0; top: calc(100% + 8px);
+      min-width: 10rem; background: #FDFBF7;
+      border: 1px solid #e8e2d9; border-radius: 0.75rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12); padding: 0.5rem 0; z-index: 300;
+    }
+    .site-nav__dd-menu.open { display: block; }
+    .site-nav__dd-menu button {
+      display: block; width: 100%; text-align: left;
+      padding: 0.6rem 1.1rem; font-size: 0.875rem; color: #3a3028;
+      background: none; border: none; cursor: pointer;
+      transition: background .15s, color .15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__dd-menu button:hover { background: #fff5f0; color: #C8102E; }
+    .site-nav__hamburger {
+      display: flex; background: none; border: none; cursor: pointer;
+      color: #44403c; padding: 0.5rem; transition: color 0.15s;
+    }
+    .site-nav__hamburger:hover { color: #C8102E; }
+    @media (min-width: 768px) { .site-nav__hamburger { display: none; } }
+    .site-mobile-nav { display: none; border-top: 1px solid #f0ead8; background: #FDFBF7; }
+    .site-mobile-nav.open { display: block; }
+    .site-mobile-nav__inner { padding: 1rem 1rem 1.25rem; }
+    .site-mobile-nav__section {
+      font-size: 0.72rem; color: #a8a29e; letter-spacing: 0.12em;
+      padding: 0.5rem 0 0.25rem; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-mobile-nav__btn {
+      display: block; width: 100%; text-align: left; padding: 0.45rem 0.5rem;
+      font-size: 0.875rem; color: #57534e; background: none; border: none;
+      cursor: pointer; transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-mobile-nav__btn:hover { color: #C8102E; }
+    .site-mobile-nav__primary {
+      color: #C8102E !important; font-weight: 500;
+      border-bottom: 1px solid #f0ead8; margin-bottom: 0.5rem; padding-bottom: 0.75rem;
+    }
+    /* ── Site footer (injected) ──────────────────── */
+    .site-footer {
+      background: #1c1917; color: #a8a29e;
+      padding: 4rem 1rem; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-footer__inner {
+      max-width: 56rem; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .site-footer__logo { height: 3rem; width: auto; object-fit: contain; margin-bottom: 1.25rem; opacity: 0.8; display: block; }
+    .site-footer__tagline { font-size: 0.875rem; color: #78716c; margin-bottom: 0.5rem; }
+    .site-footer__sub { font-size: 0.75rem; color: #57534e; margin-bottom: 2rem; }
+    .site-footer__links { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
+    .site-footer__link {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: #a8a29e; text-decoration: none; font-size: 0.875rem; transition: color 0.15s;
+    }
+    .site-footer__link:hover { color: #fbbf24; }
+    .site-footer__link svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+    .site-footer__copy {
+      width: 100%; border-top: 1px solid #292524;
+      padding-top: 1.5rem; font-size: 0.75rem; color: #57534e;
+    }
+  </style>
+</head>
+<body>
+<!-- ── Site navigation (injected) ───────────────── -->
+<nav class="site-nav" id="main-nav">
+  <div class="site-nav__inner">
+    <a href="../index.html" class="site-nav__logo" aria-label="首頁">
+      <img src="../assets/上元春鬧活動標準字（黑）.png" alt="上元春鬧"
+           onerror="this.outerHTML='&lt;span style=&quot;font-weight:700;font-size:1.1rem;color:#1c1917&quot;&gt;上元春鬧&lt;/span&gt;'">
+    </a>
+    <div class="site-nav__desktop">
+      <a href="../2027.html" class="site-nav__link">丁未計畫書</a>
+      <div class="site-nav__dd" id="dd-wrapper">
+        <button class="site-nav__dd-btn" onclick="toggleDD()">
+          歷年活動
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="site-nav__dd-menu" id="dd-menu">
+          <button onclick="location.href='../2021.html'">2021 辛丑上元</button>
+          <button onclick="location.href='../2022.html'">2022 壬寅上元</button>
+          <button onclick="location.href='../2023.html'">2023 癸卯上元</button>
+          <button onclick="location.href='../2024.html'">2024 甲辰上元</button>
+          <button onclick="location.href='../2025.html'">2025 乙巳上元</button>
+          <button onclick="location.href='../2026.html'">2026 丙午上元</button>
+        </div>
+      </div>
+      <div class="site-nav__dd" id="dd2-wrapper">
+        <button class="site-nav__dd-btn" onclick="toggleDD2()">
+          年秊・刊物
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="site-nav__dd-menu" id="dd2-menu">
+          <button onclick="location.href='#'">節・一元</button>
+          <button onclick="location.href='index.html'">癸卯集</button>
+        </div>
+      </div>
+    </div>
+    <button class="site-nav__hamburger" onclick="toggleMobileMenu()" aria-label="選單">
+      <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="site-mobile-nav" id="mobile-nav">
+    <div class="site-mobile-nav__inner">
+      <button class="site-mobile-nav__btn site-mobile-nav__primary" onclick="location.href='../2027.html'; closeMobileMenu();">丁未上元計畫書</button>
+      <p class="site-mobile-nav__section">歷年活動</p>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2021.html'; closeMobileMenu();">2021 辛丑上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2022.html'; closeMobileMenu();">2022 壬寅上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2023.html'; closeMobileMenu();">2023 癸卯上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2024.html'; closeMobileMenu();">2024 甲辰上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2025.html'; closeMobileMenu();">2025 乙巳上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2026.html'; closeMobileMenu();">2026 丙午上元</button>
+      <p class="site-mobile-nav__section">年秊・刊物</p>
+      <button class="site-mobile-nav__btn" onclick="location.href='#'; closeMobileMenu();">節・一元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='index.html'; closeMobileMenu();">癸卯集</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── BACK NAV ───────────────────────────────────────── -->
+<nav class="back-nav">
+  <a href="index.html" class="back-btn">
+    <span>←</span> 主頁
+  </a>
+</nav>
+
+
+<!-- ── HERO ─────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-left">
+    <img src="assets/032.png" alt="">
+  </div>
+  <div class="hero-right">
+    <img src="assets/033.png" alt="">
+  </div>
+  <div class="hero-title" id="heroTitle">
+    <img src="assets/031.png" alt="當我們重新談起節">
+  </div>
+  <div class="scroll-hint" id="scrollHint">
+    <div class="scroll-hint__bar"></div>
+  </div>
+</section>
+
+
+<!-- ── TEXT BLOCK 1 ──────────────────────────────────── -->
+<section class="text-wrap">
+  <div class="text-body">
+
+    <p class="p">節日，存在於我們的生活中，像一種報時，提醒著——月又圓了、年又新了，也像是一種約定，守著一方不可抹滅的記憶，像滿街的燈籠或者一桌子的微笑。節日，不只是單純的自然規律，也不只是農耕社會遺留的產物，它更靠近人們，它打破人與人之間的藩籬，就像詩詞中描寫的：「千門開鎖萬燈明，正月中旬動地京。」無論男女老少富貧，人們皆打開了門鎖、點起了燈，共度此刻。</p>
+
+    <p class="p">節日重要的是看見，看見跟自己不同的人們，也看見你們擁有著共同的事物。尤其當我們住在城市之中，關起門來，可能連鄰居都不知道是誰，更不覺得自己跟路邊的阿伯有什麼關係，自己只顧好自己的生活。於是在繁華的背後，我們看見了龐大的落寞。</p>
+
+    <p class="p">當代的節日更像是空閒的假期，人們在其中自行填入喜好，跟日常的生活並沒有什麼分野。但如果有一個別於日常的、神聖的時間，在那樣的時間裏頭，你發現路邊的阿伯會跟你唱相同的歌，很吵的鄰居小孩會跟你跳相同的舞，那麼再回到日常的時間之後，是不是就會有不一樣的眼光去看待生活？從非日常回望日常，便能夠意識到我們是如何生活的。</p>
+
+    <p class="p">另外，在文化面上來看，我們得重新思辯「節」究竟對我們來說是什麼。</p>
+
+    <p class="p">節不是新穎的東西，總會從祖輩那裡聽見他們小時候的記憶，也會從一些文本與詩句中窺見過去節日的場景。這些留下的東西給了我們一個想像，也讓節日有了一定的基調，就像我們不可能在清明節歡慶，也不可能在端午節望月思人。但既有的過節方法，對當今在城市生活的人們或許已經不全然地適用，所以我們要做的並不是復刻過去，我們要作一個能夠與當代人產生意義的「節」。</p>
+
+  </div>
+</section>
+
+
+<!-- ── IMAGE CAROUSEL (041) ──────────────────────────── -->
+<section class="carousel-041">
+  <img src="assets/041.png" alt="">
+</section>
+
+
+<!-- ── TEXT BLOCK 2 ──────────────────────────────────── -->
+<section class="text-wrap">
+  <div class="text-body">
+
+    <p class="p">過去一年來，我們舉辦了上元節、清明節、端陽節與仲秋節。在上元節的時候，有了「東風夜放花千樹」的想像，我們做出可以在城市行走的燈車，尋找一個不分男女老少可以同歡慶的時刻。在清明節，我們去重新談起牌位、歷史與記憶，問起什麼是必須記得的？什麼是值得傳遞給他者一起關心的？想要喚醒某些遺忘的敬意。在端陽節，有「敕令五月五日午時書破官非口舌鼠蟻蛇蟲一切盡消除」的咒令，我們問起當代人的困難是什麼？有什麼是需要消除的？想要讓人有一個機會可以直面自己的困難。在仲秋節，總會想起「但願人長久，千里共嬋娟」，於是我們在月圓時相聚、談起陰翳、歌與詩詞。</p>
+
+    <p class="p">在這些節日裡，我們得以擁有不同的感受。我們不需要一年四季都處在敬意、虔誠的狀態之中，但也不希望人們一年四季都沒有這樣的情緒。這並不是一輩子有一次體驗就夠的事情，節日年復一年地提醒著我們內在有某一種，常被我們遺忘的情感。</p>
+
+    <p class="p">當談及節日，就有個年復一年的假設，過節並不是單次性的活動。只要年年在走，必有節節要過，我們有未來的想像，在這樣的想像裡面，我們過的是天干地支的時間，從癸亥回到甲子不停地循環，而不是西元元年開始持續往前跑、最終迎向末日。對時間的想像甚至是超越個人的，是一代代接續的，當我們不再以一個人的一生為時間的單位，那麼節日永遠不會終了，我們不會把自己的生命進行一種斷裂，即使最後我們去世，仍有一些東西被留在世間。</p>
+
+    <p class="p">節日，之於我們便是如此地重要與必要，於是我們「作節」。如果說「過節」是一種嵌入人們生活中的行為，那麼在節日已經殘存空殼的現今，我們的行為更像是「作節」，我們更刻意更用力地想要找到別於當今的生活模式。在有節的日子裡，我們必定會想到明年、後年……作節會變成生活的一部分，甚至如果時間是一代又一代的，節是可以傳承的，那麼有天那些尚未出生的孩子便不必再苦惱什麼是「我們」的文化，可以沒有疑慮地說這是「我們」的，可以自豪於「我們」擁有的東西，如果那天可以到來的話，那麼他們便可以平凡的、不用刻意的「過節」了吧。</p>
+
+  </div>
+</section>
+
+
+<!-- ── IMAGE FULL (051) ───────────────────────────────── -->
+<section class="full-wrap">
+  <div class="full-img" id="fullImg">
+    <img src="assets/051.png" alt="">
+  </div>
+</section>
+
+
+<!-- ── NEXT NAV ───────────────────────────────────────── -->
+<nav class="next-nav" id="nextNav">
+  <a href="page2.html" class="next-nav-btn">
+    人們與藝術的相遇 <span>→</span>
+  </a>
+</nav>
+
+
+<script>
+  // Hero: title fades in after brief pause; scroll hint follows
+  const heroTitle  = document.getElementById('heroTitle');
+  const scrollHint = document.getElementById('scrollHint');
+  setTimeout(() => heroTitle.classList.add('on'),  700);
+  setTimeout(() => scrollHint.classList.add('on'), 1600);
+
+  // Generic observer factory
+  function observe(el, cls, opts) {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add(cls);
+          // unobserve so animation fires once
+          e.target._obs && e.target._obs.unobserve(e.target);
+        }
+      });
+    }, opts).observe(el);
+  }
+
+  // Each paragraph triggers individually as it scrolls into view
+  document.querySelectorAll('.p').forEach(p => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+    obs.observe(p);
+  });
+
+  // Full image fade — fires once
+  const fullImg = document.getElementById('fullImg');
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      fullImg.classList.add('on');
+    }
+  }, { threshold: 0.08 }).observe(fullImg);
+
+  // Nav hide on scroll, show on idle
+  let scrollTimer;
+  const navEls = document.querySelectorAll('.back-nav, .next-nav');
+  window.addEventListener('scroll', () => {
+    navEls.forEach(el => el.classList.add('scroll-hidden'));
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => navEls.forEach(el => el.classList.remove('scroll-hidden')), 800);
+  }, { passive: true });
+</script>
+
+
+<!-- ── Site footer (injected) ────────────────────── -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <img src="../assets/上元春鬧活動標準字（白）.png" alt="上元春鬧"
+         class="site-footer__logo"
+         onerror="this.outerHTML='&lt;p style=&quot;font-size:1.25rem;font-weight:700;color:#e7e5e4;margin-bottom:1.25rem&quot;&gt;上元春鬧&lt;/p&gt;'">
+    <p class="site-footer__tagline">保留傳統脈絡，注入當代靈魂</p>
+    <p class="site-footer__sub">年秊節祭・蟬雨越讀</p>
+    <div class="site-footer__links">
+      <a href="https://www.instagram.com/niennien.jieji/" target="_blank" rel="noopener" class="site-footer__link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        年秊節祭 IG
+      </a>
+      <a href="https://www.facebook.com/semishigurebooks/" target="_blank" rel="noopener" class="site-footer__link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        蟬雨越讀 FB
+      </a>
+    </div>
+    <div class="site-footer__copy">
+      © <span id="footer-year"></span> 上元春鬧籌備小組 · 年秊節祭
+    </div>
+  </div>
+</footer>
+<script src="../shared.js"></script>
+</body>
+</html>

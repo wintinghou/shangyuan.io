@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>壬寅仲秋</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #fff;
+      color: #1e1e1e;
+      font-family: 'Noto Serif TC', Georgia, '宋體', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      display: flex;
+      align-items: stretch;
+      width: 100vw;
+      height: 100vh;
+      background: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /*
+      Left column: spacer (33vh) + 102 image (2/3 of text) + text block
+      102 aligns with the upper-third of the poster;
+      text sits in the lower third.
+    */
+    .hero-left {
+      position: relative;
+      z-index: 2;
+      flex: 0 0 44%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+    }
+
+    /* Empty spacer — pushes 102 down to the 1/3 mark */
+    .hero-spacer {
+      flex: 0 0 33vh;
+    }
+
+    /* 102 image: 2/3 the height of the text block below.
+       Text gets flex:1 → ~40vh. 102 = 40×(2/3) ≈ 27vh.
+       Total: 33 + 27 + 40 = 100vh. */
+    .hero-img-102-wrap {
+      flex: 0 0 27vh;
+      overflow: hidden;
+    }
+    .hero-img-102-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: left bottom;
+      opacity: 0;
+      transition: opacity 1.8s ease;
+      display: block;
+    }
+    .hero-img-102-wrap img.on { opacity: 1; }
+
+    /* Text block: takes remaining ~40vh */
+    .hero-text {
+      flex: 1;
+      padding: 1.2rem 4vw 2rem 4vw;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 1.8s ease;
+    }
+    .hero-text.on { opacity: 1; }
+
+    .hero-quote {
+      font-size: clamp(0.78rem, 1vw, 0.9rem);
+      line-height: 1.9;
+      letter-spacing: 0.1em;
+      font-weight: 400;
+      color: #1e1e1e;
+      margin-bottom: 0.9rem;
+    }
+    .hero-para {
+      font-size: clamp(0.66rem, 0.86vw, 0.8rem);
+      line-height: 2;
+      letter-spacing: 0.04em;
+      font-weight: 300;
+      color: #3a3a3a;
+      margin-bottom: 0.75rem;
+    }
+    .hero-para:last-child { margin-bottom: 0; }
+
+    /* Right column: 101 poster — no crop, full image */
+    .hero-right {
+      flex: 1;
+      overflow: hidden;
+      background: #fff;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .hero-img-right {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center top;
+      display: block;
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    .scroll-hint.on { opacity: 0.45; }
+    .scroll-hint__bar {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(transparent, #555 40%, transparent);
+      animation: drop 2s ease-in-out infinite;
+    }
+    @keyframes drop {
+      0%   { transform: translateY(-26px); opacity: 0; }
+      35%  { opacity: 1; }
+      100% { transform: translateY(26px);  opacity: 0; }
+    }
+
+    /* ── CONTENT WHITE ──────────────────────────── */
+    .content-white { background: #fff; }
+
+    /* ── SPLIT SECTION (Part One) ───────────────── */
+    .split-section { padding: 6rem 5vw 8rem; }
+    .split-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 5vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Carousel (left) */
+    .split-carousel {
+      flex: 0 0 42%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      cursor: grab;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      user-select: none;
+    }
+    .split-carousel::-webkit-scrollbar { display: none; }
+    .split-carousel.on { opacity: 1; }
+    .split-carousel:active { cursor: grabbing; }
+    .carousel-track { display: flex; }
+    .carousel-slide { flex: 0 0 100%; scroll-snap-align: start; }
+    .carousel-slide img { width: 100%; display: block; }
+
+    /* Text (right) */
+    .split-text {
+      flex: 1;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+    .split-text.on { opacity: 1; }
+
+    /* ── PARAGRAPH ──────────────────────────────── */
+    .p {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 1s ease, transform 1s ease;
+      margin-bottom: 2rem;
+      font-size: clamp(0.9rem, 1.2vw, 1rem);
+      line-height: 2.4;
+      letter-spacing: 0.05em;
+      font-weight: 300;
+      color: #1e1e1e;
+    }
+    .p:last-child { margin-bottom: 0; }
+    .p.on { opacity: 1; transform: none; }
+    .p--attr {
+      color: #666;
+      font-size: clamp(0.82rem, 1vw, 0.9rem);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── POEMS ──────────────────────────────────── */
+    .poems-wrap {
+      padding: 4rem 0 9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .poem-block {
+      width: min(640px, 88vw);
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 1.1s ease, transform 1.1s ease;
+    }
+    .poem-block:last-child { margin-bottom: 0; }
+    .poem-block.on { opacity: 1; transform: none; }
+    .poem-number {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.28em;
+      color: #bbb;
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+    .poem-lines {
+      font-size: clamp(0.9rem, 1.25vw, 1rem);
+      line-height: 2.6;
+      letter-spacing: 0.06em;
+      font-weight: 300;
+      color: #1e1e1e;
+    }
+    .poem-attr {
+      display: block;
+      text-align: right;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      color: #888;
+      font-weight: 300;
+      margin-top: 0.8rem;
+    }
+
+    /* ── DARK SECTION ───────────────────────────── */
+    .dark-section { background: #000; }
+
+    /* ── PHOTO SCROLLYTELLING ───────────────────── */
+    .photo-scroll-wrapper {
+      position: relative;
+      height: 650vh;
+    }
+    .photo-scroll-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .photo-track {
+      display: flex;
+      align-items: center;
+      will-change: transform;
+      gap: 10vw;
+      padding: 0 6vw;
+      width: max-content;
+    }
+    .photo-slide {
+      flex-shrink: 0;
+      width: min(820px, 84vw);
+    }
+    .photo-img {
+      width: 100%;
+      height: auto;
+      /* Reserve ~8rem for captions above and below */
+      max-height: calc(100vh - 8rem);
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    /* Captions: outside image, no overlap with photo */
+    .photo-captions {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 0.55rem 0;
+    }
+    .cap {
+      color: #fff;
+      font-family: 'Noto Serif TC', Georgia, '宋體', serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.8;
+      letter-spacing: 0.04em;
+      white-space: nowrap; /* single line on wide screens */
+    }
+    .cap--right { text-align: right; margin-left: auto; }
+    .cap--spacer { flex: 1; }
+
+    /* ── RESPONSIVE ─────────────────────────────── */
+
+    /* Tablet / narrow: hero stacks vertically */
+    @media (max-width: 960px) {
+      .hero {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+      }
+      .hero-right {
+        order: -1; /* poster on top */
+        flex: 0 0 auto;
+        width: 100%;
+      }
+      .hero-img-right {
+        width: 100%;
+        height: auto;
+        max-height: 72vw;
+        object-fit: contain;
+        object-position: center top;
+      }
+      .hero-left {
+        flex: 0 0 auto;
+        width: 100%;
+        height: auto;
+      }
+      .hero-spacer { display: none; } /* no spacer in stacked layout */
+      .hero-img-102-wrap {
+        flex: 0 0 auto;
+        height: 36vw;
+      }
+      .hero-text {
+        flex: 0 0 auto;
+        overflow: visible;
+        padding: 1rem 5vw 2rem;
+      }
+      .scroll-hint { display: none; }
+    }
+
+    /* Part One stacks + captions may wrap */
+    @media (max-width: 800px) {
+      .split-row { flex-direction: column; gap: 2.5rem; }
+      .split-carousel { flex: 0 0 auto; width: 100%; }
+      .split-text { flex: 0 0 auto; width: 100%; }
+      /* Allow caption wrapping; each cap stays within its half */
+      .cap {
+        white-space: normal;
+        max-width: 50%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cap { font-size: 0.72rem; }
+      .photo-slide { width: 90vw; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────────────────── -->
+<section class="hero">
+
+  <!-- Left: spacer + 102 (calligraphy/title image) + text, grouped as a column -->
+  <div class="hero-left">
+    <div class="hero-spacer"></div>
+    <div class="hero-img-102-wrap">
+      <img id="heroImg102" src="assets/102.png" alt="">
+    </div>
+    <div class="hero-text" id="heroText">
+      <p class="hero-quote">——但願人長久，千里共嬋娟。</p>
+      <p class="hero-para">仲秋的美，來自月亮的寧靜、溫柔、優雅。而能望月懷遠，則是因為人們皆有一份深情，能夠很慢很沉著地，將情感的細膩表現出來，與月光相照映。</p>
+      <p class="hero-para">除了再談團圓的美好，更要找回文化上對情感的細微刻畫，以再次捕捉人與人、人與萬物之間，那存在著，卻被太快速的生活節奏所遮蔽的細節。希望在烤肉之外，也能品味一份雋永的優雅。</p>
+    </div>
+  </div>
+
+  <!-- Right: 101 festival poster — full image, no crop -->
+  <div class="hero-right">
+    <img class="hero-img-right" src="assets/101.png" alt="">
+  </div>
+
+  <div class="scroll-hint" id="scrollHint">
+    <div class="scroll-hint__bar"></div>
+  </div>
+</section>
+
+
+<!-- ── WHITE CONTENT ──────────────────────────────── -->
+<div class="content-white">
+
+  <!-- Part One: Horizontal carousel + full editorial text -->
+  <section class="split-section">
+    <div class="split-row">
+
+      <div class="split-carousel" id="carousel103">
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <img src="assets/103.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="split-text" id="splitText1">
+        <p class="p">平常去二手書店的時候，總會留意還沒收集到的漢聲雜誌，在籌備期間，發現了唯一一本，而裡頭居然有幾頁中秋的介紹。當時與夥伴驚喜，第一次看到了兔兒爺，拜月亮紙的孩子，還有梅蘭芳〈嫦娥奔月〉的劇照。</p>
+        <p class="p">其實沒有太多資訊，就幾張老照片引領想像，想像當時的人如何佈置家屋，想像當時的人如何敬拜月娘，想像孩子們看著泥塑兔兒爺的神情，還有當他們一次次的許願時，究竟寄望著什麼？</p>
+        <p class="p">後來仲秋的封面圖就以兔兒爺為主角了，多少想到了李維史陀在〈神話與意義〉中對於兔子的解碼，但更根本上，或許只是覺得土地上人格的神太多了，民間常拜的虎爺又過於兇猛，如果能有點小動物的形象，將其放置在高於人的位置，或許可以平衡些太沈重的什麼吧。</p>
+        <p class="p">歷史一直在走，興衰與變化，總有時豐富也有時匱乏，但只要還有訊息，就還可以相互參照，可以見識可能。離今年仲秋剩下七天了，月亮上弦，但因為大風什麼都看不見，只願當時萬里無雲，可與月娘相望。</p>
+        <p class="p p--attr">——寫於壬寅仲秋前</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Part Two: Four poems, sequential fade-in -->
+  <section class="poems-wrap">
+
+    <div class="poem-block" id="poem01">
+      <span class="poem-number">01</span>
+      <div class="poem-lines">
+        羿請不死之藥於西王母，羿妻姮娥竊之奔月，<br>
+        託身於月，是為蟾蜍，而為月精。
+      </div>
+      <span class="poem-attr">——《淮南子》</span>
+    </div>
+
+    <div class="poem-block" id="poem02">
+      <span class="poem-number">02</span>
+      <div class="poem-lines">
+        春江潮水連海平，海上明月共潮生。<br>
+        灩灩隨波千萬裏，何處春江無月明！<br>
+        江流宛轉繞芳甸，月照花林皆似霰；<br>
+        空裏流霜不覺飛，汀上白沙看不見。<br>
+        江天一色無纖塵，皎皎空中孤月輪。<br>
+        江畔何人初見月？江月何年初照人？<br>
+        人生代代無窮已，江月年年望相似。<br>
+        不知江月待何人，但見長江送流水。<br>
+        白雲一片去悠悠，青楓浦上不勝愁。<br>
+        誰家今夜扁舟子？何處相思明月樓？<br>
+        可憐樓上月徘徊，應照離人妝鏡臺。<br>
+        玉戶簾中卷不去，搗衣砧上拂還來。<br>
+        此時相望不相聞，願逐月華流照君。<br>
+        鴻雁長飛光不度，魚龍潛躍水成文。<br>
+        昨夜閒潭夢落花，可憐春半不還家。<br>
+        江水流春去欲盡，江潭落月復西斜。<br>
+        斜月沉沉藏海霧，碣石瀟湘無限路。<br>
+        不知乘月幾人歸，落月搖情滿江樹。
+      </div>
+      <span class="poem-attr">——《春江花月夜》張若虛</span>
+    </div>
+
+    <div class="poem-block" id="poem03">
+      <span class="poem-number">03</span>
+      <div class="poem-lines">
+        青天有月來幾時，我今停杯一問之。<br>
+        人攀明月不可得，月行卻與人相隨。<br>
+        皎如飛鏡臨丹闕，綠煙滅盡清輝發。<br>
+        但見宵從海上來，寧知曉向雲間沒。<br>
+        白兔擣藥秋復春，姮娥孤棲與誰鄰。<br>
+        今人不見古時月，今月曾經照古人。<br>
+        古人今人若流水，共看明月皆如此。<br>
+        唯願當歌對酒時，月光長照金樽裏。
+      </div>
+      <span class="poem-attr">——《把酒問月》李白</span>
+    </div>
+
+    <div class="poem-block" id="poem04">
+      <span class="poem-number">04</span>
+      <div class="poem-lines">
+        明月幾時有？把酒問青天。<br>
+        不知天上宮闕，今夕是何年？<br>
+        我欲乘風歸去，又恐瓊樓玉宇，高處不勝寒。<br>
+        起舞弄清影，何似在人間？<br>
+        轉朱閣，低綺戶，照無眠。<br>
+        不應有恨，何事長向別時圓？<br>
+        人有悲歡離合，月有陰晴圓缺，此事古難全。<br>
+        但願人長久，千里共嬋娟。
+      </div>
+      <span class="poem-attr">——《水調歌頭》蘇軾</span>
+    </div>
+
+  </section>
+
+</div><!-- end .content-white -->
+
+
+<!-- ── DARK SECTION: Horizontal scrollytelling ────── -->
+<div class="dark-section">
+  <div class="photo-scroll-wrapper" id="photoScrollWrapper">
+    <div class="photo-scroll-sticky">
+      <div class="photo-track" id="photoTrack">
+
+        <!-- 10401 -->
+        <div class="photo-slide">
+          <div class="photo-captions">
+            <span class="cap">從一張老照片出發。於是設了個拜月的祭壇，擺上柚子、柚酒、月餅、芒花與月光媽</span>
+            <span class="cap cap--right">從書店「蟬雨越讀」一路跳舞到書店「等閒」</span>
+          </div>
+          <img class="photo-img" src="assets/10401.png" alt="">
+          <div class="photo-captions">
+            <span class="cap--spacer"></span>
+            <span class="cap cap--right">接受了熱情民眾的烤肉</span>
+          </div>
+        </div>
+
+        <!-- 10404 -->
+        <div class="photo-slide">
+          <div class="photo-captions">
+            <span class="cap">仲秋節時常可看見人們在路邊玩火、玩炮。在公園裡遇見了玩仙女棒的妹妹</span>
+          </div>
+          <img class="photo-img" src="assets/10404.png" alt="">
+          <div class="photo-captions">
+            <span class="cap">在文化中心的廣場上，把一條紅綠色的綁帶給了好奇的妹妹</span>
+          </div>
+        </div>
+
+        <!-- 10406 -->
+        <div class="photo-slide">
+          <div class="photo-captions">
+            <span class="cap">一群熱情的孩子用鞭炮阻攔了我們</span>
+          </div>
+          <img class="photo-img" src="assets/10406.png" alt="">
+          <div class="photo-captions"></div>
+        </div>
+
+        <!-- 10408 -->
+        <div class="photo-slide">
+          <div class="photo-captions">
+            <span class="cap">大家牽著彼此在路邊跳起最後的舞蹈</span>
+          </div>
+          <img class="photo-img" src="assets/10408.png" alt="">
+          <div class="photo-captions"></div>
+        </div>
+
+        <!-- 10409 -->
+        <div class="photo-slide">
+          <div class="photo-captions">
+            <span class="cap">累壞的柴犬被主人扛回家，牠晚上將會夢見很大的圓月</span>
+          </div>
+          <img class="photo-img" src="assets/10409.png" alt="">
+          <div class="photo-captions"></div>
+        </div>
+
+        <!-- 10410 -->
+        <div class="photo-slide">
+          <div class="photo-captions">
+            <span class="cap--spacer"></span>
+            <span class="cap cap--right">隊伍經過夜晚的市場，吟頌《春江花月夜》，也唸唱著「月圓花離枝，月缺燕歸巢」</span>
+          </div>
+          <img class="photo-img" src="assets/10410.png" alt="">
+          <div class="photo-captions"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div><!-- end .dark-section -->
+
+
+<script>
+  // ── Hero fade-in sequence
+  setTimeout(() => document.getElementById('heroImg102').classList.add('on'), 600);
+  setTimeout(() => document.getElementById('heroText').classList.add('on'), 1100);
+  setTimeout(() => document.getElementById('scrollHint').classList.add('on'), 1800);
+
+  // ── Paragraph + poem scroll fade-in
+  document.querySelectorAll('.p, .poem-block').forEach(el => {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }).observe(el);
+  });
+
+  // ── Part One: carousel + text fade-in
+  const carousel = document.getElementById('carousel103');
+  const splitTxt = document.getElementById('splitText1');
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      carousel.classList.add('on');
+      setTimeout(() => splitTxt.classList.add('on'), 500);
+    }
+  }, { threshold: 0.15 }).observe(carousel);
+
+  // Carousel drag-to-scroll
+  let isDrag = false, dragStartX, dragScrollLeft;
+  carousel.addEventListener('mousedown', e => {
+    isDrag = true;
+    dragStartX = e.pageX - carousel.offsetLeft;
+    dragScrollLeft = carousel.scrollLeft;
+    carousel.style.cursor = 'grabbing';
+  });
+  document.addEventListener('mouseup', () => { isDrag = false; carousel.style.cursor = 'grab'; });
+  carousel.addEventListener('mousemove', e => {
+    if (!isDrag) return;
+    e.preventDefault();
+    carousel.scrollLeft = dragScrollLeft - (e.pageX - carousel.offsetLeft - dragStartX);
+  });
+
+  // ── Photo scrollytelling: vertical scroll → horizontal translate
+  const photoWrapper = document.getElementById('photoScrollWrapper');
+  const photoTrack   = document.getElementById('photoTrack');
+
+  function updatePhotoScroll() {
+    const rect         = photoWrapper.getBoundingClientRect();
+    const maxScroll    = photoWrapper.offsetHeight - window.innerHeight;
+    const scrolled     = -rect.top;
+    const progress     = Math.max(0, Math.min(1, scrolled / maxScroll));
+    const maxTranslate = Math.max(0, photoTrack.scrollWidth - window.innerWidth);
+    photoTrack.style.transform = `translateX(-${progress * maxTranslate}px)`;
+  }
+
+  window.addEventListener('scroll', updatePhotoScroll, { passive: true });
+  window.addEventListener('resize', updatePhotoScroll);
+  window.addEventListener('load',   updatePhotoScroll);
+  updatePhotoScroll();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>祭典藝術中的美</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #000;
+      color: #c8bfb0;
+      font-family: 'Noto Serif TC', Georgia, '宋體', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── BACK / NEXT NAV (固定底部) ────────────── */
+    .back-nav {
+      position: fixed;
+      bottom: 1.6rem;
+      left: 1.8rem;
+      z-index: 100;
+      transition: opacity 0.6s ease;
+    }
+    .next-nav {
+      position: fixed;
+      bottom: 1.6rem;
+      right: 1.8rem;
+      z-index: 100;
+      transition: opacity 0.6s ease;
+    }
+    .back-nav.scroll-hidden,
+    .next-nav.scroll-hidden { opacity: 0; pointer-events: none; }
+    .back-btn, .next-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #c8bfb0;
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+      transition: opacity 0.2s, color 0.5s ease;
+    }
+    .back-btn:hover, .next-nav-btn:hover { opacity: 1; }
+    .back-btn span, .next-nav-btn span { font-size: 1rem; }
+    .back-nav.on-light-bg .back-btn,
+    .next-nav.on-light-bg .next-nav-btn { color: #555; }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    /* gradient: same as index (transparent → black) */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 28%;
+      background: linear-gradient(transparent, #000);
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* hero titles – base */
+    .hero-title {
+      position: absolute;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 2.2s ease;
+    }
+    .hero-title.on { opacity: 1; }
+    .hero-title img {
+      display: block;
+      mix-blend-mode: multiply;
+      height: 72vh;
+      width: auto;
+    }
+
+    /* 081.1: 右側，頂部對齊 */
+    .ht-1 { left: 72%; top: 0; transform: translateX(-50%); }
+
+    /* 081.2: 中左側，改用 top 定位避免上方裁切 */
+    .ht-2 { left: 35%; top: 8vh; transform: translateX(-50%); }
+
+    /* 081.3: 左側，底部對齊 */
+    .ht-3 { left: 23%; bottom: 0; transform: translateX(-50%); }
+
+    /* group wrapper for 081.2 + 081.3 */
+    .ht-23-group {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    .scroll-hint.on { opacity: 0.4; }
+    .scroll-hint__bar {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(transparent, #fff 40%, transparent);
+      animation: drop 2s ease-in-out infinite;
+    }
+    @keyframes drop {
+      0%   { transform: translateY(-26px); opacity: 0; }
+      35%  { opacity: 1; }
+      100% { transform: translateY(26px);  opacity: 0; }
+    }
+
+    /* ── TEXT SECTIONS ──────────────────────────── */
+    .text-wrap {
+      padding: 8rem 0 7rem;
+      display: flex;
+      justify-content: center;
+    }
+    .text-body { width: min(640px, 88vw); }
+
+    .p {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 1s ease, transform 1s ease;
+      margin-bottom: 2.6rem;
+      font-size: clamp(0.93rem, 1.35vw, 1.06rem);
+      line-height: 2.4;
+      letter-spacing: 0.05em;
+      font-weight: 300;
+      color: #c8bfb0;
+    }
+    .p:last-child { margin-bottom: 0; }
+    .p.on { opacity: 1; transform: none; }
+
+    /* ── IMAGE 083 ──────────────────────────────── */
+    .img-083-wrap {
+      padding: 0 0 5rem;
+      display: flex;
+      justify-content: center;
+    }
+    #img083 {
+      width: min(900px, 90vw);
+      display: block;
+      opacity: 0;
+      transition: opacity 1.8s ease;
+    }
+    #img083.on { opacity: 1; }
+
+    /* ── WHITE SECTION ──────────────────────────── */
+    .white-section {
+      background: #fff;
+    }
+    .white-section .p { color: #1e1e1e; }
+
+    /* quote: bold + red (same as page2) */
+    .p--quote {
+      font-weight: 700;
+      color: #c8231e;
+      font-size: clamp(1rem, 1.5vw, 1.12rem);
+    }
+    .white-section .p--quote { color: #c8231e; }
+
+    /* ── SIDE-BY-SIDE SECTIONS ──────────────────── */
+    .split-section {
+      padding: 2rem 5vw 8rem;
+    }
+    .split-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 5vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .split-img {
+      flex: 0 0 46%;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+    .split-img img { width: 100%; display: block; }
+    .split-img.on { opacity: 1; }
+
+    .split-text {
+      flex: 1;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      padding-top: 1.5rem;
+    }
+    .split-text.on { opacity: 1; }
+
+    /* 勸世歌歌詞區塊往右推，拉開與085的距離感 */
+    #split-text3 { padding-left: 3vw; }
+
+    /* reversed: 086 right, text4 left */
+    .split-row--rev .split-img { order: 2; }
+    .split-row--rev .split-text { order: 1; }
+
+    /* ── LYRICS ─────────────────────────────────── */
+    .lyric-columns {
+      display: flex;
+      gap: 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+    .lyric-col {
+      flex: 1;
+      font-size: clamp(0.88rem, 1.2vw, 1rem);
+      line-height: 2.6;
+      letter-spacing: 0.06em;
+      font-weight: 300;
+      color: #1e1e1e;
+    }
+    .lyric-stanza {
+      font-size: clamp(0.88rem, 1.2vw, 1rem);
+      line-height: 2.6;
+      letter-spacing: 0.06em;
+      font-weight: 300;
+      color: #1e1e1e;
+      margin-bottom: 1.6rem;
+    }
+    .lyric-stanza:last-of-type { margin-bottom: 1.4rem; }
+    .lyric-attr {
+      display: block;
+      text-align: right;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      color: #888;
+      font-weight: 300;
+    }
+
+    /* ── IMAGE 084 FULL BLEED ───────────────────── */
+    .img-084-wrap {
+      width: 100%;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    .img-084-wrap.on { opacity: 1; }
+    .img-084-wrap img { width: 100%; display: block; }
+
+    /* ── RESPONSIVE: 小螢幕標題定位 ────────────── */
+    @media (max-width: 700px) {
+      .ht-1 { left: auto; right: 0; transform: none; }
+      .ht-23-group {
+        inset: auto;
+        left: 0; top: 0; bottom: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+      }
+      .ht-3 {
+        position: relative;
+        left: auto; bottom: auto; transform: none;
+        align-self: flex-end;
+        order: 1;
+      }
+      .ht-2 {
+        position: relative;
+        left: auto; top: auto; transform: none;
+        align-self: flex-start;
+        margin-top: 8vh;
+        order: 2;
+      }
+    }
+
+    /* ── RESPONSIVE: 小螢幕改上下排版 ──────────── */
+    @media (max-width: 800px) {
+      .split-row {
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+      .split-img { flex: 0 0 auto; width: 100%; }
+      .split-text {
+        flex: 0 0 auto;
+        width: 100%;
+        padding-top: 0;
+      }
+      /* 取消 reversed 的 order，上下排版時維持圖在上、文在下 */
+      .split-row--rev .split-img { order: unset; }
+      .split-row--rev .split-text { order: unset; }
+      /* 取消勸世歌的 left padding（上下排版不需要） */
+      #split-text3 { padding-left: 0; }
+    }
+
+  </style>
+  <style>
+    /* ── Site nav (injected) ─────────────────────── */
+    .site-nav {
+      font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: #FDFBF7; border-bottom: 1px solid #e2ddd6;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: transform 0.38s ease, opacity 0.38s ease, box-shadow 0.38s ease;
+    }
+    .site-nav.nav-hero-hide { transform: translateY(-110%); opacity: 0; pointer-events: none; box-shadow: none; }
+    .site-nav.nav-hero-hide.nav-peek { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .site-nav__inner {
+      max-width: 80rem; margin: 0 auto; padding: 0 1rem;
+      display: flex; justify-content: space-between; align-items: center; height: 4rem;
+    }
+    .site-nav__logo img { height: 2.25rem; width: auto; object-fit: contain; display: block; }
+    .site-nav__desktop { display: none; align-items: center; gap: 1.75rem; font-size: 0.9rem; }
+    @media (min-width: 768px) { .site-nav__desktop { display: flex; } }
+    .site-nav__link {
+      color: #C8102E; font-weight: 500; text-decoration: none;
+      transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__link:hover { color: #a00d24; }
+    .site-nav__dd { position: relative; }
+    .site-nav__dd-btn {
+      display: flex; align-items: center; gap: 0.25rem;
+      background: none; border: none; cursor: pointer; font-size: 0.9rem;
+      color: #44403c; transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__dd-btn:hover { color: #C8102E; }
+    .site-nav__dd-menu {
+      display: none; position: absolute; right: 0; top: calc(100% + 8px);
+      min-width: 10rem; background: #FDFBF7;
+      border: 1px solid #e8e2d9; border-radius: 0.75rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12); padding: 0.5rem 0; z-index: 300;
+    }
+    .site-nav__dd-menu.open { display: block; }
+    .site-nav__dd-menu button {
+      display: block; width: 100%; text-align: left;
+      padding: 0.6rem 1.1rem; font-size: 0.875rem; color: #3a3028;
+      background: none; border: none; cursor: pointer;
+      transition: background .15s, color .15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__dd-menu button:hover { background: #fff5f0; color: #C8102E; }
+    .site-nav__hamburger {
+      display: flex; background: none; border: none; cursor: pointer;
+      color: #44403c; padding: 0.5rem; transition: color 0.15s;
+    }
+    .site-nav__hamburger:hover { color: #C8102E; }
+    @media (min-width: 768px) { .site-nav__hamburger { display: none; } }
+    .site-mobile-nav { display: none; border-top: 1px solid #f0ead8; background: #FDFBF7; }
+    .site-mobile-nav.open { display: block; }
+    .site-mobile-nav__inner { padding: 1rem 1rem 1.25rem; }
+    .site-mobile-nav__section {
+      font-size: 0.72rem; color: #a8a29e; letter-spacing: 0.12em;
+      padding: 0.5rem 0 0.25rem; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-mobile-nav__btn {
+      display: block; width: 100%; text-align: left; padding: 0.45rem 0.5rem;
+      font-size: 0.875rem; color: #57534e; background: none; border: none;
+      cursor: pointer; transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-mobile-nav__btn:hover { color: #C8102E; }
+    .site-mobile-nav__primary {
+      color: #C8102E !important; font-weight: 500;
+      border-bottom: 1px solid #f0ead8; margin-bottom: 0.5rem; padding-bottom: 0.75rem;
+    }
+    /* ── Site footer (injected) ──────────────────── */
+    .site-footer {
+      background: #1c1917; color: #a8a29e;
+      padding: 4rem 1rem; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-footer__inner {
+      max-width: 56rem; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .site-footer__logo { height: 3rem; width: auto; object-fit: contain; margin-bottom: 1.25rem; opacity: 0.8; display: block; }
+    .site-footer__tagline { font-size: 0.875rem; color: #78716c; margin-bottom: 0.5rem; }
+    .site-footer__sub { font-size: 0.75rem; color: #57534e; margin-bottom: 2rem; }
+    .site-footer__links { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
+    .site-footer__link {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: #a8a29e; text-decoration: none; font-size: 0.875rem; transition: color 0.15s;
+    }
+    .site-footer__link:hover { color: #fbbf24; }
+    .site-footer__link svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+    .site-footer__copy {
+      width: 100%; border-top: 1px solid #292524;
+      padding-top: 1.5rem; font-size: 0.75rem; color: #57534e;
+    }
+  </style>
+</head>
+<body>
+<!-- ── Site navigation (injected) ───────────────── -->
+<nav class="site-nav" id="main-nav">
+  <div class="site-nav__inner">
+    <a href="../index.html" class="site-nav__logo" aria-label="首頁">
+      <img src="../assets/上元春鬧活動標準字（黑）.png" alt="上元春鬧"
+           onerror="this.outerHTML='&lt;span style=&quot;font-weight:700;font-size:1.1rem;color:#1c1917&quot;&gt;上元春鬧&lt;/span&gt;'">
+    </a>
+    <div class="site-nav__desktop">
+      <a href="../2027.html" class="site-nav__link">丁未計畫書</a>
+      <div class="site-nav__dd" id="dd-wrapper">
+        <button class="site-nav__dd-btn" onclick="toggleDD()">
+          歷年活動
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="site-nav__dd-menu" id="dd-menu">
+          <button onclick="location.href='../2021.html'">2021 辛丑上元</button>
+          <button onclick="location.href='../2022.html'">2022 壬寅上元</button>
+          <button onclick="location.href='../2023.html'">2023 癸卯上元</button>
+          <button onclick="location.href='../2024.html'">2024 甲辰上元</button>
+          <button onclick="location.href='../2025.html'">2025 乙巳上元</button>
+          <button onclick="location.href='../2026.html'">2026 丙午上元</button>
+        </div>
+      </div>
+      <div class="site-nav__dd" id="dd2-wrapper">
+        <button class="site-nav__dd-btn" onclick="toggleDD2()">
+          年秊・刊物
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="site-nav__dd-menu" id="dd2-menu">
+          <button onclick="location.href='#'">節・一元</button>
+          <button onclick="location.href='index.html'">癸卯集</button>
+        </div>
+      </div>
+    </div>
+    <button class="site-nav__hamburger" onclick="toggleMobileMenu()" aria-label="選單">
+      <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="site-mobile-nav" id="mobile-nav">
+    <div class="site-mobile-nav__inner">
+      <button class="site-mobile-nav__btn site-mobile-nav__primary" onclick="location.href='../2027.html'; closeMobileMenu();">丁未上元計畫書</button>
+      <p class="site-mobile-nav__section">歷年活動</p>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2021.html'; closeMobileMenu();">2021 辛丑上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2022.html'; closeMobileMenu();">2022 壬寅上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2023.html'; closeMobileMenu();">2023 癸卯上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2024.html'; closeMobileMenu();">2024 甲辰上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2025.html'; closeMobileMenu();">2025 乙巳上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2026.html'; closeMobileMenu();">2026 丙午上元</button>
+      <p class="site-mobile-nav__section">年秊・刊物</p>
+      <button class="site-mobile-nav__btn" onclick="location.href='#'; closeMobileMenu();">節・一元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='index.html'; closeMobileMenu();">癸卯集</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── BACK NAV ──────────────────────────────────── -->
+<nav class="back-nav">
+  <a href="page3.html" class="back-btn">
+    <span>←</span> 祭典中的一起
+  </a>
+</nav>
+
+
+<!-- ── HERO ──────────────────────────────────────── -->
+<section class="hero">
+  <img class="hero-img" src="assets/082.png" alt="">
+
+  <div class="hero-title ht-1" id="ht1">
+    <img src="assets/081.1.png" alt="">
+  </div>
+  <div class="ht-23-group">
+    <div class="hero-title ht-2" id="ht2">
+      <img src="assets/081.2.png" alt="">
+    </div>
+    <div class="hero-title ht-3" id="ht3">
+      <img src="assets/081.3.png" alt="">
+    </div>
+  </div>
+
+  <div class="scroll-hint" id="scrollHint">
+    <div class="scroll-hint__bar"></div>
+  </div>
+</section>
+
+
+<!-- ── TEXT BLOCK 1 (dark) ───────────────────────── -->
+<section class="text-wrap">
+  <div class="text-body">
+
+    <p class="p">在當代，似乎再也沒有什麼可以被稱作「我們的」藝術，我們總是說：這是誰寫的作品，這是誰編的戲劇，這是誰導的電影……這樣的藝術透過我們的欣賞，間接地與每個人都產生不一樣的意義。可是在祭典之中，我們總會想像藝術是共有的——不是誰做的燈車，也不是誰編的舞蹈，每項藝術都是「我們的」。祭典中的藝術是集體的，它因為你們一起發想、一起製作而產生了直接的關聯性。</p>
+
+    <p class="p">舉個例子來說，因為有了這樣對於藝術的想像，我們找上了「民謠」。民謠，顧名思義即是民間的歌謠，作者是誰並不可考，或者說即使我們知道〈雨夜花〉是鄧雨賢寫的，但是這並不重要，因為它已經脫離了鄧雨賢「自己的」作品，已經成為了老嫗孩童都熟悉的歌曲，〈雨夜花〉在人們的口中，一代又一代的流傳之中。</p>
+
+    <p class="p">民謠有一種「超越性」，它不只是單獨個人的東西，民謠的成立得與人們的生活發生真實的關係。如果只是學會如何彈好、如何唱好，那超越性並不會發生，只有當人群聚在一起、一齊認同該首民謠，進而產生有機的互動時，那超越性才會浮現。民謠的美即是存在於人們的口中。</p>
+
+    <p class="p" id="text1-last">民謠可以更加容易地與人們產生關聯，跟民謠的空間也有一定的關係。民謠的空間極大，除了固定的曲調以外，每首歌可以自行填入新的歌詞，就像是在癸卯仲秋的時候，我們運用了〈守牛調〉的曲調，〈守牛調〉是半島的傳統民謠之一，歌詞的創作僅有七字的限制。我們被這樣子的形式吸引，看見了民謠之中更大的空間，可以依照當下所見所想而唱，歌跟人之間如此就有了一層直接的關係，人們透過歌說出自己的語言，這是現在的流行樂無法取代的。</p>
+
+  </div>
+</section>
+
+
+<!-- ── IMAGE 083 (dark) ───────────────────────────── -->
+<div class="img-083-wrap">
+  <img id="img083" src="assets/083.png" alt="">
+</div>
+
+
+<!-- ── WHITE SECTION ──────────────────────────────── -->
+<div class="white-section">
+
+  <!-- TEXT BLOCK 2 -->
+  <section class="text-wrap">
+    <div class="text-body">
+
+      <p class="p">在民謠之中，我們看見了語言的豐富與情感的強烈。就像是漢聲雜誌第三十五期《西北高原的花兒》中描寫的如此：「（花兒，中國西北的民歌）其中比喻和誇張的新奇巧妙、感情的真摯熱烈、語言的生動幽默都出自終生不離田間勞作的串把式之手，想來很令經綸滿腹、學富五車的文人汗顏！」</p>
+
+      <p class="p">民謠的語言究竟是怎麼樣的呢？在《歌謠周刊》中有這麼幾句話：</p>
+      
+      <p class="p p--quote">「黑夜聽著山水響，白日看著山水流，有心要跟山水去，又怕山水不回頭。」</p>
+      
+      <p class="p">沒有什麼艱難的詞彙，卻是人要在山水中生活才能寫出來的真誠。而在《漢聲雜誌》中也看見了：</p>
+      
+      <p class="p p--quote">「月亮上來彎又彎，想你者日夜淚不乾，兩把馬勺舀不完，還得兩副桶來擔！」</p>
+      
+      <p class="p">用了馬勺啊桶啊這類的詞，我們這些居住在城市裡的人，很難創作出那樣的語言，因為那是拔根而起的、深深嵌入土地的歌詞。確實就如同葉石濤先生說：</p>
+      
+      <p class="p p--quote">「（文學是）地上之鹽。」</p>
+      
+      <p class="p">歌謠就像鹽一般，不可或缺地撒在常民的生活上。裡面的詞語常常讓人看了會心一笑，因為這就是生活中會遇到的事情、會使用的詞。民謠雖「俗」卻不讓人感覺俗不可耐，這樣的「俗」正是民謠的美麗之處，它被傳唱在不識字的阿嬤口中，被傳唱在尚未讀書的小孩嘴裡，真真實實地反映了人們的生活。</p>
+
+      <p class="p" id="text2-last">如果能夠有這樣子的一首歌，即使歌詞會隨著時代而變化，但精神如果可以不變——我們用一個簡單不過的曲調，卻能夠創造出無限的情境與情感，那麼令誰聽見都會為之動容的吧，在祭典的藝術之中，我們希望不只是歌，還有舞蹈、繪畫、戲劇等等，所有在街上出現的藝術。這樣的藝術不是只是一個人的，是我們的，是下一代孩子的，是屬於文化的。</p>
+
+    </div>
+  </section>
+
+
+  <!-- ── 085（左）＋ 文字區塊三（右）────────────────── -->
+  <section class="split-section">
+    <div class="split-row">
+
+      <div class="split-img" id="img085">
+        <img src="assets/085.png" alt="">
+      </div>
+
+      <div class="split-text" id="split-text3">
+        <div class="lyric-columns">
+          <div class="lyric-col">
+            正月算來是上元<br>
+            咱人團圓無好冤<br>
+            二月算來是春天<br>
+            花蕊開滿空氣甜<br>
+            三月算來是清明<br>
+            窗仔透風憶以前<br>
+            這是好時念祖先
+          </div>
+          <div class="lyric-col">
+            咱彈江湖行高雄<br>
+            無欲勸世是歌唱<br>
+            唱寡故事留囝孫<br>
+            行序大路路長長<br>
+            歌詞參著代代影<br>
+            今嘛咱人免著驚<br>
+            親戚朋友斟酌聽
+          </div>
+        </div>
+        <span class="lyric-attr">——《勸世歌》</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ── 086（右）＋ 文字區塊四（左）────────────────── -->
+  <section class="split-section">
+    <div class="split-row split-row--rev">
+
+      <div class="split-img" id="img086">
+        <img src="assets/086.png" alt="">
+      </div>
+
+      <div class="split-text" id="split-text4">
+        <div class="lyric-stanza">
+          五月鑼鼓響遍天 阮要看龍船行河邊<br>
+          家家戶戶插榕枝 賣食肉粽愛買蓮子
+        </div>
+        <div class="lyric-stanza">
+          五月鑼鼓響半天 阮要看龍船行河邊<br>
+          人講塗牛嫂佇河邊 排一擔擔仔塊賣胭脂<br>
+          炮聲響 龍船行<br>
+          鑼鼓若響風浪會驚<br>
+          鯽仔魚講伊無塊宓 因為龍船咧搶紅旗
+        </div>
+        <div class="lyric-stanza">
+          炮聲響 龍船行<br>
+          鑼鼓若響風浪會驚<br>
+          鯽仔魚講伊無塊宓 因為龍船咧搶紅旗
+        </div>
+        <span class="lyric-attr">——《慶端陽》</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ── IMAGE 084 FULL BLEED ──────────────────────── -->
+  <div class="img-084-wrap" id="img084">
+    <img src="assets/084.png" alt="">
+  </div>
+
+</div><!-- end .white-section -->
+
+
+<!-- ── NEXT NAV ───────────────────────────────────── -->
+<nav class="next-nav">
+  <a href="page5.html" class="next-nav-btn">
+    循舊，或者創新？ <span>→</span>
+  </a>
+</nav>
+
+
+<script>
+  // Hero titles staggered fade-in
+  setTimeout(() => document.getElementById('ht1').classList.add('on'),  700);
+  setTimeout(() => document.getElementById('ht2').classList.add('on'), 1100);
+  setTimeout(() => document.getElementById('ht3').classList.add('on'), 1500);
+  setTimeout(() => document.getElementById('scrollHint').classList.add('on'), 2100);
+
+  // Per-paragraph fade-in on scroll
+  document.querySelectorAll('.p').forEach(p => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    obs.observe(p);
+  });
+
+  // Image 083: triggered by last paragraph of text block 1
+  const img083    = document.getElementById('img083');
+  const text1Last = document.getElementById('text1-last');
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) img083.classList.add('on');
+  }, { threshold: 0.6 }).observe(text1Last);
+
+  // 085 + text3: triggered by last paragraph of text block 2
+  const img085      = document.getElementById('img085');
+  const splitText3  = document.getElementById('split-text3');
+  const text2Last   = document.getElementById('text2-last');
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      img085.classList.add('on');
+      setTimeout(() => splitText3.classList.add('on'), 700);
+    }
+  }, { threshold: 0.6 }).observe(text2Last);
+
+  // 086 + text4: triggered when text3 enters view
+  const img086     = document.getElementById('img086');
+  const splitText4 = document.getElementById('split-text4');
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      img086.classList.add('on');
+      setTimeout(() => splitText4.classList.add('on'), 700);
+    }
+  }, { threshold: 0.5 }).observe(splitText3);
+
+  // Image 084: triggered when text4 enters view
+  const img084 = document.getElementById('img084');
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) img084.classList.add('on');
+  }, { threshold: 0.4 }).observe(splitText4);
+
+  // Nav hide on scroll, show on idle
+  let scrollTimer;
+  const navEls = document.querySelectorAll('.back-nav, .next-nav');
+  window.addEventListener('scroll', () => {
+    navEls.forEach(el => el.classList.add('scroll-hidden'));
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => navEls.forEach(el => el.classList.remove('scroll-hidden')), 800);
+  }, { passive: true });
+
+  // Switch button color when entering white section
+  new IntersectionObserver(entries => {
+    navEls.forEach(el => el.classList.toggle('on-light-bg', entries[0].isIntersecting));
+  }, { threshold: 0, rootMargin: '-80px 0px 0px 0px' }).observe(document.querySelector('.white-section'));
+</script>
+
+
+<!-- ── Site footer (injected) ────────────────────── -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <img src="../assets/上元春鬧活動標準字（白）.png" alt="上元春鬧"
+         class="site-footer__logo"
+         onerror="this.outerHTML='&lt;p style=&quot;font-size:1.25rem;font-weight:700;color:#e7e5e4;margin-bottom:1.25rem&quot;&gt;上元春鬧&lt;/p&gt;'">
+    <p class="site-footer__tagline">保留傳統脈絡，注入當代靈魂</p>
+    <p class="site-footer__sub">年秊節祭・蟬雨越讀</p>
+    <div class="site-footer__links">
+      <a href="https://www.instagram.com/niennien.jieji/" target="_blank" rel="noopener" class="site-footer__link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        年秊節祭 IG
+      </a>
+      <a href="https://www.facebook.com/semishigurebooks/" target="_blank" rel="noopener" class="site-footer__link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        蟬雨越讀 FB
+      </a>
+    </div>
+    <div class="site-footer__copy">
+      © <span id="footer-year"></span> 上元春鬧籌備小組 · 年秊節祭
+    </div>
+  </div>
+</footer>
+<script src="../shared.js"></script>
+</body>
+</html>

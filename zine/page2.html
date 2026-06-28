@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>人們與藝術的相遇</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #fff;
+      color: #1e1e1e;
+      font-family: 'Noto Serif TC', Georgia, '宋體', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── BACK / NEXT NAV (固定底部) ─────────────── */
+    .back-nav {
+      position: fixed;
+      bottom: 1.6rem;
+      left: 1.8rem;
+      z-index: 100;
+      transition: opacity 0.6s ease;
+    }
+    .next-nav {
+      position: fixed;
+      bottom: 1.6rem;
+      right: 1.8rem;
+      z-index: 100;
+      transition: opacity 0.6s ease;
+    }
+    .back-nav.scroll-hidden,
+    .next-nav.scroll-hidden { opacity: 0; pointer-events: none; }
+    .back-btn, .next-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #444;
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .back-btn:hover, .next-nav-btn:hover { opacity: 1; }
+    .back-btn span, .next-nav-btn span { font-size: 1rem; }
+
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    /* title: right 1/3, top-aligned with image */
+    .hero-title {
+      position: absolute;
+      left: 74%;
+      top: 0;
+      transform: translateX(-50%);
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 2.2s ease;
+    }
+    .hero-title.on { opacity: 1; }
+    .hero-title img {
+      height: 78vh;
+      width: auto;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+
+    /* scroll hint (reuse same style as page 1) */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    .scroll-hint.on { opacity: 0.3; }
+    .scroll-hint__bar {
+      width: 1px;
+      height: 52px;
+      background: linear-gradient(#333 40%, transparent);
+      animation: drop 2s ease-in-out infinite;
+    }
+    @keyframes drop {
+      0%   { transform: translateY(-26px); opacity: 0; }
+      35%  { opacity: 1; }
+      100% { transform: translateY(26px);  opacity: 0; }
+    }
+
+    /* ── TEXT SECTIONS ──────────────────────────── */
+    .text-wrap {
+      padding: 7rem 0 6rem;
+      display: flex;
+      justify-content: center;
+    }
+    .text-body { width: min(640px, 88vw); }
+
+    .p {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.95s ease, transform 0.95s ease;
+      margin-bottom: 2.4rem;
+      font-size: clamp(0.93rem, 1.35vw, 1.05rem);
+      line-height: 2.3;
+      letter-spacing: 0.05em;
+      font-weight: 300;
+      color: #1e1e1e;
+    }
+    .p:last-child { margin-bottom: 0; }
+    .p.on { opacity: 1; transform: none; }
+
+    /* quote paragraph: bold + red */
+    .p--quote {
+      font-weight: 700;
+      color: #c8231e;
+      font-size: clamp(1rem, 1.5vw, 1.12rem);
+    }
+
+    /* ── ILLUSTRATION 063 ───────────────────────── */
+    .illus-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 1rem 0 4rem;
+    }
+    .illus {
+      width: min(340px, 55vw);
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .illus.on { opacity: 1; }
+    .illus.bounce {
+      animation: gentle-bounce 3.3s ease-in-out infinite;
+    }
+    .illus img { width: 100%; display: block; }
+
+    @keyframes gentle-bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+
+    /* ── CAROUSEL ───────────────────────────────── */
+    .carousel-section {
+      padding-top: 3rem;
+      overflow: hidden;
+    }
+    .carousel-section img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+
+  </style>
+  <style>
+    /* ── Site nav (injected) ─────────────────────── */
+    .site-nav {
+      font-family: 'Noto Sans TC', 'PingFang TC', sans-serif;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: #FDFBF7; border-bottom: 1px solid #e2ddd6;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: transform 0.38s ease, opacity 0.38s ease, box-shadow 0.38s ease;
+    }
+    .site-nav.nav-hero-hide { transform: translateY(-110%); opacity: 0; pointer-events: none; box-shadow: none; }
+    .site-nav.nav-hero-hide.nav-peek { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .site-nav__inner {
+      max-width: 80rem; margin: 0 auto; padding: 0 1rem;
+      display: flex; justify-content: space-between; align-items: center; height: 4rem;
+    }
+    .site-nav__logo img { height: 2.25rem; width: auto; object-fit: contain; display: block; }
+    .site-nav__desktop { display: none; align-items: center; gap: 1.75rem; font-size: 0.9rem; }
+    @media (min-width: 768px) { .site-nav__desktop { display: flex; } }
+    .site-nav__link {
+      color: #C8102E; font-weight: 500; text-decoration: none;
+      transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__link:hover { color: #a00d24; }
+    .site-nav__dd { position: relative; }
+    .site-nav__dd-btn {
+      display: flex; align-items: center; gap: 0.25rem;
+      background: none; border: none; cursor: pointer; font-size: 0.9rem;
+      color: #44403c; transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__dd-btn:hover { color: #C8102E; }
+    .site-nav__dd-menu {
+      display: none; position: absolute; right: 0; top: calc(100% + 8px);
+      min-width: 10rem; background: #FDFBF7;
+      border: 1px solid #e8e2d9; border-radius: 0.75rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12); padding: 0.5rem 0; z-index: 300;
+    }
+    .site-nav__dd-menu.open { display: block; }
+    .site-nav__dd-menu button {
+      display: block; width: 100%; text-align: left;
+      padding: 0.6rem 1.1rem; font-size: 0.875rem; color: #3a3028;
+      background: none; border: none; cursor: pointer;
+      transition: background .15s, color .15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-nav__dd-menu button:hover { background: #fff5f0; color: #C8102E; }
+    .site-nav__hamburger {
+      display: flex; background: none; border: none; cursor: pointer;
+      color: #44403c; padding: 0.5rem; transition: color 0.15s;
+    }
+    .site-nav__hamburger:hover { color: #C8102E; }
+    @media (min-width: 768px) { .site-nav__hamburger { display: none; } }
+    .site-mobile-nav { display: none; border-top: 1px solid #f0ead8; background: #FDFBF7; }
+    .site-mobile-nav.open { display: block; }
+    .site-mobile-nav__inner { padding: 1rem 1rem 1.25rem; }
+    .site-mobile-nav__section {
+      font-size: 0.72rem; color: #a8a29e; letter-spacing: 0.12em;
+      padding: 0.5rem 0 0.25rem; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-mobile-nav__btn {
+      display: block; width: 100%; text-align: left; padding: 0.45rem 0.5rem;
+      font-size: 0.875rem; color: #57534e; background: none; border: none;
+      cursor: pointer; transition: color 0.15s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-mobile-nav__btn:hover { color: #C8102E; }
+    .site-mobile-nav__primary {
+      color: #C8102E !important; font-weight: 500;
+      border-bottom: 1px solid #f0ead8; margin-bottom: 0.5rem; padding-bottom: 0.75rem;
+    }
+    /* ── Site footer (injected) ──────────────────── */
+    .site-footer {
+      background: #1c1917; color: #a8a29e;
+      padding: 4rem 1rem; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .site-footer__inner {
+      max-width: 56rem; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .site-footer__logo { height: 3rem; width: auto; object-fit: contain; margin-bottom: 1.25rem; opacity: 0.8; display: block; }
+    .site-footer__tagline { font-size: 0.875rem; color: #78716c; margin-bottom: 0.5rem; }
+    .site-footer__sub { font-size: 0.75rem; color: #57534e; margin-bottom: 2rem; }
+    .site-footer__links { display: flex; gap: 1.5rem; margin-bottom: 2rem; }
+    .site-footer__link {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: #a8a29e; text-decoration: none; font-size: 0.875rem; transition: color 0.15s;
+    }
+    .site-footer__link:hover { color: #fbbf24; }
+    .site-footer__link svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+    .site-footer__copy {
+      width: 100%; border-top: 1px solid #292524;
+      padding-top: 1.5rem; font-size: 0.75rem; color: #57534e;
+    }
+  </style>
+</head>
+<body>
+<!-- ── Site navigation (injected) ───────────────── -->
+<nav class="site-nav" id="main-nav">
+  <div class="site-nav__inner">
+    <a href="../index.html" class="site-nav__logo" aria-label="首頁">
+      <img src="../assets/上元春鬧活動標準字（黑）.png" alt="上元春鬧"
+           onerror="this.outerHTML='&lt;span style=&quot;font-weight:700;font-size:1.1rem;color:#1c1917&quot;&gt;上元春鬧&lt;/span&gt;'">
+    </a>
+    <div class="site-nav__desktop">
+      <a href="../2027.html" class="site-nav__link">丁未計畫書</a>
+      <div class="site-nav__dd" id="dd-wrapper">
+        <button class="site-nav__dd-btn" onclick="toggleDD()">
+          歷年活動
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="site-nav__dd-menu" id="dd-menu">
+          <button onclick="location.href='../2021.html'">2021 辛丑上元</button>
+          <button onclick="location.href='../2022.html'">2022 壬寅上元</button>
+          <button onclick="location.href='../2023.html'">2023 癸卯上元</button>
+          <button onclick="location.href='../2024.html'">2024 甲辰上元</button>
+          <button onclick="location.href='../2025.html'">2025 乙巳上元</button>
+          <button onclick="location.href='../2026.html'">2026 丙午上元</button>
+        </div>
+      </div>
+      <div class="site-nav__dd" id="dd2-wrapper">
+        <button class="site-nav__dd-btn" onclick="toggleDD2()">
+          年秊・刊物
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="site-nav__dd-menu" id="dd2-menu">
+          <button onclick="location.href='#'">節・一元</button>
+          <button onclick="location.href='index.html'">癸卯集</button>
+        </div>
+      </div>
+    </div>
+    <button class="site-nav__hamburger" onclick="toggleMobileMenu()" aria-label="選單">
+      <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="site-mobile-nav" id="mobile-nav">
+    <div class="site-mobile-nav__inner">
+      <button class="site-mobile-nav__btn site-mobile-nav__primary" onclick="location.href='../2027.html'; closeMobileMenu();">丁未上元計畫書</button>
+      <p class="site-mobile-nav__section">歷年活動</p>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2021.html'; closeMobileMenu();">2021 辛丑上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2022.html'; closeMobileMenu();">2022 壬寅上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2023.html'; closeMobileMenu();">2023 癸卯上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2024.html'; closeMobileMenu();">2024 甲辰上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2025.html'; closeMobileMenu();">2025 乙巳上元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='../2026.html'; closeMobileMenu();">2026 丙午上元</button>
+      <p class="site-mobile-nav__section">年秊・刊物</p>
+      <button class="site-mobile-nav__btn" onclick="location.href='#'; closeMobileMenu();">節・一元</button>
+      <button class="site-mobile-nav__btn" onclick="location.href='index.html'; closeMobileMenu();">癸卯集</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── BACK NAV ──────────────────────────────────── -->
+<nav class="back-nav">
+  <a href="page1.html" class="back-btn">
+    <span>←</span> 當我們重新談起節
+  </a>
+</nav>
+
+
+<!-- ── HERO ──────────────────────────────────────── -->
+<section class="hero">
+  <img class="hero-img" src="assets/062.png" alt="">
+  <div class="hero-title" id="heroTitle">
+    <img src="assets/061.png" alt="人們與藝術的相遇">
+  </div>
+  <div class="scroll-hint" id="scrollHint">
+    <div class="scroll-hint__bar"></div>
+  </div>
+</section>
+
+
+<!-- ── TEXT BLOCK 1 ───────────────────────────────── -->
+<section class="text-wrap" id="text1">
+  <div class="text-body">
+
+    <p class="p">上街，對我們來說相當重要，在每個節祭之中，無論呈現了什麼、無論核心概念為何，我們必定上街。</p>
+
+    <p class="p">聽過這樣子的描述：昔日，跑江湖的藝人會在廟埕或樹下說書、唸歌仔。雖然是為了吸引客人、為了賣藥，但可以在街頭上聽見藝術、可以與之同唱，實在是相當美好的事情。街，是一個開放的空間，反之，美術館、劇院或電影院是封閉的，在隔絕於現實的空間裡，創作者創造了一個世界，觀眾被動地進入創作者的世界裡，無論是美術館中禁止超越的線，或者廳院中的舞台，都使觀眾永遠都待在觀者的那方。</p>
+
+    <p class="p" id="text1-last">在城市之中，人們看似接收到相當多的藝術，但要說這些觀者真的會些什麼嗎？會唱歌演戲、會作詩作畫嗎？會把藝術融入自身的生活嗎？還是離開美術館之後，繼續過著無藝術參與的生活？當代的人們對於藝術僅有欣賞卻無法真正掌握，於是，透過祭典，我們想要主動去創造一些什麼。</p>
+
+  </div>
+</section>
+
+
+<!-- ── ILLUSTRATION 063 ────────────────────────────── -->
+<div class="illus-wrap">
+  <div class="illus" id="illus">
+    <img src="assets/063.png" alt="">
+  </div>
+</div>
+
+
+<!-- ── TEXT BLOCK 2 ───────────────────────────────── -->
+<section class="text-wrap">
+  <div class="text-body">
+
+    <p class="p">在祭典的藝術裡面，雖然有些基本的規則，但主客的關係是可以改變的，總有個預想是人們可以一起進來做些什麼，像是扛轎、打鑼鼓等等。祭典藝術因為走在人們生活的地方，而更靠近人們。祭典雖然也會創造一個世界，不過其創造的世界與真實緊密地連結在一起，我們走在街上時，不可能不注意到別人的注視與好奇，不可能無視別人的疑問。</p>
+
+    <p class="p">我們經過鄰里社區，我們直面城市的人們，上街，實在地區別了祭典藝術與其他的藝術，在開放的街道上，人們無論專業與否、身分為何，皆可以成為美的元素。如果你在上元的晚上來到五福路，你可以看見燈車、花轎與歌舞戲劇，你可以旁觀也可以選擇加入歡慶……我們這群辦祭典的人們，只是跟大部分普通的城市人一樣，多半沒有背景，也不是某領域的專業，我們僅是對藝術抱持著興趣，對藝術有一些執著，對美的另一種可能帶有想像。</p>
+
+    <p class="p">另外，也像是蔣勳在《美的覺醒》裡面說的吧：</p>
+
+    <p class="p p--quote">「經由別人的陶醉，你看到了夕陽，經由別人的歡唱，你看到了花的開放。其實，美是可以感染的。」</p>
+
+    <p class="p">如果藝術放置在美術館裡頭，美只與一個又一個的觀者產生意義，是點到點的關係，但是在祭典中，藝術與人們是一張網，人之間的距離可以透過藝術連結在一起，不再只是人與藝術品之間一對一的關係，所以你看見的燈車、花轎與歌舞戲劇不只是作品，你看見的還是別人的笑容與感動，當你意識到自己也透過別人而微笑、而感動，你便成為了祭典藝術之中不可或缺的一部分。</p>
+
+    <p class="p">於是，我們把藝術搬上街道，奪回美的主導。讓美不再只是藝術家說的算，藝術，可以不是只屬於私人、美術館或廳院，藝術可以存在於日常的風景之中，在店家前，在馬路旁，在不分野的百姓手中綻放。</p>
+
+  </div>
+</section>
+
+
+<!-- ── CAROUSEL ────────────────────────────────────── -->
+<section class="carousel-section">
+  <img src="assets/067.png" alt="">
+</section>
+
+
+<!-- ── NEXT NAV ───────────────────────────────────── -->
+<nav class="next-nav">
+  <a href="page3.html" class="next-nav-btn">
+    祭典中的一起 <span>→</span>
+  </a>
+</nav>
+
+
+<script>
+  // Hero entrance
+  const heroTitle  = document.getElementById('heroTitle');
+  const scrollHint = document.getElementById('scrollHint');
+  setTimeout(() => heroTitle.classList.add('on'),  700);
+  setTimeout(() => scrollHint.classList.add('on'), 1600);
+
+  // Each paragraph fades in individually on scroll
+  document.querySelectorAll('.p').forEach(p => {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          entries[0].target._obs?.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }).observe(p);
+  });
+
+  // Illustration: appear after last paragraph of text block 1 enters view
+  const text1Last = document.getElementById('text1-last');
+  const illus     = document.getElementById('illus');
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      illus.classList.add('on');
+      setTimeout(() => illus.classList.add('bounce'), 1100);
+    }
+  }, { threshold: 0.6 }).observe(text1Last);
+
+  // Nav hide on scroll, show on idle
+  let scrollTimer;
+  const navEls = document.querySelectorAll('.back-nav, .next-nav');
+  window.addEventListener('scroll', () => {
+    navEls.forEach(el => el.classList.add('scroll-hidden'));
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => navEls.forEach(el => el.classList.remove('scroll-hidden')), 800);
+  }, { passive: true });
+</script>
+
+
+<!-- ── Site footer (injected) ────────────────────── -->
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <img src="../assets/上元春鬧活動標準字（白）.png" alt="上元春鬧"
+         class="site-footer__logo"
+         onerror="this.outerHTML='&lt;p style=&quot;font-size:1.25rem;font-weight:700;color:#e7e5e4;margin-bottom:1.25rem&quot;&gt;上元春鬧&lt;/p&gt;'">
+    <p class="site-footer__tagline">保留傳統脈絡，注入當代靈魂</p>
+    <p class="site-footer__sub">年秊節祭・蟬雨越讀</p>
+    <div class="site-footer__links">
+      <a href="https://www.instagram.com/niennien.jieji/" target="_blank" rel="noopener" class="site-footer__link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        年秊節祭 IG
+      </a>
+      <a href="https://www.facebook.com/semishigurebooks/" target="_blank" rel="noopener" class="site-footer__link">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        蟬雨越讀 FB
+      </a>
+    </div>
+    <div class="site-footer__copy">
+      © <span id="footer-year"></span> 上元春鬧籌備小組 · 年秊節祭
+    </div>
+  </div>
+</footer>
+<script src="../shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,3633 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 丙午上元 - 上元春鬧</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<style>
+.jc-sched-node .jc-flow-card { cursor: pointer; transition: border-color .2s, background .2s; }
+.jc-sched-node.sk-active .jc-flow-card { border-color: #C8102E; background: #fff5f5; }
+.jc-sched-node[data-milestone="true"] .jc-flow-dot { background: #C8102E; }
+.sk-card-detail { display:none; margin-top:.75rem; padding-top:.75rem; border-top:1px solid #e8e2d9; }
+.sk-card-detail.open { display:block; }
+</style>
+</head>
+<body>
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav-sans fixed top-0 left-0 right-0 z-50 bg-[#FDFBF7] border-b border-stone-200 shadow-sm" id="main-nav">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex justify-between items-center h-16">
+      <a href="index.html" class="flex items-center" aria-label="首頁">
+        <img src="assets/上元春鬧活動標準字（黑）.png"
+             alt="上元春鬧" class="h-9 w-auto object-contain max-w-[140px]"
+             onerror="this.outerHTML='<span class=&quot;text-lg font-bold text-stone-900&quot;>上元春鬧</span>'">
+      </a>
+      <div class="hidden md:flex items-center gap-7 text-[0.9rem]">
+        <a href="2027.html" class="text-[#C8102E] font-medium hover:text-[#a00d24] transition-colors" style="font-family:'Noto Sans TC'">丁未計畫書</a>
+        <div class="relative ml-2" id="dd-wrapper">
+          <button onclick="toggleDD()" class="flex items-center gap-1 hover:text-[#C8102E] transition-colors text-stone-700">
+            歷年活動
+            <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="ddmenu" id="dd-menu">
+            <button onclick="location.href='2021.html'">2021 辛丑上元</button>
+            <button onclick="location.href='2022.html'">2022 壬寅上元</button>
+            <button onclick="location.href='2023.html'">2023 癸卯上元</button>
+            <button onclick="location.href='2024.html'">2024 甲辰上元</button>
+            <button onclick="location.href='2025.html'">2025 乙巳上元</button>
+            <button onclick="location.href='2026.html'">2026 丙午上元</button>
+          </div>
+        </div>
+        <div class="relative" id="dd2-wrapper">
+          <button onclick="toggleDD2()" class="flex items-center gap-1 hover:text-[#C8102E] transition-colors text-stone-700">
+            年秊・刊物
+            <svg class="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div id="dd2-menu">
+            <button onclick="location.href='節一元/index.html'">節・一元</button>
+            <button onclick="location.href='zine/index.html'">癸卯集</button>
+          </div>
+        </div>
+      </div>
+      <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-stone-700 hover:text-[#C8102E]" aria-label="選單">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-nav">
+    <div class="px-4 py-4 border-t border-stone-100 bg-[#FDFBF7]">
+      <div class="mb-2 pb-2 border-b border-stone-100 pl-2">
+        <button onclick="location.href='2027.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-[#C8102E] font-medium hover:text-[#a00d24]">丁未上元計畫書</button>
+      </div>
+      <p class="py-2 text-xs text-stone-400 tracking-widest">歷年活動</p>
+      <div class="space-y-0.5 pl-2">
+        <button onclick="location.href='2021.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2021 辛丑上元</button>
+        <button onclick="location.href='2022.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2022 壬寅上元</button>
+        <button onclick="location.href='2023.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2023 癸卯上元</button>
+        <button onclick="location.href='2024.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2024 甲辰上元</button>
+        <button onclick="location.href='2025.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2025 乙巳上元</button>
+        <button onclick="location.href='2026.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">2026 丙午上元</button>
+      </div>
+      <p class="py-2 text-xs text-stone-400 tracking-widest mt-2">年秊・刊物</p>
+      <div class="space-y-0.5 pl-2">
+        <button onclick="location.href='節一元/index.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">節・一元</button>
+        <button onclick="location.href='zine/index.html'; closeMobileMenu();" class="block w-full text-left py-2 text-sm text-stone-600 hover:text-[#C8102E]">癸卯集</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main>
+<div id="page-bingwu">
+
+  <!-- ══ 1. HERO CAROUSEL ══ -->
+  <div class="xz-cs-wrap" id="bw-carousel-wrap">
+    <!-- slides injected by JS -->
+    <div class="xz-cs-overlay"></div>
+    <div class="xz-cs-content px-4 text-center">
+      <h1 class="text-white text-4xl md:text-6xl font-bold tracking-widest drop-shadow-2xl"
+          style="text-shadow:0 2px 16px rgba(0,0,0,.7)">2026 丙午上元</h1>
+      <p class="text-white/70 mt-3 tracking-[0.3em] text-sm" style="font-family:'Noto Sans TC'">延續過節火苗</p>
+    </div>
+    <div id="bw-cs-dots" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10"></div>
+  </div>
+  <div class="xz-cs-spacer" aria-hidden="true"></div>
+
+  <div class="page-content-wrap">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 space-y-20">
+
+    <!-- ══ 2. OVERVIEW ══ -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">OVERVIEW</p>
+          <h2 class="section-title text-2xl">活動概覽</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 items-start mt-6">
+        <!-- poster -->
+        <div class="rounded-2xl overflow-hidden bg-stone-50">
+          <img src="assets/歷年活動封面圖（海報）/丙午上元海報.png" alt="丙午上元封面"
+               class="w-full object-contain" style="max-height:520px;"
+               onerror="this.parentElement.style.display='none'">
+        </div>
+        <!-- info -->
+        <div>
+          <p class="leading-[2.2] text-stone-700 mb-6">
+            2026丙午上元，由莊逸軒發起，高雄「蟬雨越讀」獨立書店主辦。
+          </p>
+          <div class="space-y-3 text-[0.92rem] text-stone-600" style="font-family:'Noto Sans TC'">
+            <div class="flex gap-3">
+              <span class="shrink-0 text-[#C8102E] font-semibold w-20">藝術統籌</span>
+              <span>莊逸軒</span>
+            </div>
+            <div class="flex gap-3">
+              <span class="shrink-0 text-[#C8102E] font-semibold w-20">籌備期間</span>
+              <span>2025年9月至2026年2月28日</span>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="shrink-0 text-[#C8102E] font-semibold w-20">活動時間</span>
+              <div class="space-y-1">
+                <div>左營・遊庄點燈：2026年02月20日（初四）</div>
+                <div>鹽埕・遊庄點燈：2026年02月21日（初五）</div>
+                <div>丙午上元・正日：2026年02月28日</div>
+              </div>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="shrink-0 text-[#C8102E] font-semibold w-20">活動路線</span>
+              <div class="space-y-2">
+                <div>丙午上元・正日：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢蟬雨書店</div>
+                <div>左營・遊庄點燈：北門⭢左營下路⭢廖家古厝⭢鳳凰美髮（林家舊宅）⭢建業新村</div>
+                <div>鹽埕・遊庄點燈：鹽埕埔⭢新樂街⭢大溝頂⭢國際商場（銀座聚場）⭢侯宅⭢新豐代天府</div>
+              </div>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="shrink-0 text-[#C8102E] font-semibold w-20">成果</span>
+              <span>三日共超過300 人參與。由於書店搬遷，丙午年縮小活動規模，首度開辦「群藝新傳」課程，透過課程方式深入培養參與者表演技，並新增「遊庄點燈」模式，結合夥伴家庭共襄盛舉，成功深入社區。丙午上元正日雖碰上下雨，但仍在參與民眾陪同下，完成活動流程。是上元春鬧首度達成盈利。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 現場紀錄 -->
+      <div class="mt-8 pt-6 border-t border-stone-200/60">
+        <p style="font-size:0.7rem;font-family:'Noto Sans TC';letter-spacing:0.18em;color:#a8a29e;margin-bottom:0.75rem">現場紀錄</p>
+        <div class="flex gap-1 mb-3" id="bw-vid-tabs">
+          <button onclick="bwVid(this,'tbNW3C93tos')" style="font-size:0.78rem;font-family:'Noto Sans TC';padding:0.2rem 0.65rem;border:none;background:none;cursor:pointer;color:#C8102E;border-bottom:1.5px solid #C8102E;transition:color 0.15s">左營</button>
+          <button onclick="bwVid(this,'AB9WJkW8n_A')" style="font-size:0.78rem;font-family:'Noto Sans TC';padding:0.2rem 0.65rem;border:none;background:none;cursor:pointer;color:#a8a29e;border-bottom:1.5px solid transparent;transition:color 0.15s">正日</button>
+        </div>
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:0.75rem;background:#111">
+          <iframe id="bw-yt" style="position:absolute;top:0;left:0;width:100%;height:100%" src="https://www.youtube.com/embed/tbNW3C93tos" title="丙午上元現場紀錄" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <script>
+      function bwVid(btn, id) {
+        document.getElementById('bw-yt').src = 'https://www.youtube.com/embed/' + id;
+        document.getElementById('bw-vid-tabs').querySelectorAll('button').forEach(function(b) {
+          b.style.color = '#a8a29e'; b.style.borderBottom = '1.5px solid transparent';
+        });
+        btn.style.color = '#C8102E'; btn.style.borderBottom = '1.5px solid #C8102E';
+      }
+      </script>
+    </section>
+
+    <!-- ══ 2. THEME ══ -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">THEME</p>
+          <h2 class="section-title text-2xl text-stone-900">年度主題</h2>
+        </div>
+      </div>
+
+      <div class="mt-8 space-y-4 text-stone-700 leading-relaxed" style="font-family:'Noto Serif TC'">
+        <p>交關，是一種單向度的認可或支持，而交陪，則是多元的交流與連結。</p>
+        <p>我們期待從今年開始，能逐漸發展「交陪」，藉由不同的互惠模式、資源流動的想像，創造出能讓藝術與鄰里產生更多互動的可能。</p>
+        <p>是以一步一步，讓上元的「復活」能回到生活，而不只有特定的舞台———舞台就能是自家門口。</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 mt-8 items-start">
+
+        <!-- 左欄：群藝流程 -->
+        <img src="assets/插圖/丙午/群藝流程.jpeg" alt="群藝流程" class="w-full rounded-2xl">
+
+        <!-- 右欄：交陪圖 ＋ 協作想像 ＋ 兩張主題卡 -->
+        <div class="flex flex-col gap-6">
+
+          <img src="assets/插圖/丙午/丙午交陪.png" alt="丙午交陪" class="w-full rounded-2xl" style="background:#fff;">
+
+          <!-- 交陪計畫之協作想像 -->
+          <div>
+            <h3 class="text-lg font-bold text-stone-900 mb-1" style="font-family:'Noto Serif TC'">交陪計畫之協作想像</h3>
+            <div class="grid sm:grid-cols-2 gap-4 mt-3">
+              <div class="bg-stone-50 border border-stone-200 rounded-xl p-4">
+                <div class="text-[#C8102E] font-semibold mb-1 text-sm" style="font-family:'Noto Sans TC'">初階・讓門口變成舞台，創造日常新風景</div>
+                <ul class="text-sm text-stone-600 space-y-1 list-disc pl-4">
+                  <li>響應張燈結綵</li>
+                  <li>參與繫願望箋儀式</li>
+                </ul>
+              </div>
+              <div class="bg-stone-50 border border-stone-200 rounded-xl p-4">
+                <div class="text-[#C8102E] font-semibold mb-1 text-sm" style="font-family:'Noto Sans TC'">進階・復興饋歲風俗，重現鄰里人情味</div>
+                <ul class="text-sm text-stone-600 space-y-1 list-disc pl-4">
+                  <li>提供平安食、贊助燈火銀</li>
+                  <li>創造「美」的交換現場（才藝表演）</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /右欄 -->
+      </div><!-- /2-col grid -->
+
+      <!-- 兩張主題卡獨立兩欄 -->
+      <div class="grid md:grid-cols-2 gap-6 mt-6 items-stretch">
+
+        <!-- 「群藝新傳」卡片 -->
+        <div class="bg-white border border-stone-200/80 rounded-2xl p-8 shadow-md flex flex-col">
+          <h4 class="text-[#C8102E] font-semibold text-lg border-b border-[#C8102E]/20 pb-3 mb-4">「群藝新傳」</h4>
+          <p class="text-stone-500 text-sm mb-4" style="font-family:'Noto Serif TC'">對於百年傳承想像踏出的第一步</p>
+          <p class="leading-[2.1] text-stone-700 text-justify text-[0.95rem] mb-5" style="font-family:'Noto Serif TC'">
+            我們參考傳統藝陣的模式，但從娛神走向娛人，且一改廟會過於鋪張的問題，期待在現代與傳統之間，重新創造一份嶄新但又純樸的藝術形式，為平凡的日常街景，注入新的能量與活力。
+          </p>
+          <div class="flex justify-center mb-5">
+            <img src="assets/歷年活動封面圖（海報）/群藝新傳海報.png" alt="群藝新傳海報"
+                 class="max-w-full h-auto rounded-xl max-h-[300px] object-cover"
+                 onerror="this.style.display='none'">
+          </div>
+          <div class="flex flex-col gap-3 mt-auto">
+            <a href="https://docs.google.com/document/d/1patwbWWjIbccqtb8hzkQEsXtSV8UgBKAa6HSfvtgVHE/edit?tab=t.j4af4es1jcf0#heading=h.hcl8d7qz4l5s"
+               target="_blank" rel="noopener"
+               class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-800 text-stone-100 text-xs font-medium hover:bg-stone-700 transition-all shadow-sm hover:shadow">
+              <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              群奏組課程紀錄
+            </a>
+            <a href="https://docs.google.com/document/d/1z4jgda8R2AA2eDPnjOD7JGs7V4ArF6Kdtzyt1ibzm6w/edit?tab=t.j4af4es1jcf0#heading=h.hcl8d7qz4l5s"
+               target="_blank" rel="noopener"
+               class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-800 text-stone-100 text-xs font-medium hover:bg-stone-700 transition-all shadow-sm hover:shadow">
+              <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              舞蹈組課程紀錄
+            </a>
+          </div>
+        </div>
+
+        <!-- 「文輿的願望箋」卡片 -->
+        <div class="bg-white border border-stone-200/80 rounded-2xl p-8 shadow-md flex flex-col">
+          <h4 class="text-[#C8102E] font-semibold text-lg border-b border-[#C8102E]/20 pb-3 mb-4">「文輿的願望箋」</h4>
+          <p class="leading-[2.1] text-stone-700 text-justify text-[0.95rem]" style="font-family:'Noto Serif TC'">
+            我們希望找到一種願望的語言，介於「普天大願」與「個人私願」之間，雖能涵蓋眾人卻不遺漏私心，雖帶理想卻又不淪為空泛，希望在交陪時，除了繫上箋文，更藉由轎班的力量，「喊」出這樣的語言，不只添增文輿的生命力，更為新的一年永遠保留一份願望的火焰。
+          </p>
+          <img src="assets/插圖/丙午/丙午文火燈.png" alt="丙午文火燈" class="w-full rounded-xl mt-auto pt-6">
+        </div>
+
+      </div><!-- /主題卡兩欄 -->
+
+    </section>
+
+    <!-- ══ 3. PROGRAM ══ -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">PROGRAM</p>
+          <h2 class="section-title text-2xl">活動流程</h2>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <img src="assets/插圖/丙午/丙午隊伍圖.png" alt="丙午正日隊伍" class="w-full rounded-2xl" style="cursor:pointer" onclick="openBwFlowLightbox(this)">
+      </div>
+
+      <!-- 02/20 左營遊庄 -->
+      <div class="jc-day-label mb-4 mt-8"><span>02/20大年初四・左營遊庄</span></div>
+      <div class="jc-flow-scroll-zone mt-6" id="zy-flow-zone">
+      <div class="jc-flow-scroll-sticky">
+      <div class="jc-flow-h-track" id="zy-flow-track">
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">18:00</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔開場〕</div>
+            <div class="jc-flow-loc">舊城門</div>
+            <div class="jc-flow-desc">政諺代表致詞，以起轎為訊號，花燈入巷口號起，隨後鼓聲出發。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 18:20</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔廖家古厝〕</div>
+            <div class="jc-flow-loc">廖家古厝</div>
+            <div class="jc-flow-desc">停留，可能表演亮相，或僅簡單停留交陪。需報馬仔提前確認狀況，因僅有口頭談，不確定場域氣氛是否適合表演。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 19:15</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔換電池・中途補給〕</div>
+            <div class="jc-flow-loc">政諺家巷子</div>
+            <div class="jc-flow-desc">稍作停留，吃政諺準備的食物，廁所有限需排隊。到左營大路時政諺先離隊準備。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 19:30</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔往建業新村〕</div>
+            <div class="jc-flow-loc">移動中</div>
+            <div class="jc-flow-desc">路上可放鬆走，不用維持遊行能量。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 19:45</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔建業新村〕</div>
+            <div class="jc-flow-loc">建業新村入口</div>
+            <div class="jc-flow-desc">互動店家相對多，開始前由各組長預告，維持能量一路到最後表演結束。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 20:30</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔結束〕</div>
+            <div class="jc-flow-loc">建業新村</div>
+            <div class="jc-flow-desc">跟言叡喝酒聊天，政諺代表發表感言（政諺可邀請爺爺）。</div>
+          </div>
+        </div>
+
+      </div>
+      </div></div>
+
+      <!-- 02/21 鹽埕遊庄 -->
+      <div class="jc-day-label mb-4 mt-8"><span>02/21大年初五・鹽埕遊庄</span></div>
+      <div class="jc-flow-scroll-zone mt-6" id="ye-flow-zone">
+      <div class="jc-flow-scroll-sticky">
+      <div class="jc-flow-h-track" id="ye-flow-track">
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">18:00</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔開場〕</div>
+            <div class="jc-flow-loc">鹽埕三號出口</div>
+            <div class="jc-flow-desc">文婷代表致詞，以起轎為訊號，花燈入巷口號起，隨後鼓聲出發。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 18:10</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔有木田・拜年〕</div>
+            <div class="jc-flow-loc">有木田</div>
+            <div class="jc-flow-desc">拜年活動。各組再確認演出方式：馬燈多律動、竿燈多秩序、群奏注意各人展現機會、轎班轉圈強化穩定度。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 18:30</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔春福・拜年〕</div>
+            <div class="jc-flow-loc">春福</div>
+            <div class="jc-flow-desc">如上行拜年禮。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 18:40</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔鹽一公有市場〕</div>
+            <div class="jc-flow-loc">鹽一公有市場</div>
+            <div class="jc-flow-desc">竿燈組、鼓隊、馬燈進入亂繞（需兩隊長帶領，馬燈請文婷維護安全，保持活力）。轎輿若可放置空腹蟲前，需先確認能否進入。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 19:15</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔銀座聚場・對陣〕</div>
+            <div class="jc-flow-loc">銀座聚場</div>
+            <div class="jc-flow-desc">分兩隊對陣。文婷帶領從新樂街進場，我帶領從五福四路進場。狹長十字架空間：定位轎左馬右，輪流對陣舞組→音樂組→竿燈組。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 19:35</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔換電池・廁所〕</div>
+            <div class="jc-flow-loc">公園路・鹽埕堀江商場</div>
+            <div class="jc-flow-desc">上廁所加更換電池。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 19:50</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔文婷宅・小拜年〕</div>
+            <div class="jc-flow-loc">文婷宅</div>
+            <div class="jc-flow-desc">進行小拜年，隨後聽文婷講故事。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 20:00</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔鹽埕夜市・對陣〕</div>
+            <div class="jc-flow-loc">鹽埕夜市</div>
+            <div class="jc-flow-desc">重新進入鹽埕夜市，與周邊互動，並在吉貝武聖殿與烏龜對陣。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 20:15</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔新豐代天府・表演〕</div>
+            <div class="jc-flow-loc">新豐代天府前</div>
+            <div class="jc-flow-desc">定位：馬左、群奏右、轎子正後、竿燈Ｕ字型。配合群藝演出彩排流程。備註：「喊願望」環節限於此結尾，其他店家以「收」為主。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">預計 20:30</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔結束・點燈〕</div>
+            <div class="jc-flow-loc">鹽埕</div>
+            <div class="jc-flow-desc">遊庄點燈—鹽埕，大家吃粥，隨後找個地方混混聊聊。</div>
+          </div>
+        </div>
+
+      </div>
+      </div></div>
+
+      <div class="jc-day-label mb-4 mt-8"><span>02/28上元正日</span></div>
+
+      <!-- 丙午路線圖 scroll-draw -->
+      <div class="gm-svgmap-wrap" id="bw-map-wrap">
+        <div class="gm-svgmap-sticky" style="height:65vh;top:100px">
+          <div class="gm-svgmap-canvas" style="position:relative;cursor:pointer;" title="點擊放大路線圖" onclick="document.getElementById('bw-art-lightbox-img').src='assets/插圖/丙午/丙午路線.svg';document.getElementById('bw-art-lightbox-img').alt='丙午正日路線圖';document.getElementById('bw-art-lightbox').style.display='flex';document.body.style.overflow='hidden'">
+            <svg id="bw-route-svg"
+                 viewBox="0 0 2481 3508"
+                 xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 style="width:100%;height:100%;display:block;"
+                 preserveAspectRatio="xMidYMid meet">
+              <image href="assets/插圖/丙午/丙午路線.svg"
+                     xlink:href="assets/插圖/丙午/丙午路線.svg"
+                     x="0" y="0" width="2481" height="3508"/>
+              <path d="M1671.554,2595.437l-48,-140l674,-242l143,429l-120,52l-73,-209l-20,9l73,207l-1229,441l-141,-414l275,-100l-246,-710l-158,45l-124,-351l-142,44l-291,-845l438,-153l678,1890l250,-89"
+                   fill="none" stroke="white" stroke-width="18"
+                   stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+              <path id="bw-route-path"
+                    d="M1671.554,2595.437l-48,-140l674,-242l143,429l-120,52l-73,-209l-20,9l73,207l-1229,441l-141,-414l275,-100l-246,-710l-158,45l-124,-351l-142,44l-291,-845l438,-153l678,1890l250,-89"
+                    fill="none" stroke="#C8102E" stroke-width="22"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="jc-flow-scroll-zone mt-6" id="bw-flow-zone">
+      <div class="jc-flow-scroll-sticky">
+      <div class="jc-flow-h-track" id="bw-flow-track">
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">17:00</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔賦上元〕</div>
+            <div class="jc-flow-loc">書店前</div>
+            <div class="jc-flow-desc">開場辭賦，焚香共敬天地人歷史，把場域轉化為有通天與歷史感的當下。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">17:05</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔拔河〕</div>
+            <div class="jc-flow-loc">書店前</div>
+            <div class="jc-flow-desc">三戰兩勝制，象徵不分你我，眾人合為一繩，以身體的力量凝聚共同意志。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">17:20</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔郊禮〕</div>
+            <div class="jc-flow-loc">書店前</div>
+            <div class="jc-flow-desc">邀請各組以才藝共慶，為下個五年種下技藝種子的祝福。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">17:40</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔點燈〕</div>
+            <div class="jc-flow-loc">書店前</div>
+            <div class="jc-flow-desc">昇燈儀式，點亮上元第一盞燈，宣告節日正式開始。</div>
+            <img src="assets/插圖/丙午/正日開場定位圖.png" alt="正日開場定位圖" class="w-full rounded-xl mt-3" style="cursor:pointer" onclick="openBwFlowLightbox(this)">
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">17:50</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔迎燈—慶津梁〕</div>
+            <div class="jc-flow-loc">書店前出發</div>
+            <div class="jc-flow-desc">以慶津梁「從移民歷史到來此地共慶」意象迎燈，馬燈引路、竿燈高舉、燈車隨行，召喚燈綵，祝福城市如花盛放。</div>
+            <img src="assets/插圖/丙午/正日開場.jpeg" alt="正日開場" class="w-full rounded-xl mt-3" style="cursor:pointer" onclick="openBwFlowLightbox(this)">
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">18:10</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔祈燈—文輿遊境〕</div>
+            <div class="jc-flow-loc">遊境路線起點</div>
+            <div class="jc-flow-desc">〈文輿號仔〉聲音起頭，起轎出發，眾人高喊文願，將願望化為喊聲，祈求實踐的開始。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">18:30</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔遊燈—轎輿連令・花燈入巷〕</div>
+            <div class="jc-flow-loc">林泉街→林德街→柴魚町→小樹的家→御書房</div>
+            <div class="jc-flow-desc">約兩小時遊街，隨機互動，傳遞燈節能量，擾動日常風景。</div>
+            <img src="assets/插圖/丙午/丙午遊庄.png" alt="丙午遊庄" class="w-full rounded-xl mt-3" style="cursor:pointer" onclick="openBwFlowLightbox(this)">
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">途中</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔點燈—起場鼓舞・繫文願・十二月令〕</div>
+            <div class="jc-flow-loc">各停駐點</div>
+            <div class="jc-flow-desc">上元入陣舞、邀民眾繫文願並與店家交儀、演唱《十二月令》，與鄰里共慶，擴大美的傳遞。</div>
+            <img src="assets/插圖/丙午/竿燈演出表.jpeg" alt="竿燈演出表" class="w-full rounded-xl mt-3" style="cursor:pointer" onclick="openBwFlowLightbox(this)">
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">21:00</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔點燈（尾）—起場鼓舞・十二月令〕</div>
+            <div class="jc-flow-loc">蟬雨越讀書店</div>
+            <div class="jc-flow-desc">最後一次遊庄點燈，以敬意為核心回到書店做最後演出，寄與未來成長與新火加入。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">21:10</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔安文輿・置燈〕</div>
+            <div class="jc-flow-loc">書店內</div>
+            <div class="jc-flow-desc">將文輿放回庭院，眾人卸下職位，感謝每一雙扛起的手。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">21:15</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔送燈〕</div>
+            <div class="jc-flow-loc">書店前</div>
+            <div class="jc-flow-desc">將文輿上的願望一個個放入小火盆，眾人圍燈慢行繞長圈，過化存神。</div>
+          </div>
+        </div>
+
+        <div class="jc-flow-h-item">
+          <div class="jc-flow-h-time">21:30</div>
+          <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+          <div class="jc-flow-card">
+            <div class="jc-flow-event">〔謝相逢—看燈十五〕</div>
+            <div class="jc-flow-loc">書店前</div>
+            <div class="jc-flow-desc">目光回到眼前人，以歌聲祝福彼此，望來年再見。</div>
+          </div>
+        </div>
+
+      </div>
+      </div></div>
+    </section>
+
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">TEAM</p>
+          <h2 class="section-title text-2xl text-stone-900">策劃團隊</h2>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-6 justify-center mb-8">
+        <div class="jc-chief-card" style="max-width:220px;">
+          <div class="jc-chief-role">核心</div>
+          <div class="jc-chief-name">莊逸軒</div>
+          <div class="jc-chief-badge">總召／藝術統籌</div>
+          <p class="text-xs mt-2" style="color:#78716c;font-family:'Noto Sans TC';line-height:1.6">建立上元的理念與想像，統整美學調性，帶領各組創作。</p>
+        </div>
+        <div class="jc-chief-card" style="max-width:220px;">
+          <div class="jc-chief-role">核心</div>
+          <div class="jc-chief-name">楊詠</div>
+          <div class="jc-chief-badge">公關／籌資</div>
+          <p class="text-xs mt-2" style="color:#78716c;font-family:'Noto Sans TC';line-height:1.6">蟬雨書店主理人，負責對外公關聯繫、贊助募資與資源對接。</p>
+        </div>
+      </div>
+
+      <div class="grid gap-8" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+
+        <!-- 現場演出 -->
+        <div>
+          <div class="jc-group-card mb-4" style="border-top:3px solid #C8102E;">
+            <div class="jc-group-role">現場演出</div>
+            <div class="jc-group-tasks">
+              <span class="jc-task-tag">舞蹈</span>
+              <span class="jc-task-tag">群奏</span>
+              <span class="jc-task-tag">文輿轎班</span>
+              <span class="jc-task-tag">歌謠</span>
+              <span class="jc-task-tag">竿燈</span>
+              <span class="jc-task-tag">馬燈</span>
+              <span class="jc-task-tag">船燈</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-3">
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">舞蹈</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">指導</span><span class="jc-task-tag">演出</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag jc-member-tag--lead" data-tip="舞蹈課程設計與指導，帶領學員完成丙午上元舞蹈創作。">黃程尉</span>
+                <span class="jc-member-tag" data-tip="舞蹈組演出、竿燈上街。">陳威豪</span>
+                <span class="jc-member-tag" data-tip="舞蹈組演出、服飾製作、對外宣傳。">侯文婷</span>
+                <span class="jc-member-tag" data-tip="舞蹈與群奏雙組演出。">董光平</span>
+                <span class="jc-member-tag" data-tip="舞蹈組演出、竿燈修復工作坊。">鍾承勲</span>
+                <span class="jc-member-tag" data-tip="舞蹈組演出、藝術統籌。">莊逸軒</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">群奏</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">指導</span><span class="jc-task-tag">演出</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag jc-member-tag--lead" data-tip="群奏課程設計與指導、歌謠演出。">蔡秉君</span>
+                <span class="jc-member-tag" data-tip="群奏演出、服飾製作。">蔡容禎</span>
+                <span class="jc-member-tag" data-tip="群奏演出、裝置製作。">曾家茗</span>
+                <span class="jc-member-tag" data-tip="群奏與舞蹈雙組演出。">董光平</span>
+                <span class="jc-member-tag" data-tip="群奏演出成員。">孫子芸</span>
+                <span class="jc-member-tag" data-tip="群奏演出成員。">羅雅文</span>
+                <span class="jc-member-tag" data-tip="群奏演出成員。">劉翊辰</span>
+                <span class="jc-member-tag" data-tip="群奏演出成員。">林耕宇</span>
+                <span class="jc-member-tag" data-tip="群奏演出成員。">許筑婷</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">文輿轎班</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">文輿出行</span><span class="jc-task-tag">喊願望箋</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="文輿轎班、左營遊庄社區對接。">林政諺</span>
+                <span class="jc-member-tag" data-tip="文輿轎班演出成員。">陳怡潔</span>
+                <span class="jc-member-tag" data-tip="文輿轎班演出成員。">李唯謙</span>
+                <span class="jc-member-tag" data-tip="文輿轎班演出、服飾製作。">謝廷威</span>
+                <span class="jc-member-tag" data-tip="文輿轎班演出成員。">王碩偉</span>
+                <span class="jc-member-tag" data-tip="文輿轎班演出、服飾製作。">鄭皓允</span>
+                <span class="jc-member-tag" data-tip="文輿轎班演出成員。">陳群</span>
+                <span class="jc-member-tag" data-tip="文輿轎班演出成員。">歐子玄</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">歌謠演出</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">歌謠</span><span class="jc-task-tag">現場演出</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="歌謠演出成員。">柯濟昇</span>
+                <span class="jc-member-tag" data-tip="歌謠演出成員。">林琮竣</span>
+                <span class="jc-member-tag" data-tip="歌謠演出成員。">張韶文</span>
+                <span class="jc-member-tag" data-tip="歌謠演出、群奏指導。">蔡秉君</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">竿燈組</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">竿燈上街</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="竿燈上街、舞蹈組演出。">陳威豪</span>
+                <span class="jc-member-tag" data-tip="竿燈上街、竿燈修復、舞蹈組演出。">鍾承勲</span>
+                <span class="jc-member-tag" data-tip="竿燈上街演出成員。">李茉孺</span>
+                <span class="jc-member-tag" data-tip="竿燈上街演出成員。">蔡佳洋</span>
+                <span class="jc-member-tag" data-tip="竿燈上街演出成員。">莊雅淇</span>
+                <span class="jc-member-tag" data-tip="竿燈上街、竿燈修復工作坊。">黃佳瑜</span>
+                <span class="jc-member-tag" data-tip="竿燈上街、竿燈修復工作坊。">黃遠君</span>
+                <span class="jc-member-tag" data-tip="竿燈上街演出成員。">張百州</span>
+                <span class="jc-member-tag" data-tip="竿燈上街演出成員。">黃暘尊</span>
+                <span class="jc-member-tag" data-tip="竿燈上街、竿燈修復工作坊。">鍾岳昇</span>
+                <span class="jc-member-tag" data-tip="竿燈上街演出成員。">胡嘉蓁</span>
+                <span class="jc-member-tag" data-tip="竿燈上街演出成員。">董宥孜</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">馬燈組</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">馬燈上街</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="馬燈設計製作。">莊子緯</span>
+                <span class="jc-member-tag" data-tip="馬燈製作、竿燈修復。">蔡睿軒</span>
+                <span class="jc-member-tag" data-tip="馬燈製作成員。">方宥鈞</span>
+                <span class="jc-member-tag" data-tip="馬燈製作成員。">林莆秦</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">船燈組</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">船燈上街</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="船燈製作與出行。">劉玟伶</span>
+                <span class="jc-member-tag" data-tip="船燈製作與出行。">洪歆婷</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 裝置製作 -->
+        <div>
+          <div class="jc-group-card mb-4" style="border-top:3px solid #C8102E;">
+            <div class="jc-group-role">裝置製作</div>
+            <div class="jc-group-tasks">
+              <span class="jc-task-tag">中裝置</span>
+              <span class="jc-task-tag">服飾</span>
+              <span class="jc-task-tag">竿燈修復</span>
+              <span class="jc-task-tag">木工配電</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-3">
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">中裝置／服飾</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">裝置製作</span><span class="jc-task-tag">縫製</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="中裝置主創、服飾設計與縫製。">莊逸軒</span>
+                <span class="jc-member-tag" data-tip="裝置製作、服飾縫製。">曾家茗</span>
+                <span class="jc-member-tag" data-tip="服飾縫製製作。">黎思承</span>
+                <span class="jc-member-tag" data-tip="裝置製作、服飾縫製。">謝廷威</span>
+                <span class="jc-member-tag" data-tip="裝置製作、服飾縫製。">鄭皓允</span>
+                <span class="jc-member-tag" data-tip="服飾縫製、群奏演出。">蔡容禎</span>
+                <span class="jc-member-tag" data-tip="服飾縫製、舞蹈組演出。">侯文婷</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">竿燈修復</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">修復工作坊</span><span class="jc-task-tag">配線</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊主導、舞蹈組演出。">鍾承勲</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊、舞蹈組演出。">陳威豪</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊參與。">王瓊儀</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊、馬燈製作。">蔡睿軒</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊、竿燈上街。">鍾岳昇</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊參與。">黃建箖</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊參與。">林玉純</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊、竿燈上街。">黃遠君</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊參與。">郭登利</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊、竿燈上街。">黃佳瑜</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊參與。">陳士豪</span>
+                <span class="jc-member-tag" data-tip="竿燈修復工作坊參與。">林靖詠</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">木工配電</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">木工製作</span><span class="jc-task-tag">配電</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="鼓車、文輿木工製作。">黃士倫</span>
+                <span class="jc-member-tag" data-tip="木工製作協力。">曾翔安</span>
+                <span class="jc-member-tag" data-tip="木工配電、場控統籌。">林政耀</span>
+                <span class="jc-member-tag" data-tip="木工配電、場控統籌。">高希菱</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 行政紀錄 -->
+        <div>
+          <div class="jc-group-card mb-4" style="border-top:3px solid #C8102E;">
+            <div class="jc-group-role">行政紀錄</div>
+            <div class="jc-group-tasks">
+              <span class="jc-task-tag">宣傳</span>
+              <span class="jc-task-tag">場控</span>
+              <span class="jc-task-tag">攝影</span>
+              <span class="jc-task-tag">社區代表</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-3">
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">宣傳</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">社群媒體</span><span class="jc-task-tag">對外宣傳</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="對外宣傳、社群媒體發文、藝術統籌。">莊逸軒</span>
+                <span class="jc-member-tag" data-tip="對外宣傳協力、舞蹈組演出。">侯文婷</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">場控組</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">現場場控</span><span class="jc-task-tag">後勤支援</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="場控統籌、木工配電。">林政耀</span>
+                <span class="jc-member-tag" data-tip="場控統籌、木工配電。">高希菱</span>
+                <span class="jc-member-tag" data-tip="現場場控後勤。">鍾政靜</span>
+                <span class="jc-member-tag" data-tip="現場場控後勤。">李惠鈴</span>
+                <span class="jc-member-tag" data-tip="現場場控後勤。">陳愷徽</span>
+                <span class="jc-member-tag" data-tip="現場場控後勤。">莊璦禎</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">攝影</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">活動攝影</span><span class="jc-task-tag">紀錄</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="活動攝影紀錄。">黃柏淯</span>
+                <span class="jc-member-tag" data-tip="活動攝影紀錄。">林晉宇</span>
+                <span class="jc-member-tag" data-tip="活動攝影紀錄。">廖章甫</span>
+                <span class="jc-member-tag" data-tip="活動攝影紀錄。">陳言叡</span>
+                <span class="jc-member-tag" data-tip="活動攝影紀錄。">林炘潔</span>
+                <span class="jc-member-tag" data-tip="活動攝影紀錄。">余慈宣</span>
+              </div>
+            </div>
+            <div class="jc-group-card" style="border-left:2px solid #e5c9a8;">
+              <div class="jc-group-role">社區代表</div>
+              <div class="jc-group-tasks"><span class="jc-task-tag">遊庄對接</span></div>
+              <div class="jc-group-members">
+                <span class="jc-member-tag" data-tip="左營遊庄社區主辦對接。">林政諺家</span>
+                <span class="jc-member-tag" data-tip="左營遊庄社區協辦。">植月選物</span>
+                <span class="jc-member-tag" data-tip="鹽埕遊庄社區主辦對接（侯宅）。">侯文婷家</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-8 bg-stone-50 rounded-2xl p-6 border border-stone-200">
+        <div class="jc-group-role mb-3">活動協力</div>
+        <p class="text-sm text-stone-600 leading-relaxed" style="font-family:'Noto Sans TC'">杏福巷子、梅琴洋行、丈引小院、嵐清音樂藝術工作室、博漢蔘業、有木田、瑞園食堂、春福、空腹蟲大酒家、醉魚、銀座聚場、新豐里長、新豐代天府、御書房、好椰、柴魚亭、九記食糖水、小樹的家、阿貴食堂、高雄市政府警察局苓雅分局、義交大隊、Gelatail五滴義式冰淇淋</p>
+      </div>
+
+      <div class="mt-4 bg-stone-50 rounded-2xl p-6 border border-stone-200">
+        <div class="jc-group-role mb-3">贊助名單</div>
+        <p class="text-sm text-stone-600 leading-relaxed" style="font-family:'Noto Sans TC'">王一帆、王鳳君、方宥鈞、何有廷、李耕豪、李雅菁、周美利、林美珍、林艾嘉、洪琮昱、侯佳榮、城珮慈、翁明輝、許瓊文、許棋禎、許立德、張圓媛、黃紋萍、黃雅芳、黃千芬、黃暘尊、黃羽彤、楊國煜、楊忠憲、趙慧如、陳淑芬、陳潔君、陳亮言、陳亮谷、蔡怡亭、簡秀芽、蘇千芳、吳南樺、三禾清豐、全心丼飯、阿貴食堂、香茗茶行、柴魚亭、新豐代天府、說給花聽花坊、欣律音樂藝術中心、林育生司機大哥、ARC專業燈光音響</p>
+      </div>
+
+      <div class="mt-4 rounded-2xl p-6 border border-stone-200 bg-white">
+        <div class="jc-group-role mb-2">特別感謝</div>
+        <p class="text-sm text-stone-600 leading-relaxed" style="font-family:'Noto Sans TC'">陳塵、林亞彤</p>
+        <p class="text-sm text-stone-500 leading-relaxed mt-2" style="font-family:'Noto Serif TC'">以及，參與小額募資的各位贊助者、書店客人！<br>和，無數在籌備過程給予協助的朋友、上街共同春鬧的市民們！</p>
+      </div>
+
+    </section>
+
+    <!-- ══ TEAM ══ -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">ARTWORK</p>
+          <h2 class="section-title text-2xl text-stone-900">創作內容</h2>
+        </div>
+      </div>
+      <div class="mt-8">
+        <div class="ys-gallery-outer" onclick="openBwArtLightbox(event)">
+          <div class="ys-gallery-track" id="bw-art-gallery-track">
+            <figure class="ys-gallery-figure">
+              <img src="assets/插圖/丙午/丙午文輿設計圖.png" alt="文輿設計圖" data-src="assets/插圖/丙午/丙午文輿設計圖.png">
+              <figcaption>文輿設計圖</figcaption>
+            </figure>
+            <figure class="ys-gallery-figure">
+              <img src="assets/插圖/丙午/丙午門神.png" alt="門神" data-src="assets/插圖/丙午/丙午門神.png">
+              <figcaption>門神</figcaption>
+            </figure>
+            <figure class="ys-gallery-figure">
+              <img src="assets/插圖/丙午/丙午馬燈.png" alt="馬燈" data-src="assets/插圖/丙午/丙午馬燈.png">
+              <figcaption>馬燈</figcaption>
+            </figure>
+            <figure class="ys-gallery-figure">
+              <img src="assets/插圖/丙午/丙午船燈.png" alt="船燈" data-src="assets/插圖/丙午/丙午船燈.png">
+              <figcaption>船燈</figcaption>
+            </figure>
+            <!-- duplicate for seamless loop -->
+            <figure class="ys-gallery-figure" aria-hidden="true">
+              <img src="assets/插圖/丙午/丙午文輿設計圖.png" alt="文輿設計圖" data-src="assets/插圖/丙午/丙午文輿設計圖.png">
+              <figcaption>文輿設計圖</figcaption>
+            </figure>
+            <figure class="ys-gallery-figure" aria-hidden="true">
+              <img src="assets/插圖/丙午/丙午門神.png" alt="門神" data-src="assets/插圖/丙午/丙午門神.png">
+              <figcaption>門神</figcaption>
+            </figure>
+            <figure class="ys-gallery-figure" aria-hidden="true">
+              <img src="assets/插圖/丙午/丙午馬燈.png" alt="馬燈" data-src="assets/插圖/丙午/丙午馬燈.png">
+              <figcaption>馬燈</figcaption>
+            </figure>
+            <figure class="ys-gallery-figure" aria-hidden="true">
+              <img src="assets/插圖/丙午/丙午船燈.png" alt="船燈" data-src="assets/插圖/丙午/丙午船燈.png">
+              <figcaption>船燈</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">DISCOURSE</p>
+          <h2 class="section-title text-2xl text-stone-900">創作論述</h2>
+        </div>
+      </div>
+
+      <!-- Essay Navigator -->
+      <div class="xz-essay-nav mt-12">
+        <div class="xz-essay-list" id="bw-essay-list"></div>
+        <div class="xz-essay-body" id="bw-essay-body">
+          <p class="text-stone-400 text-sm text-center mt-12" style="font-family:'Noto Sans TC'">← 點選左側文章標題</p>
+        </div>
+      </div>
+
+      <!-- 創作內容燈箱 -->
+      <div id="bw-art-lightbox" class="ys-lightbox" style="display:none;" onclick="closeBwArtLightbox()">
+        <button class="ys-lightbox-close" onclick="event.stopPropagation();closeBwArtLightbox()">✕</button>
+        <img id="bw-art-lightbox-img" src="" alt="" style="background:#fff;">
+      </div>
+    </section>
+
+    <!-- ══ SCHEDULE ══ -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">SCHEDULE</p>
+          <h2 class="section-title text-2xl text-stone-900">工作期程</h2>
+        </div>
+      </div>
+
+      <!-- OKR -->
+      <div class="mt-8">
+        <div class="jc-day-label mb-5"><span>OKR 核心目標</span></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-xl border border-stone-200 bg-[#fdfbf7] p-5">
+            <p class="text-[#C8102E] font-semibold text-sm mb-2" style="font-family:'Noto Sans TC'">O1・展望演出技藝</p>
+            <p class="text-stone-500 text-xs mb-3" style="font-family:'Noto Sans TC'">讓技藝在正日、遊庄中展現感動力</p>
+            <ul class="text-stone-700 text-xs space-y-1.5" style="font-family:'Noto Sans TC';line-height:1.8">
+              <li>・〈入陣舞〉完成基礎架構並精進微調</li>
+              <li>・〈上街節奏〉群奏完成教學，Ｃ段現場確認</li>
+              <li>・轎輿達成正日 8 人規模，絕招練成</li>
+              <li>・〈慶津梁〉〈花燈入巷〉定案，配合月琴排練</li>
+            </ul>
+          </div>
+          <div class="rounded-xl border border-stone-200 bg-[#fdfbf7] p-5">
+            <p class="text-[#C8102E] font-semibold text-sm mb-2" style="font-family:'Noto Sans TC'">O2・回顧裝置創作</p>
+            <p class="text-stone-500 text-xs mb-3" style="font-family:'Noto Sans TC'">以裝置承載丙午年沉澱與記憶</p>
+            <ul class="text-stone-700 text-xs space-y-1.5" style="font-family:'Noto Sans TC';line-height:1.8">
+              <li>・馬燈、鼓車、文輿完成製作</li>
+              <li>・竿燈完成修補 12 支</li>
+              <li>・服裝定版並完成縫製</li>
+            </ul>
+          </div>
+          <div class="rounded-xl border border-stone-200 bg-[#fdfbf7] p-5">
+            <p class="text-[#C8102E] font-semibold text-sm mb-2" style="font-family:'Noto Sans TC'">O3・深入社區共節慶</p>
+            <p class="text-stone-500 text-xs mb-3" style="font-family:'Noto Sans TC'">遊庄點燈在兩個社區落地</p>
+            <ul class="text-stone-700 text-xs space-y-1.5" style="font-family:'Noto Sans TC';line-height:1.8">
+              <li>・左營遊庄（02/20）完成</li>
+              <li>・鹽埕遊庄（02/21）完成</li>
+              <li>・正日路線達成 3 個以上店家完整互動</li>
+            </ul>
+          </div>
+          <div class="rounded-xl border border-stone-200 bg-[#fdfbf7] p-5">
+            <p class="text-[#C8102E] font-semibold text-sm mb-2" style="font-family:'Noto Sans TC'">O4・完成群藝新傳</p>
+            <p class="text-stone-500 text-xs mb-3" style="font-family:'Noto Sans TC'">素人透過課程習得技藝並上陣</p>
+            <ul class="text-stone-700 text-xs space-y-1.5" style="font-family:'Noto Sans TC';line-height:1.8">
+              <li>・群奏、舞燈、跳鼓各完成 12 堂課</li>
+              <li>・課堂創作完成（詞曲、舞作）</li>
+              <li>・總彩排完成，跨組協作達成</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 週次節點（橫向滾動） -->
+      <div class="mt-10">
+        <div class="jc-day-label mb-5"><span>工作週次</span></div>
+        <div class="jc-flow-scroll-zone" id="sk-flow-zone">
+          <div class="jc-flow-scroll-sticky">
+            <div class="jc-flow-h-track" id="sk-flow-track">
+              <div class="jc-flow-h-item jc-sched-node" data-week="1" data-milestone="true">
+                <div class="jc-flow-h-time">第 1 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">11/1–9</div><div class="jc-flow-loc">開工籌備</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="2" data-milestone="false">
+                <div class="jc-flow-h-time">第 2 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">11/10–16</div><div class="jc-flow-loc">—</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="3" data-milestone="true">
+                <div class="jc-flow-h-time">第 3 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">11/17–23</div><div class="jc-flow-loc">課程開始</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="4" data-milestone="true">
+                <div class="jc-flow-h-time">第 4 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">11/24–30</div><div class="jc-flow-loc">確認書店內部社群</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="5" data-milestone="true">
+                <div class="jc-flow-h-time">第 5 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">12/1–7</div><div class="jc-flow-loc">大跨組會</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="6" data-milestone="false">
+                <div class="jc-flow-h-time">第 6 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">12/8–14</div><div class="jc-flow-loc">—</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="7" data-milestone="true">
+                <div class="jc-flow-h-time">第 7 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">12/15–21</div><div class="jc-flow-loc">冬至開工</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="8" data-milestone="false">
+                <div class="jc-flow-h-time">第 8 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">12/22–28</div><div class="jc-flow-loc">—</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="9" data-milestone="false">
+                <div class="jc-flow-h-time">第 9 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">12/29–1/4</div><div class="jc-flow-loc">—</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="10" data-milestone="false">
+                <div class="jc-flow-h-time">第 10 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">1/5–11</div><div class="jc-flow-loc">—</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="11" data-milestone="true">
+                <div class="jc-flow-h-time">第 11 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">1/12–18</div><div class="jc-flow-loc">跨組綵排</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="12" data-milestone="true">
+                <div class="jc-flow-h-time">第 12 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">1/19–25</div><div class="jc-flow-loc">寒假開始</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="13" data-milestone="false">
+                <div class="jc-flow-h-time">第 13 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">1/26–2/1</div><div class="jc-flow-loc">—</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="14" data-milestone="true">
+                <div class="jc-flow-h-time">第 14 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">2/2–8</div><div class="jc-flow-loc">小彩排</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="15" data-milestone="true">
+                <div class="jc-flow-h-time">第 15 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">2/9–15</div><div class="jc-flow-loc">總彩</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="16" data-milestone="true">
+                <div class="jc-flow-h-time">第 16 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">2/16–22</div><div class="jc-flow-loc">遊庄點燈</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="17" data-milestone="true">
+                <div class="jc-flow-h-time">第 17 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">2/23–3/1</div><div class="jc-flow-loc">上元正日</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="18" data-milestone="true">
+                <div class="jc-flow-h-time">第 18 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">3/2–8</div><div class="jc-flow-loc">場復</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="19" data-milestone="true">
+                <div class="jc-flow-h-time">第 19 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">3/9–15</div><div class="jc-flow-loc">場後檢討</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="20" data-milestone="true">
+                <div class="jc-flow-h-time">第 20 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">3/16–22</div><div class="jc-flow-loc">裝置後製</div><div class="sk-card-detail"></div></div>
+              </div>
+              <div class="jc-flow-h-item jc-sched-node" data-week="21" data-milestone="true">
+                <div class="jc-flow-h-time">第 21 週</div>
+                <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
+                <div class="jc-flow-card"><div class="jc-flow-event">3/23–28</div><div class="jc-flow-loc">結案收尾</div><div class="sk-card-detail"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- COLLABORATORS -->
+    <section>
+      <div class="sec-hd">
+        <div class="flex gap-3 items-baseline">
+          <p class="section-eyebrow">COLLABORATORS</p>
+          <h2 class="section-title text-2xl text-stone-900">共同創作者視角</h2>
+        </div>
+      </div>
+      <div class="xz-essay-nav">
+        <div class="xz-essay-list" id="bw-collab-list"></div>
+        <div class="xz-essay-body" id="bw-collab-body">
+          <p class="text-stone-400 text-sm text-center mt-12" style="font-family:'Noto Sans TC'">← 點選左側創作者姓名</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  </div><!-- /page-content-wrap -->
+</div>
+</main>
+
+<footer class="bg-stone-900 text-stone-400 py-16">
+  <div class="max-w-4xl mx-auto px-4 flex flex-col items-center text-center">
+    <img src="assets/上元春鬧活動標準字（白）.png" alt="上元春鬧"
+         class="h-12 w-auto object-contain mb-5 opacity-80"
+         onerror="this.outerHTML='<p class=\'text-xl font-bold text-stone-200 mb-5\'>上元春鬧</p>'">
+    <p class="text-stone-500 text-sm mb-2" style="font-family:'Noto Sans TC'">保留傳統脈絡，注入當代靈魂</p>
+    <p class="text-stone-600 text-xs mb-8" style="font-family:'Noto Sans TC'">年秊節祭・蟬雨越讀</p>
+    <div class="flex gap-6 mb-8">
+      <a href="https://www.instagram.com/niennien.jieji/" target="_blank" rel="noopener"
+         class="flex items-center gap-2 text-stone-400 hover:text-amber-300 transition-colors text-sm"
+         style="font-family:'Noto Sans TC'">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        年秊節祭 IG
+      </a>
+      <a href="https://www.facebook.com/semishigurebooks/" target="_blank" rel="noopener"
+         class="flex items-center gap-2 text-stone-400 hover:text-blue-300 transition-colors text-sm"
+         style="font-family:'Noto Sans TC'">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        蟬雨越讀 FB
+      </a>
+    </div>
+    <div class="w-full border-t border-stone-800 pt-6 text-xs text-stone-600" style="font-family:'Noto Sans TC'">
+      &copy; <span id="footer-year"></span> 上元春鬧籌備小組 &middot; 年秊節祭
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const BW_PHOTOS = [
+  "20260228-099.jpg",
+  "20260228-104.jpg",
+  "20260228-116.jpg",
+  "20260228-126.jpg",
+  "20260228-128.jpg",
+  "20260228-140.jpg",
+  "20260228-15.jpg",
+  "20260228-154.jpg",
+  "20260228-158.jpg",
+  "20260228-16.jpg",
+  "20260228-17.jpg",
+  "20260228-181.jpg",
+  "20260228-187.jpg",
+  "20260228-19.jpg",
+  "20260228-197.jpg",
+  "20260228-20.jpg",
+  "20260228-204.jpg",
+  "20260228-213.jpg",
+  "20260228-22.jpg",
+  "20260228-24.jpg",
+  "20260228-28.jpg",
+  "20260228-31.jpg",
+  "20260228-34.jpg",
+  "20260228-42.jpg",
+  "20260228-5.jpg",
+  "20260228-6.jpg",
+  "20260228-67.jpg",
+  "20260228-7.jpg",
+  "20260228-92.jpg",
+  "IMG_9879.JPG",
+  "LINE_ALBUM_丙午上元正日_260305_104.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_114.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_20.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_204.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_266.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_277.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_289.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_305.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_306.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_316.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_325.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_335.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_340.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_35.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_353.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_364.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_367.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_391.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_405.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_41.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_86.jpg",
+  "LINE_ALBUM_丙午上元正日_260305_87.jpg"
+];
+// BUILD:BW_ESSAYS_START
+const BW_ESSAYS = [
+  { id: 28, title: "課程計畫討論會大綱", date: "2025-10-16", url: "", body: `> 備注：10/17下午三點半於書店新址
+
+# 議程
+
+ㄧ、分工、角色定位重佈
+
+二、課程內容與其條件
+
+三、階段目標與總體展望
+
+四、延伸-關於跳鼓陣的實行與折衷
+
+---
+
+嗨各位，很抱歉很晚才整理明天的討論項目。
+
+再次仍先簡單解釋一下，首先，會針對書店的現況做簡單介紹，包含新的角色分工和書店規劃。而目前主要會遇到的問題，是裝潢完工時程還沒有完全確認，目前期望至少能在十一月中能夠使用教室，但還有一些變數的可能需要考慮。
+
+然後，由於資訊一直沒有處在同步的狀況，明天還是會希望能針對課程規劃與想像讓彼此更認識，尤其是因為要協助招募，所以會需要老師們那邊也給予更多上課的核心想法、理念等等，包含對課程規劃、期程的看法（結合第三點，丹丹上次討論就有提到蠻重要的想法，明天希望也能核對），然後也再次確認一下大家對於課程費用的考量，希望能讓邀請參與的環節更順利。
+
+而關於第三點，在此直接先簡述一次，屆時可針對細節再做討論：
+
+這次的課程，算是思考上元「轉型」的第一步，也是如何讓「藝術」可以更日常的持續嘗試。從兩年前開始，就希望讓上元不是一場突發性的體驗，而是能更細水長流，從日常學習到一場又一場「成果展」。但也知道，要讓人開始接觸藝術，尤其「關於群體的」、「回到根本感知的」之藝術，又不同於舊體制對藝術的理解，而在招生上格外困難，所以在此階段，仍先以上元累積的基本盤出發，慢慢看能不能逐漸擴大，讓社群外的人也慢慢加入。
+
+也之所以，此階段便希望在學習的過程中，能產生一個有小型成果展意義的演出，而關於具體是什麼方向的表演，也至少再花一次時間討論（光就形式來說，我個人希望創造出一套「能結合裝置、歌、舞、鼓（表現出跨域性），且能去不同區域進行（創造交流、宣傳）的演出（或許類似陣頭，能在活動前到不同的地方做類似「拜年」的活動），而這在上元的什麼環節適合發生，就可以再細一點規劃）
+
+不管如何，由於是第一次，多少還是有實驗的意味，但仍希望藉此經驗，也讓後續的宣傳、未來的推廣有更多基礎。另外，為了讓學習團體自體能更向上發展，有特別安排「小組長制」，也就是每個小組有先指派一位核心成員作為小組長，協助團體動力的提升與一些人事的溝通處理，希望讓學習過程是更凝聚的，而不只是各自上課然後就回去（希望能產生自發性的練習）。
+
+以上是目標和展望的部分，另外一個支線，是要討論不久前的提案「跳鼓陣」的成立可能。主要是希望能有一個結合舞與鼓的表演發生，讓表演的呈現可以更豐富。但直接來說，礙於現況條件，除了課程難度，招募此隊可能也更加的困難，所以也想討論一下是否折衷處理或直接取消此想法（先送往未來～）。
+
+以上，大約是明天的項目，就再麻煩各位確認了。
+
+## 課程基礎規劃（明天需確認每項目）
+
+- 鼓課：
+    - 人數：六～十名（目前報名人數為四～五）
+    - 時間：1.5或2小時／暫定每週三晚上七點開始
+- 舞課：
+    - 人數：六～十名（目前報名人數為二～三）
+    - 時間：1.5或2小時／暫定每週一晚上七點開始（尚可更動）
+- 日期預計：十一月中旬到二月初（約莫十二堂課）
+- 費用：一人/ＯＯ（需再確認）`},
+
+  { id: 1, title: "【群藝新傳】——書店文藝課程招生", date: "2025-10-19", url: "https://www.facebook.com/semishigurebooks/posts/pfbid0uTBDaEqrfg5cL5BhTqHCPHw4TWpV3nPzXhsgkojkPPhC3todcHYgv74inc3mFPsfl?__cft__[0]=AZUAf9BAqv2yQQHCWcEFPYlcP_Etg2slpUDBrONZ6JZ6gObRzDlDpCjr3rSg0ZKDG_a7GlgGkb4RMDPEryFTLcMaPQgGUSJclngmFzRv1yP1bTAlOA2QLLBn8EoCCXSq-Quiy8OqTeq280khNXF-dl5ZsAUPXL30kEc7uATIUDtGY5llCULrBIp590fQr17M7H0&__tn__=%2CO%2CP-R", body: `從書店舊址結束到現在，又經歷了「入書市」的籌備與新址的找尋，馬不停蹄地，目前來到了整理新空間的階段，還期待不久後以全新的面貌與朋友相見。
+
+也隨著時間逐漸入秋，我們同步醞釀起明年上元的想像。
+
+是一年一年，希望能以更充裕的方式準備這個節日，所以我們決定規劃不同的藍圖，從節奏、舞蹈、絃琴到手作，希望能以「一季」的時間，讓「學習」一步步展開，並且深耕於日常。
+
+這個藍圖命名為「群藝新傳」——「群藝」意味著眾人一齊、不分世代、階級的藝術，而「新傳」，則是指在傳統之外，卻仍帶上傳承的想望。
+
+過了五年，還是期許能持續成長、摸索更成熟的方式，不管是關於「過節」、還是回到藝術文化。知道一季的時間對很多人來說未必輕鬆，且還可能得承擔相應的表演壓力，但仍誠摯地邀請各位朋友的參與，繼續一起為城市創造美的可能。
+
+但也要提醒，由於我們仍屬於以民間發起的模式，並沒有政府補助，所以會需要各位朋友以學費的模式讓事物運轉起來，而這不只是對老師們專業的肯定，也是更實質對我們努力的支持。
+
+以下便是報名與課程的相關資訊，有什麼問題也可以直接私訊書店，還期待朋友們的參與和分享！
+
+報名時間：即日起至十一月九日
+
+[報名表單](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FJogboZiVmJkBPUPBA%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExUVNoRElRaTNITHkweld5OHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR7wUXZMyeZqbcYCYooRQ_n0garBEWx6Qat7Vp7PnIoErceLzXhoSik2tCofjQ_aem__94BTUSNPJQrDUVK8_bY5A&h=AT2WVcuPxqmwMtpfBvkKbQozxt2khV2J5y4aV2uxhQWkUtjXIc6knmd9dtl1mgVxAB5p8g0rDjnp7TsNbB9V4qVkMUVtPbqfiRjeM4Gcl-yDHwlAa0KtI1HaF_pefrkKHsqX5XQERMIqO3kMtnkKcYKTwKEWpwlkgt0FRg&__tn__=-UK-R&c%5B0%5D=AT3IAM2GHMowEqaza3-8pIeEeTVaXo-SsbCG0IJRY8TwGjfQ8AYrELbRyIbBzVNj2Y-wTS0jnwXxujNTrBC2vG7HZow1W9zfQrQANsvDkzfp9m8CTKSBI9ddUUKnpJFqAgc8oA-8CU0kI62pFv2_hcSMv3c_pyX2IrTPICRhtCtjXbO4FoG5Hc-4p5Dgap2En6BiLke9DBlMYajIBbhi8Rax-Q)
+
+- 若有意願但時間無法配合的人，也歡迎填表單讓我們知道，這將是我們繼續規劃的動力。`},
+
+  { id: 2, title: "【群藝新傳】——書店文藝課程招生二", date: "2025-10-26", url: "https://www.facebook.com/reel/1718981315443576/?__cft__[0]=AZWdC0zPE3FMwwDey5pWcZbDwaYx8dPFLLy2Jr7L-6KLNL2ltPUYGIbL5kQ54R96zXkOxrDD7Dvl1wtaDCxuSdZe-wCdPMJoD7XlSEQGnVqGCCCXt32Q04ajIWm0xtU8KZyg_wAXXs-G7oXNBgHe0rhOJNnj23_qN8a84cfAO4G0c08Qz418EzwZ6uJG_ohvgdErCUBmViqZf5yxHCesekM-&__tn__=%2CO%2CP-R", body: `開始招生一週，有人問：如果沒有基礎，也可以報名嗎？
+
+在此特別回答：是可以的。且這其實就是這次課程的初衷，我們想試著「從頭開始」，讓學習能夠發生。
+
+但還是要補充一下，所謂的「基礎」究竟是什麼呢？
+
+畢竟在當代，藝術早已有明確的科班體系，如何打小訓練「基礎」，以至成為一個「專業者」，相信是很多人對「基礎」的印象。
+
+然而，這或許也成為了門檻，讓人覺得「基礎」離一般人更加遙遠，因為那「既無聊」又「需要很多時間」（還容易不得要領）。
+
+況且，近年來也出現很多的「藝術工作坊」、「藝術體驗課」等，除了推廣更多元的藝術學習方式，也多了「表達」優於「技術」的觀念。如此一來，「基礎」之於藝術是否必要，似乎也不再是絕對的條件。
+
+關於這點，我們也是同意的，並不是一定要「基礎」才能接觸藝術，也畢竟，以往的上元便鼓勵「任何人都可以參加」，希望藉由節慶、祭典的形式，降低人對於藝術門檻的想像，讓藝術不再束之高閣，而更能為民眾所擁有。
+
+所以，我們並不會放棄這項要素，只是想在這之外，試著開闢新的道路，也就是讓人在「為了成為專業者（或去比賽）」之外，卻依然「能發現學習基礎的價值」，只因為「基礎能與他人更自由地互動」。
+
+幾年來發現，上元裡最快樂的一件事，便是各種有機的互動，不管是舞蹈還是音樂，都容易因為彼此默契的共振而倍感喜悅。
+
+然而，在缺乏基礎的狀況，人們卻很難與對方真正地「對上」。不管是聽見底奏的拍子也好、認識身體的韻律也好、還是在現場學會感知彼此之間的距離，其實都有某種為了「默契」而需要的「基礎」。
+
+如此，在「如何讓更多人能參與」之外，我們也開始思考「怎麼在素人與專業之間搭建新的橋樑」。那既是希望節慶藝術中互動的面相能更被打開，另一方面，也是希望多一個管道，那大家覺的「基礎」所需要的努力其實有不同的理解方式。
+
+從乙巳跨越到丙午，還期待各位朋友的報名，一步一步，不只開闊對藝術的不同觀點，也持續認識世界更豐富的感知。
+
+┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+
+報名表單：[**https://forms.gle/JogboZiVmJkBPUPBA**](https://forms.gle/JogboZiVmJkBPUPBA?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExUVNoRElRaTNITHkweld5OHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5MDE9wGY8nSRPoAaFGa0KaBJaVIRubeWV4DR4Xt3QtACg26qMr2P9DZuwUJQ_aem_zwbH-yFDXdTMFPkepOqraA)
+
+- 目前群奏課已順利開班，剩下名額有限，還請把握。`},
+
+  { id: 29, title: "上元舞蹈（乙巳－丙午討論）", date: "2025-11-22", url: "", body: `## 理念
+
+一、讓舞蹈 藉節慶普及日常生活、創造人的連結。
+二、創造相應之豐富表現、跨域互動、乃至美学，擴大舞蹈定義。
+
+## 丙午年挑戰
+
+一、缺全易讓大眾認知的形象，（ex：竿燈手？報馬仔？舞者？）
+二、缺乏「基礎練習」的稳定方向。（ex：肌力．拍子…）
+三、舞蹈定義本身模糊，導致想像容易落差。
+
+（如下：
+
+Ａ、
+參與（易擴大參與群眾、適合遊戲方法）
+　|
+　|　　→經驗落差使標準不好定位
+　|
+表演（練習門檻、具觀賞性、辨識性）
+
+延伸｜戲舞不分題：「角色」的定位=？
+
+Ｂ、
+情動形（自由、即興、個人魅力）
+　vs　　→討論材料不足（缺乏範式）
+形動情（框架、運用模組、文化）
+
+## →應對
+
+「整理学員組成、重新定位課程目標
+思考如何最大化回應上述挑戰？」
+
+一、定位角色形象，乃至訓練方法。
+二、奠定幾種運用情境，持續扣住想像（包含曲目、上街、拜年、群眾互動～）
+三、學生 × 導師開係再界定（學習→共創）`},
+
+  { id: 30, title: "遊庄點燈計劃書（胎死腹中）", date: "2025-12-17", url: "", body: `# **壹、計畫緣起與目的**
+
+「2026丙午上元」為蟬雨越讀書店第六度推動的春節節祭行動。前身「2025乙巳上元」以「打造一場民間的移動燈會」為精神，透過集體自製燈籠、走街祈福與文化展演，喚回城市中逐漸淡去的元宵節記憶，也重新凝聚地方居民共度佳節的情感。在這樣的基礎上，本年度延續「讓藝術介入城市社區空間，創造當代的交陪美學」的理念，並進一步回到節祭與生活日常的關係本質。
+
+2026年，我們嘗試以更「輕盈」與「生活化」的方式回應上一屆的社群經驗。相較於以往的單一路線大規模遊行，本屆活動將規模縮小、線路拆解，分別在三個具有一定社群連結的場域展開，包括：
+
+一、左營舊城線（由長期與書店合作的小食、手作、文化工作者串連而成）
+
+二、鹽埕臨海線（以在地店家、文史團隊與鹽埕老字號為核心）
+
+三、文化中心線（聚焦林泉街周邊巷弄，以小尺度的鄰里藝術介入為主）
+
+這三條線路不是單純的路徑分岐，而是城市中不同生活圈、不同生態系的「切片」。每一條線，都源自「人與人之間的合作」，由願意與書店同行的朋友、職人與店家共同生成。這樣的組織方式回到傳統「庄頭遊燈」的精神──由社群自然地長出節慶，而非外加的大型活動製作。
+
+在操作上，我們仍以「藝術」作為主要語言，邀請地方社群參與燈籠製作、走街儀式、講座分享與小型展演。透過傳統技藝的學習與共享，找回「自己做燈、自己提燈、自己過節」的樂趣，並透過元宵夜的步行行動，向城市傳遞新年的祝福。
+
+我們期望藉由「多線共存的小型節祭」，回應近年社群所面臨的封閉性問題：在快速的城市變遷中，人們之間的合作網絡逐漸鬆動，異質文化之間的理解也時常被簡化或同化。本計畫透過儀式、交換與款待的行動，尋找「打開」「連結」與「互為主體」的倫理細節，打造一個能讓差異共存、被善待且彼此聆聽的生活場域。
+
+「丙午上元」因此不僅是一次節慶活動，更是一次重新思考社群關係的實驗。
+
+# **貳、計畫目標**
+
+本計畫整體目標可分為四項面向，分別對應於節祭的文化意義、藝術實踐與社群建構：
+
+一、節慶文化的延續與轉譯
+
+二、以社群為基礎的城市串連
+
+三、藝術介入與共創機制的推展
+
+四、回應多元文化與社群倫理的議題
+
+# **參、工作內容與執行細項**
+
+本計畫以「田野整理—社群連結—小誌編輯—藝文推廣—節祭實踐」五大軸線展開，並以三條節祭路線（文化中心線、左營舊城線、鹽埕臨海線）為行動框架，逐步推動社區串聯與節慶再生產。以下為各階段之具體工作內容與執行細項。
+
+一、田野整理
+
+（二）資料整理與田野補足
+
+二、尋求合作與贊助（友店串連／禮物經濟）
+
+三、小誌編輯製作
+
+四、講座（節祭文化 × 地方故事 × 路線說明）
+
+五、工作坊（產出for正式活動）
+
+（一）手作工作坊（燈籠、花燈、材料共作）
+
+（二）民謠工作坊（節令歌、走街歌、地方文本）
+
+六、正式活動（丙午上元三線）
+
+（三）丙午上元正日（文化中心線 × 三線匯流）`},
+
+  { id: 3, title: "冬至———上元始動", date: "2025-12-21", url: "", body: `在歷史中，冬至有著「一陽來復」的意象。
+
+是因為黑夜將慢慢縮短，而白天則要慢慢變長。古人便認為這是個好時機，適合立定目標，開始做些什麼。
+
+可惜書店離開幕仍需要一段時間，畢竟該整頓的、該確立的，不管是空間規劃、營業方向、還有成員關係等等，都仍持續地想方設法中。未來到底會怎麼，除了一份期待以外，更多的是一個個問句等著面對。
+
+不過，上元倒是要開始轉動了。
+
+雖然隨著遷址、成員變化等因素，而有了明年將縮小規模的決定，且明年的模式也將配合現有條件進行了不小的調整。但對於我們來說，不管是一份對上元更長遠的想像，亦或者想好好「過節」的心，到底，都是不變的吧。
+
+所以，在繼續搭建書店的同時，亦開始邀請有緣的朋友協力作節，從修復舊燈、參與製作日常舞蹈練習、到現場秩序，一起見證第六年的轉折、與嶄新的開始。
+
+✦————✦————✦————✦————✦
+
+🁢 志工招募｜[https://forms.gle/uLJqWacfDNcQrMAy9](https://forms.gle/uLJqWacfDNcQrMAy9)
+🁢 燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+✦——✦——✦——✦——✦——✦——✦——✦
+
+#2026丙午上元 系列活動
+
+▍上元正日｜2026年02月28日（六）｜路線規劃中
+▍左營遊庄｜2026年02月20日（五）｜舊左營至建業
+▍塩埕遊庄｜2026年02月21日（六）｜塩埕周邊
+
+✦——✦——✦——✦——✦——✦——✦——✦`},
+
+  { id: 4, title: "【2026丙午上元：年末始動】", date: "2025-12-30", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02JzYaKvinKWWEUTcsnf43GfhWWYXJovR15SXvJ95kTc4Vw2YN4xpAUAU3cXdjt8t4l", body: `冬至後，隨著書店新址的漸漸成形，上元也一步步展開了籌備。
+
+秋初時的「群藝新傳」已經走過一半，前兩天也剛結束轎班的山上集訓。
+
+是累積了過去沒有的經驗，從身體、到節奏、再到表演。是整整過了五年，決定重頭開始的學習。
+
+然而，卻也遲遲沒有對外公布消息。
+
+畢竟，明年的上元，可能會很不一樣，不只客觀條件上空間的轉移、成員的變化。更是主觀上得再一次面對的：對未來持續的「辯證」。
+
+是辯證藝術、辯證儀式、辯證人與人的關係、辯證書店、辯證文化、辯證金錢與資源、辯證過去的五年與此刻。
+
+但有時候仍會困入規模想像的壓力，像膨脹的牛皮，無形中在意起不知名「大眾」的眼光；或者擅自扛起莫大的責任，好似得回應支持的人的期待，儘管都知道本質皆是善意而非利害關係。
+
+想得太多，戰戰兢兢，便有夥伴提醒，僅需要好好履行和城市一年年花放的約定便足矣。也有夥伴鼓勵，如果這算是一種低谷，那更要帶上守護餘燼的心情，讓上元的火苗延續。
+
+如此試著慢慢放下些什麼、並一步步重新整頓自己。但也不得不說，隨著每次「放下」，也又在哪裡誕生了新的想像而汲汲營營。
+
+總之，老詞了，確實仍在路上，就且走且看吧。
+
+在此跟朋友們宣布：明年仍會舉辦上元。會做一些燈籠、嘗試新的舞步、依然上街、以及唱一些寫過的歌。但會縮減規模、且試著顧及書店的運作。不過，能保證一份不變的初心：我們將繼續在這座城市尋找、創造，屬於人在當代過節的樣子。
+
+文／逸軒
+
+（感謝林翔裕@0312.xiang 協助轎班攝影）
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍丙午上元說明會｜1月17日（六）15:00｜蟬雨越讀新址（高雄市苓雅區林泉街38巷3號）
+
+▍丙午上元正日
+
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+
+∆ 舊左營至建業｜2026年02月20日（五）
+
+∆ 塩埕周邊｜2026年02月21日（六）
+
+✦————————————————————✦`},
+
+  { id: 5, title: "【2026丙午上元：志工招募】", date: "2026-01-02", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02E8nNh3WF8N558LRSkqo6sEorqMi7TWs19WavzHqqpnBxukXXcDfB93H4Ri3XJT5ql", body: `┌━━報名表單━━┐
+
+[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://forms.gle/uLJqWacfDNcQrMAy9?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExOW42U2o4c1l3aXF5MnZ2SHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR4LucayNpBlhwIN3esO7fj2zGn34MgxZJbrnuJJAEZZIkRhlVcllHxZYAZYkQ_aem_p-O9tQycUN3sWJttB4eSTQ)
+
+└━━━━━━━━┘
+
+回望乙巳年的志工招募，當時開展了很大的「藍圖」。
+
+是為了完成「歲轉」的陣型，便希望湊齊二十二位竿燈手。是憧憬郡上的盆舞，便希望至少有三十人一同學舞。如果再加上「文輿花轎」的轎手、「山車陸船」的推燈手、以及機動、場控的人們，志工幾近百人，還不包含過程的裝置製作。
+
+結果來說，雖然還是完成了規模，但若論裡頭的細節，卻盡是需要被填補的空格。為此幾番檢討，覺得應該要把「藍圖」重新做「實」，而不能只停在「大」的樣子。
+
+為此，今年的志工招募，我們重新檢討了核心成員可以負荷的人數，會以「協力中型裝置」、「修/作燈籠」、「轎扛」、「撐竿燈上街」、「活動/後勤」作為主要招募對象。而像是舞蹈、節奏、音樂等組別，則會配合「群藝新傳」的規劃決定後續的招募事宜，此階段暫不開放報名。
+
+仍不知道會演變成什麼的結果，包含如何與新空間相處、如何迎接的新夥伴、以及如何回望過去和現在的上元。只期待今年能比往常更加地踏實、且更穩健地，開啟通往下個五年的道路。
+
+- 填完表單後會於1月11日前陸續聯繫。
+
+文／逸軒
+
+✦——2026丙午上元：延續過節火苗——✦
+
+🁢 燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍丙午上元說明會｜1月17日（六）15:00｜蟬雨越讀新址（高雄市苓雅區林泉街38巷3號）
+
+▍丙午上元正日
+
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+
+∆ 舊左營至建業｜2026年02月20日（五）
+
+∆ 塩埕周邊｜2026年02月21日（六）
+
+✦————————————————————✦`},
+
+  { id: 6, title: "【2026丙午上元：轎班的苦旅——招募轎手】", date: "2026-01-07", url: "https://www.facebook.com/semishigurebooks/posts/pfbid0c22M7fw852MwMYH4NHFuNkWF6m3JroNwfasN7Fk3hgMPbUtmcJcRd3krMJAY87FKl", body: `┌━━報名表單━━┐
+
+[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExOW42U2o4c1l3aXF5MnZ2SHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR65-vfH9K43EhTKjcNmQrFHL1KJOrmVXZqlZHYrzrig2ehk1txr5J4o7sQu6g_aem_6f1CVdCExHGIo6jUyzRe8A&h=AT2Ayql1vb4GJ4dDO0YvuMHVzlx9yMbU7sLyyp0FosdjoRGAY6DTKmFv4LQHpWcb6B2orNZSMrpYuCBzwiyxhpzZQ0mnNnDhrQwh3X5tRGdEL2yIGdRbEaks0da8A3mWtJHiG8TJjDGpwSHTXh1hC9wkDznmviHP9EnitA&__tn__=-UK-R&c%5B0%5D=AT2jiBO3zjzgtk_qRZrNFUfIraU_KDpHrFEKFAaMayb-Ioxz8uHuR9gsy_-atVttoeLcQF36J0JbIM9RsaVdPj0s4-KVh8x7dOlmdXRYnVe_wo1xrLrRVTWeRvS9nswreBDap2j9GMVNImsX24_5NKWeXp8ZqbkPyIIYYgn-upgcGXD3vHed48_3uqWDmyOvGMACRiftHoELuBtyA7iigR8TLQ)
+
+└━━━━━━━━┘
+
+.
+
+「政諺，我看你似乎很適合扛轎！」
+
+逸軒在癸卯上元開始前2小時對我說，明知是趕鴨子上架，但就是無法拒絕好友的請求，被抓進了轎班，直至現在⋯⋯
+
+癸卯年，四人上街，我們被轎子的重量壓到喘不過氣；
+
+甲辰年，為解前一年之苦，將轎班擴編到16人，可隨時進行輪換休息；
+
+乙巳年年初，16人打散成兩組，分成了文輿與花轎，初次有了轎與轎互動；
+
+年中的「入書市」，經歷為期一個半月的身體與步伐訓練，首次嘗試讓扛轎「具表演性」；
+
+年末的山上集訓則開始思考，如何讓扛轎這件事回歸到自己的內心。
+
+若要在此做個這三年的小結，從單純走路，到意識到自己為表演者，再到理解何謂轎手，轎班已不再是單靠蠻力負重前行，而是在苦旅中，追尋更好的自己。
+
+.
+
+成為轎手要具備什麼條件？撇除身高、年齡等物理數值，從身為一個「人」切入，我認為轎手必須同時具備「野性」與「感性」！
+
+野性，是種難以馴服的原始性情，在現代社會與教育中不被允許、被壓抑。轎手所需要的野性，是力量的展現，是生命力的擴張，是一個人的自信與無懼，也許只是一個眼神，又或是一個真誠的微笑，都會成為觀賞者心中難以忘懷的風景。
+
+感性，是種感知他人與環境的能力。想像一頂轎子，每個角都存在一位轎手，轎手的雙眼與身體是「被受限的」，後方轎手看不到前方的路，前方轎手看不到轎子的狀態，左邊的轎手右肩被壓住，反之亦然。唯有把感受打開，感覺同一轎桿支撐重量的同伴、身邊的環境資訊、城市帶來的情緒，一個微弱的力道，便能知道要停要走，一點聲音，便能清楚自己身在何處，一個來自路人的點頭，便能讓自己內心燃起溫暖。
+
+.
+
+三年走來，轎班一直很難被人們記起！畢竟肩上是座美麗的燈輿，所有目光皆被那燈給吸引。人們回顧常提歡樂的舞蹈組、氣勢磅礡的鼓隊、行動快速且自由的竿燈、大到不像話的燈車⋯⋯
+
+但轎手啊轎手，自豪吧！我們就如盤古，隻手舉起那美麗的繁星夜空，雙腳比任何人都站穩大地！也許失去能夠自由活動的身體，但卻擁有彼此！
+
+老話一句，咱們就繼續往前行吧！踏穩了我的朋友，一個厲害的轎手會在跌宕起伏中找到自己內心的方向，同時也帶給他人力量！
+
+苦旅，是面對自己的軟弱、面對他人對自己的信任、面對自己的極限⋯⋯最終超越的旅程。感受快樂與痛苦、感受浪漫與現實，從相信自己背負的意義，懷疑自己的意志堅定，將錯綜複雜的情緒，化成願望、化成呼喊，讓聲音在這漆黑孤單的城市中迴盪吧！
+
+從乙巳到丙午，這趟苦旅我們又走了一年！
+
+文／轎班班長　林政諺
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍轎手練習：1/10、1/18、1/24、1/25、1/31、2/1下午
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍丙午上元說明會｜1月17日（六）15:00｜蟬雨越讀新址（高雄市苓雅區林泉街38巷3號）
+
+▍丙午上元正日
+
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+
+∆ 舊左營至建業｜2026年02月20日（五）
+
+∆ 塩埕周邊｜2026年02月21日（六）`},
+
+  { id: 7, title: "【2026丙午上元：讓種子發芽——群藝新傳】", date: "2026-01-12", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02qGeN8Xn62C2YPHdzMQaFYbrnNmP57HDZJRpZL529Z12BdyYETrWxyBM18mFJyVmzl", body: `┌━━報名表單━━┐
+
+[**](https://forms.gle/uLJqWacfDNcQrMAy9?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExOW42U2o4c1l3aXF5MnZ2SHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR4LucayNpBlhwIN3esO7fj2zGn34MgxZJbrnuJJAEZZIkRhlVcllHxZYAZYkQ_aem_p-O9tQycUN3sWJttB4eSTQ)[https://forms.gle/uLJqWacfDNcQrMAy9**](https://forms.gle/uLJqWacfDNcQrMAy9**)
+
+└━━━━━━━━┘
+
+乙巳上元結束後，有人問光平：「明年想做什麼，讓他在祭典中發生？」那刻他的語塞，像每次學習的起點——不知道答案，卻願意把身體與時間交出去，讓可能性長出來。
+
+於是，「群藝新傳」成了一顆被放進土裡的種子：有人選擇群奏，有人走進舞蹈，也有人兩邊都跳進去，只為了在丙午年的上元夜，讓熱鬧被學習點亮。
+
+.
+
+容禎分享，原以為節奏課的門檻是看懂五線譜上的豆芽，但蔡秉把大家帶回更原始、更接近身體的路：「嘴譜」。先用「咚、答、鏘」的聲音，把節奏唸進嘴巴、唸進呼吸，再讓鼓棒落在鼓面上。
+
+當節奏不再只是紙上符號，而是一口氣、一個循環，群奏就不只是「整齊」，而是「一起」：有底奏、有加花，有呼有應，有時甚至不需言語，也能靠聆聽，把亂掉的自己拉回。她說，那種同樂讓藝術更像日常，也讓上元的祝福有了新的語言——不只揮手與口號，還可以用音樂把歡樂送出去。
+
+.
+
+而舞蹈的學習，則是另一種「一起」。文婷記得，無垢的林麗珍老師曾描繪：「呼吸之後，便是舞蹈。」而她認為，上完丹丹的舞蹈課，確實找到能真正把身體、音樂、與空間統合起來的關鍵。
+
+那不是更用力地完成動作，而是更清楚地知道自己怎麼用呼吸，讓節律從身體裡長出來。當呼吸支撐了動作，古老的「氣韻」就能和現代的接觸即興互相照映；當下盤穩固，文化不再只是背景，而是施力的根。更重要的是，有了空間性，上元這種需要遊走在思考與不思考之間的舞蹈，也有了表演意識，讓風吹草動、驚鴻一瞥，能被身體給吸收，幻化成具體的流動，舞蹈能夠自娛，也娛人。
+
+.
+
+威豪則把「狀態」說得更日常具體。他觀察到，課堂從暖身、拉筋到練習空間互動，並不急著抵達某個漂亮的姿勢，而是讓身體慢慢感知他人與環境的狀態。當我們減少視覺依賴、調整呼吸頻率，動作開始從身體內部自然發生；空間也因此被眼神、距離、節奏層層形塑，變得流動、有厚度。
+
+這份敏感甚至延伸到生活：聽音樂、看表演時，他開始把注意力放回身體的反應，觀察節奏如何牽動呼吸、重心與動作，而不是只用單一感官看待。於是，上街或許不再像「完成一段表演」，而成為「與他人、空間、環境共存的行動」。
+
+.
+
+把群奏與舞蹈放在一起，就會懂光平為什麼開始想像「上元的跳鼓會是什麼模樣」。他提到，群奏從穩定拍子出發：大家各打各的節奏，但只要站在同樣的拍子上，就能交織成有序的網；舞蹈的狀態雖無法量化，可是若能成功進入，就能在同伴之間形成一致的氛圍。
+
+當「拍子」遇見「狀態」，聲音與步伐開始互相指認：腳往下踩是「咚」，身體往上帶是「噠」，手畫出弧線可能是密集的鼓點，也可能是留白的延伸。於是，同樣的四方步，配上不同的「咚噠」，身體的律動就變得不同。這不只是編排，更像語彙的誕生，是我們終於有機會用自己的身體與聲音，說出屬於上元的句子。
+
+.
+
+因此，丙午的上元遊街，不再只是隊伍往前走，而是能把空間走出層次，用呼吸把祝福跳成浪、用節奏把歡喜打成回聲；比起各自賣力，更有辦法在同一個拍子上、同一個狀態裡彼此托住。
+
+像種子發芽不轟轟烈烈，儘管現在仍像嬰孩牙牙學語，但相信三個月一次次練習與失敗裡，呼出的每一口氣、落下的每個節拍，都會讓我們對演出的語彙更為熟悉。
+
+如此，願被學習澆灌的的我們，走上街時能開成一段流動的熱鬧，讓每一聲咚答鏘、每一步起落，都成為「群藝新傳」最真實的祝福。
+
+文／光平、容禎、威豪、文婷
+
+編輯／文婷
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍丙午上元說明會｜1月17日（六）15:00｜蟬雨越讀新址（高雄市苓雅區林泉街38巷3號）
+
+▍丙午上元正日
+
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+
+∆ 舊左營至建業｜2026年02月20日（五）
+
+∆ 塩埕周邊｜2026年02月21日（六）
+
+---
+
+## 光平
+
+記得乙巳上元結束時，夥伴士倫問說：「明年上元想做些什麼？讓他在祭典中發生？」。
+
+我一時語塞，不知道該如何回應。在得知「群藝薪傳」的課程有「群奏」和「舞蹈」後，便想到廟會常出現的跳鼓陣。
+
+伴隨腳步敲響的鑼鼓鈸聲，搭配陣型變化，總能將氣氛帶到高點，開始想像，若上元的遊行隊伍中，有這樣一支隊伍該有多熱鬧？經過一番思考便同時報名了兩個課程。
+
+「群奏」從打出穩定的拍子出發，儘管不同樂器打著不同的節奏，但當大家都在同樣的拍子上時，交織的節奏就能編出有序的網，也只有當大家在同樣的拍子上時，交織的節奏才能編出有序的網，如何運用嘴譜確保空拍的長度夠長，如何運用身體的律動去穩定節拍，蔡秉老師用了許多心力讓大家能走在同樣的拍子上 。
+
+「舞蹈」從進入表演的狀態開始，相較於能夠量化的「拍子」，「狀態」無法被量化，但當夥伴都在同樣的狀態時，儘管做著不同的動作但演出的氛圍同樣會成立，身體如何和你所在的空間建立關係，肢體如何擺動延伸，丹丹老師花了許多時間讓學員能進到狀態裡。
+
+同時上了兩個課程，讓我開始思考，屬於上元的跳鼓會是甚麼模樣，每個舞步跟聲音開始有了相對應的關係，腳往下踩的聲音會是「咚」 ，身體往上帶的時候是「噠 」 ，舞者手畫出一到弧線時可能是「咚咚咚咚」也可能是「噠噠噠噠噠噠噠噠」，同樣是四方步配上「咚咚噠噠噠」或者改成「咚噠噠咚咚」，每一步的力道帶給身體的律動就變得不一樣。
+
+乙巳上元加入了竿燈隊，花了大部分的時間做燈上，卻沒有足夠的時間學習如何讓竿燈隨著身體舞動，帶了些遺憾。
+
+丙午上元有了「群藝薪傳」的課程，學員有三個月的時間學習群奏和舞蹈，三個月的時間說長也不長，說短也不短，學習對學員也沒法說容易，但課程進行到一半，對比第一堂課大夥都有所的成長，還不確定最後能呈現出怎樣的上元，但能確定的是藉由課程的醞釀，就算是什麼都不會素人也能在上元品得屬於自己的芳醇。
+
+## 威豪
+
+在這幾次舞蹈課程中，逐漸感受到空間如何被身體與互動慢慢形塑出來。
+
+從暖身、拉筋開始，到進入舞蹈練習與空間互動，整個上課過程並不是急著完成某個動作，而是讓身體逐步進入狀態。即使不使用語言，也能透過眼神、距離與節奏感受到彼此的存在與行動方向，空間因此變得流動而有層次。
+
+課堂中反覆強調「狀態」的重要性，掌控自己身體各部位的控制權，讓動作從身體內部自然發生，減少視覺依賴、調整呼吸的頻率，而不是由腦袋控制動作，這樣的提醒讓我意識到，舞蹈不只是外在形式的呈現，而是一種對身體與空間的持續感知。
+
+這些課堂中的重點也延續到日常生活當中。無論是聽音樂或觀看表演，開始嘗試把注意力放在身體的反應上，感受節奏如何影響呼吸、重心與動作的大小，而不是單純用眼睛理解舞蹈。慢慢培養對空間與身體狀態的敏感度，讓課堂中的經驗不只停留在教室裡。
+
+回頭對比第一堂課與現在的狀態。起初，我常急著把動作做完整，也容易被他人的節奏影響；現在則比較能維持自己的空間與步調，讓動作自然發生。對音樂與肢體的理解也從「跟拍」轉為「感受」，開始意識到節奏並不是指令，而是一種引導身體行動的力量。
+
+這樣的學習也改變了我對「上街」的想像。過去我可能將上街視為一種展現或完成表演的過程，但現在更能理解，上街是一種與他人、空間與環境共存的行動。如何在保持自身狀態的同時，不干擾他人，並在互動中形成流動的空間關係。
+
+展望今年，希望能持續深化對身體狀態與空間感知的理解，讓舞蹈成為一種自然的行動方式。倘若有新成員加入，帶領他從重心與身體感受開始，透過課程中學到的方法，引導認識空間與舞蹈之間的關係。
+
+## 容禎
+
+還記得第一堂課開始前，與其他學員們閒聊，大部分學員對正規的音樂教育都是陌生的，認為最大的挑戰是要看懂那一顆顆在五線譜上飄的豆芽，但課堂中，老師反而特別強調「嘴譜」的重要，他認為：「所有的傳統節奏，都是先有嘴譜，一路流傳下來，才有後人開始以樂譜的方式記下的。」因此，每每在學習一組新的節奏時，通常會先讓大家練習用嘴巴以「咚、答、鏘」的聲音將要打的節奏唸過幾次後，讓學員先熟悉這個節奏，才會在白板上寫下樂譜記號。
+
+這不是一門普通的節奏課，第一個差異是一開始的目的明確──我們想找到運用於上元慶典的節奏。因此老師在技巧、樂理的教學外，帶入文化性的理解，跳脫主流西方音樂的節奏理解，試圖從非洲音樂、印尼音樂，去找更接近我們文化的節奏。例如：西洋音樂的節奏裡重拍通常在第一拍，但東方音樂裡反倒在第八拍及下一個循環的第一拍，這一點便是首先顛覆我對於節奏的理解。
+
+另一讓其成為一門非普通的節奏課是，不同於伴奏──節奏樂器通常在音樂表演裡的角色，也不同於常看到學校社團或社區中氣勢萬鈞的太鼓表演，它是一門「群奏」課，講究大家能「一起」，但並非所有鼓點都要整齊一致，課堂中我們認識了底奏、加花的概念，我也慢慢聽得出來節奏有「咬」起來時的感覺，節奏中的有呼有應，單純幾位學員就能組成一段有起伏的節奏表演。
+
+對於我們這些初學者來說，在課堂中重複練習一個節奏時，周遭環境的干擾、自信心不足導致對自己的不確定、或是單純恍神等，常常因各種原因讓自己亂了陣腳，這時趕快去聽、去看身邊的學員，即使我們可能打的是不一樣的拍點，也能趕快將節奏抓回來；相反地，有時眼角餘光也能感受到身旁學員亂了陣腳，這時便會告訴自己更要穩住，讓他也能藉由自己慢慢把節奏抓回來，這也是群奏有趣的地方。
+
+對於已經長期學習音樂或甚至專業表演者來說，這些學習的心得或遭遇的挫折或許都是理所當然，但幾堂課下來，我慢慢能感受音樂世界中的「同樂」這件事，透過與他人合奏，共同享受音樂，讓藝術變成更能接近的日常。也開始對上元上街有不一樣的想像，過去，我們只能運用揮手等簡單的肢體、或「上元快樂」的口號，去分享祝福、歡樂，或許也可以開始嘗試用音樂去做類似的事。
+
+## 文婷
+
+「呼吸之後，便是舞蹈。」
+
+那天參加衛武營活動，聽見無垢的林麗珍老師這樣描繪，突然將「群藝新傳」舞蹈課的許多細節給具象化。
+
+過去校園的舞蹈經驗，多半是健康操，搭配節奏活動關節，重點在動。而後學習到的街舞，明白了身體與音樂之間的律動關係，但直到這次課程，才在丹丹的帶領下，重新將三者統合。
+
+舞蹈是身體性的，需要意識到骨骼肌肉如何帶動發力，當然也是音樂性的，但比起貼合音樂，更重要的是掌握身體的節律，藉由控制呼吸幫助動作連貫。如此一來，古老的「氣韻」，與現代的「接觸即興」有了呼應。
+
+才明白，雖然身體控制一直為舞蹈之首要，但有些施力基礎可以來自文化，例如這次藉由穩定的下盤和氣韻，帶來了不同的運動視角。
+
+同時，舞蹈也有表演性，特別是上元的舞蹈需要遊走在思考與不思考之間，偶爾宛如入神般地，進入名為「狀態」的境界，但需要時刻帶著表演意識，在自娛同時做好娛人。
+
+好的表演性是跟空間綁在一起的，這次課程提醒我們，帶領舞蹈的除了一念之間，也是環境、同伴形塑出來的場，讓風吹草動、驚鴻一瞥，能被身體給吸收，幻化成具體的流動。
+
+雖然實驗出上元舞蹈是條漫漫長路，但課程後，也開始發現，身邊同伴也開始能藉著舞蹈去傳遞，或敬或靜或狂或喜，儘管有時仍像嬰孩般牙牙學語，但呼出的每一口氣，都讓我們對這個語言更熟悉一些。`},
+
+  { id: 8, title: "【2026丙午上元：關於文輿———01】", date: "2026-01-14", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02MTq5SJDJ24wvbCCHYJcLG2ucWMwyqyhRRjAh2yJfSWDNxCRkyumXGsGdiZnDBSgUl", body: `┌━━報名表單━━┐
+
+⠀⠀⠀持續開放中！
+
+https://forms.gle/uLJqWacfDNcQrMAy9
+
+└━━━━━━━━┘
+
+
+
+廿五年秋末，和阿茗去聽了生祥的《大地書房》。其標題取自於鍾理和作品「我的書齋」，開頭寫道：
+
+❝
+
+一個文人大抵都有一間書齋，就像一位將軍有他的辦公廳，工程師有他的設計室，木匠有他的工作房。那裡面的擺設和裝璜都按著他的個性、趣味，和審美觀點加予調劑，一切都配合得十分得體，他在那裡面或工作、或休息、或坐下來冥想，都感到自由、舒適和安寧。如果一個文人沒有他的書齋，那就好比一位女人沒有她的閨房，起居坐臥都會覺得全無是處；也許他將永遠得不到安全和寧靜之感吧。
+
+.
+
+話雖這麼說，但誠如歌詞所寫「一塊木板權當桌，藤椅樹影庭前坐」，鍾理和的「書齋」不但連個像樣的書桌都沒有，還得時時隨著木瓜樹的影子移動座位。但他繼續寫道：
+
+❝
+
+大自然給我裝璜了一幅偉大壯觀的圖畫，那是任何人造的書齋裡都不會有的。那是一首宇宙的詩！
+
+.
+
+讀到這裡，想起文輿上的剪紙，當時和阿茗聊起杜甫「安得廣廈千萬間，大庇天下寒士俱歡顏」，卻苦笑我們所能乘載的願仍沒辦法像杜甫那般能關心天下勞苦人士———但至少的至少，就祈願每個人能有一處可以安放內心的「書齋」吧。
+
+如此讀著鍾理和的〈我的書齋〉，隔著半個世紀，竟也成為了此刻的回應。剪在上頭的「千萬書齋」，不只是想像，還多了一個人物真實的證明：原來「書齋」可以超越物質的限制，僅回到精神上的富足，作為一份對文人生活更本質的高尚肯定。
+
+想了想，從書店長出來的文輿，到底也寄予了這份相信吧。就如鍾理和所寫，一旦能把天地化為自己的書齋，也就多一份可以詩化處境的自在。
+
+今年上元，我們將更深入地和人們聊文輿的故事。同時掛上這陣子創作的馬年文願紙箋，試以一步步，從「形的完成」朝向「神韻的產生」，讓「文」的價值具象為人們日常的美的風景，並期望有一天，能成為安定這座城市的重要力量。
+
+文／逸軒
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍丙午上元說明會｜1月17日（六）15:00｜蟬雨越讀新址（高雄市苓雅區林泉街38巷3號）
+
+▍丙午上元正日
+
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+
+∆ 舊左營至建業｜2026年02月20日（五）
+
+∆ 塩埕周邊｜2026年02月21日（六）`},
+
+  { id: 9, title: "【2026丙午上元：關於竿燈】", date: "2026-01-20", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02THWaYpyFFph3fBE4ETRrZjyoKNe1pnvmNTjLVixu6kAxHbZY4Bv1bv85jF35j3cil", body: `┌━━報名表單━━┐
+
+⠀⠀⠀持續開放中！
+[https://forms.gle/uLJqWacfDNcQrMAy9](https://forms.gle/uLJqWacfDNcQrMAy9)
+
+└━━━━━━━━┘
+
+.
+
+第一次將燈籠架在竹竿上，是二一年的上元。
+
+當時舉著一排笨重的日式燈籠，一出書店不久電路就斷了九成，但就是堅持了下去：不管怎樣都要走完全程。
+
+是不知為何，從來就沒有過「提燈」的想法，第一次作上元，就認為「燈籠就應該用竹竿撐起來，且越高越好」。
+
+或許是聽說了布袋的「火燈夜巡」、大長壠的「賀燈」，也或許是親歷秋田的「竿燈祭り」與「祇園祭」的宵山。
+
+但到底，也只是很直覺地想著：美麗的事物就應該高高地、顯著地、乃至驕傲地被人看見。
+
+.
+
+從最初在鳳山找到的進香方燈，到文具店常見的紙燈籠，又到自己開始手編竹燈，再到船燈與懸魚燈。
+
+是一年一年，從被動的選擇到主動的創造，彷彿打破了現行產業的限制，僅回到竹篾、宣紙、漿糊、紙板、顏料。還記得第一次做出的燈籠雖然「拙笨」，但卻在心中獲得了滿滿的力量：我們終於可以決定自己想要的「模樣」了。
+
+又因為讀了《漢聲》的〈陽歌陽圖〉，啟發了「移動本身其實可以創造出象徵」的觀點。我們便嘗試將竿燈分成「十天干」與「十二地支」，以繞同心圓的走法，希望體現一個再平凡不過卻總被忽略的觀念：「時間總是會變，而我們皆是推動時間轉動的人」。
+
+❝
+相信對於我們的時代、我們的城市、我們的生活，這樣的儀式是有力量的。因為我們將把人們所遺失的「對於時間的感知」重新帶到新的一年中，讓人們意識到「轉換」的存在，以更珍惜時間，並接受變化。
+
+——甲辰上元貼文〈談歲轉〉		❞
+
+.
+
+丙午上元，我們決定修復乙巳年的船燈與懸魚燈，一方面是為了節省今年的製作，而另一方面，則是想繼續述說上頭的意象：一艘艘航向世界的福船故事，以及象徵土地情感的老厝文飾。
+
+雖然今年沒有「大歲轉」的儀式，也沒有立下湊齊二十二支竿燈的目標。但從這週六晚上開始，我們仍邀請想一起「撐」竿燈上街的朋友參與練習，從簡單的步伐到持竿燈的方式，是一步一步，即使依然「拙笨」，但仍繼續書寫竿燈的故事。
+
+文／逸軒
+攝影／柏淯、青衿子、陳十、植月、弘峰、益良、政寬、＠216__612、@hp_asa_
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍丙午上元正日
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+∆ 舊左營至建業｜2026年02月20日（五）
+∆ 塩埕周邊｜2026年02月21日（六）`},
+
+  { id: 31, title: "丙午上元一月廿二進度", date: "2026-01-22", url: "", body: `舞蹈組
+-〈上元入陣舞〉完成基礎架構「開場即興-對陣-Solo-圍圓收尾」，目前進入微調與精進階段。
+-〈十二月令〉舞蹈未定案，有考慮往讓更多參與者加入的方向，但需要週六第一次竿燈練習作為判斷依準。
+
+節奏組
+-〈上街節奏〉完成群奏教學，但Ｃ段（solo）現場運用未確認。
+-〈十二月令〉完成鼓譜教學，下週開始配合濟昇月琴練習。
+-〈入陣舞〉的鼓譜結構完成初稿，但時長未定案。
+
+轎輿組
+-正日可參與成員已達到基礎的八位，但遊庄的人數未確認是否達成。且過程練習可參與成員尚未充足。
+-轎輿絕招完成發想，本週末嘗試練習
+-〈轎輿上街號仔〉完成，但尚未實練調整。
+
+社區組
+-正日部分，目前對談後有意願做簡單互動之店家為「三禾清豐」、「福和食」、「柴魚町」、「阿貴食堂」，但未答應完整演出的要求，而關鍵的御書房目前正會面中。
+-遊庄部分，確認新豐里合作與建業植月合作意向，但尚未談表演需求細節。
+-開場地點Ａ方案為書店正前方，但有對面國宅車道風險。方案Ｂ的國宅椰林大道在和里長洽談後，確認管理方為派出所而非國宅委員會，目前正在進一步確認中。
+
+裝置組
+-〈馬燈〉骨架完成，預計周五完成配電並進入糊紙階段（但有燈條到貨時間之虞）。
+-〈鼓車〉基礎結構進行中，預計週五完成燈骨結構，而周日完成木作。
+-〈鑼車〉製作討論中，預計週末確認是否製作。
+-〈竿燈〉修復進行中，預計修補十二支。
+-〈文輿〉已完成排頭堵花磚，燦景的剪紙＋著色，目前進入頂堵的設計。
+-〈文願箋〉完成六十個馬形剪紙與流蘇，但需要參與者自行上色。
+-執行第一階段服飾製作，但尚未確認現場配備規劃。
+
+弦樂組
+-〈慶津梁〉部分詞句修正中，預計1/27定案以開始進入排練
+-〈上元曲．花燈入巷〉完成基本旋律，部分詞句修正中，預計作為「到場」與「離開」的訊號曲，但尚未與整體核對。
+
+宣傳組
+-〈丙午上元海報〉完成初步線稿，準備進入上色階段。`},
+
+  { id: 10, title: "【2026丙午上元：願望箋】", date: "2026-01-26", url: "https://www.facebook.com/semishigurebooks/posts/pfbid035tgt24bQhpa3eudDEtkCFrMje5pqXAHFdvDg1PtUoeTtsDJ12v4UsHaz9oAB43nBl", body: `┌━━報名表單━━┐
+
+⠀⠀⠀持續開放中！
+
+⠀[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://forms.gle/uLJqWacfDNcQrMAy9?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR7oFx6ff9dFS5JP7xV1l_3y31b_vsnqG_FUQ__fI3hOxLP9e4rVlw_ryUfH7g_aem_YCm_DRFk1F52YQLIZpqyPA)
+
+└━━━━━━━━┘
+
+
+.
+
+去年夏末，邀請了參與「入書市」的書店友人、以及一同籌備的夥伴們，一同在文輿上繫起一片片的「願望箋」。
+
+雖然，已經數次在轎輿上掛過願望，但當時卻突發奇想，請政諺在扛轎時大喊願望箋上頭的書寫：
+
+——「黑夜給了我黑色的眼睛，我卻用他尋找光明」
+
+——「不積跬步，無以至千里。不積小流，無以成江海。」
+
+——「現實抵達不了的，文學可以！」
+
+我走在前頭，聽著政諺宏亮的喊聲，才驚覺到：原來述說願望的語言可以這麼「有力量」。
+
+或許是太熟悉人們許生日願望時的輕柔與害羞，又或許太習慣寫在便條紙上、許願樹下、甚或神社繪馬中的「寧靜」。竟然忘記了「願望」不只可以在公眾的場合念出，更可以「嘹亮動人」。
+
+想起日語的文化有著「言靈信仰」的觀念，是相信「語言本身便具有生命力與感應力」。所以在上古時代，便產生了各式的咒術與宗教的贊歌。而在今天，我認為最接近「言靈的語言」就是「願望的語言」。
+
+畢竟是願望，讓朦朧的夢囈有了道路，是願望，讓平凡的生活多了創造。也是因為願望，才讓彼此交互了彼此對未來的期盼。
+
+.
+
+今年的文輿上，我們決定延續這個概念，同時，也對「願望箋」的書寫進行了不同的思考：
+
+——希望找到一種願望的語言，介於「普天大願」與「個人私願」之間。
+
+畢竟，「普天大願」太容易淪為一種讓人放棄行動的空洞（比方「世界和平」），而「個人私願」，又太容易成為一種暗含排他性的競爭（比方「金榜題名」）。
+
+也畢竟，「普天大願」雖然神聖，卻常常消音了個人真實的欲求。而「個人私願」雖然真實，卻又往往忽略人與人總是「共同生活」。
+
+我們相信，真正能讓「言靈」寄居的「願望」，不只把自己的未來灌注其中，同時也好好地直視了周圍的世界。那既是發自內心的「對自己喊話」，卻也真誠勇敢地「不背對彼此」。
+
+丙午上元，和家茗設計了兩款願望箋的剪紙，正好在象徵「前進」的馬年，便笑說乾脆剪個「駟馬難追」與「馬不停蹄」，還期待人們都能更珍重自己許的願、立下的約。以在上元之時，扛上想望、喊出意念，讓彼此祝福彼此不遠的將來。
+
+文／逸軒
+
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍丙午上元正日
+
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+
+∆ 舊左營至建業｜2026年02月20日（五）
+
+∆ 塩埕周邊｜2026年02月21日（六）`},
+
+  { id: 11, title: "【2026丙午上元：慶津梁】", date: "2026-01-30", url: "https://www.facebook.com/reel/1311612497672112", body: `┌━━歌謠分享會━━┐
+
+⠀⠀⠀02/07（六）15:00
+
+⠀⠀⠀⠀⠀歡迎參加
+
+└━━━━━━━━━┘
+
+十五暝，慶津梁，梳妝打扮地基主
+
+十五暝，慶津梁，厝邊隔壁來寫新族譜
+
+十五暝，慶津梁，莫管時代差了天地
+
+十五暝，慶津梁，共許一個百年久長。
+
+
+
+回望〈慶津梁〉的書寫，就這樣過了一年。
+
+當時因為聽了交工〈下淡水河寫著我等介族譜〉，心生嚮往，也想在上元寫一首關於「我們」歷史的歌謠。同時，因為去了金門、泉州等地方，認識了所謂的「僑鄉」，間接地對「高雄」作為一個移民城市有了新的觀點。
+
+乙巳上元前，覺得打鐵就要趁熱，便和家茗、濟昇拉開了藍圖，一寫就開展了四個落段，分別從打狗、閩南、台灣、高雄的視角，一面述說著「我們的身世其實是很複雜的」，另一面則傳遞「即使身世複雜，但我們仍可以聚在一起共慶喔」——這樣的訊息。
+
+如此完成了這首長達九分鐘的民謠，並於上元正日，待隊伍行至港邊，我們一同向著內海，歌聲響起而眾人舞蹈，正如歌詞「莫驚生份到海墘，文火愈濟滿天星」。現在回想，也算表達了一次我們對這座城市的情懷與敬意吧。
+
+.
+
+時間走到丙午，期間去了一趟南洋，炫目的色彩與熾熱的陽光打在身上，才理解檳城、馬六甲等僑民離鄉意志的堅定。後來又寫了一首唸歌〈港口謠〉，拜訪了朋友家庭三代的記憶，才知道「高雄」的工業史是如何改變了周圍一個個真實的生命。
+
+如此再一次回望〈慶津梁〉的詞，似乎覺得哪裡著急了點，仍用太多生僻的詞彙而不好理解，或哪裡不夠嚴謹，時代與事件之間竟有幾分混淆。
+
+雖然離上元已經很近了，但和家茗、濟昇仍討論起修訂的事宜，我們聊著旋律的動機、詞曲的咬合、詩文的意念。即使今年無法盡善盡美，但依然相信著「這會是一首美麗的歌」而持續希望她能「更好」。
+
+丙午上元，我們將在開場的時候再次唱起〈慶津梁〉。這雖然是一首書寫歷史的歌，卻也是一首徹底朝向未來的歌———關於我們的來歷、我們的文化、我們的認同———不只需要更多面向的認識，還需要更柔軟的力量，以不斷彌平傷口、跨越鴻溝，並且試著相信：人人都懷有與彼此共慶的想望。
+
+文／逸軒
+
+拍攝／May
+
+剪輯／文婷
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR78OwP6Hq8Gq3oreMEvJgZhQ7xltuUXBlxGrJnvcDwn-mlPfmAFGvmSSv6Wdg_aem_dMjvMKfYABifrjNGNhSPUQ&h=AT7fmR-zZemOyE1nrPSUWCRpjB04uFfK1S-ygGl7bYeuYY4Sb1KnPb91X7f8iJsPxOA1pWqGYqhp3DGB7QjfjiNjCk19bDuxRh_HcT0LBLjblHZeK8y846MtP9CcU0BhdHpFYnXYvArzAb0sRDKrORYIBWzaM5FU2PWjKQ&__tn__=-UK-R&c%5B0%5D=AT4CJ54UzQt1vKxLLfZE6H_CfKToYGa-ncBEtQfq4Tf4dXGKj3RLnB6eEbk9geKkuvMeSD5F2jTJGVkMArVPpeQJYxSAvcwDXxaX_vGrqBjgijx3dIIk1nAZ-Ci1smpmeXI9zbSha0vr_H6xCfvvPsHCRduMPliRabAWd9LnYMoiotaldF1gwtNktZG3mgKoUn_-s63De2mFd_9gwB1e4rsrT9nJj_KqiR41ww)
+
+▍丙午上元正日
+
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+
+∆ 舊左營至建業｜2026年02月20日（五）
+
+∆ 鹽埕周邊｜2026年02月21日（六）`},
+
+  { id: 12, title: "家茗扛轎", date: "2026-01-30", url: "https://www.instagram.com/p/DUH4DtdE0u_/", body: `沒有高到能用肩膀，也沒有矮到能用頭⋯⋯
+
+只要超過150公分就有機會加入轎班！
+
+報名連結｜https://reurl.cc/NNeLlp`},
+
+  { id: 13, title: "【2026丙午上元：扛願望的人——轎手招募】", date: "2026-02-01", url: "https://www.facebook.com/reel/3015688731957641", body: `轎班在上元隊伍中，是群浪漫又認真的人。一群揹著願望以及祝福的歸鄉人，透過聲音將其傳遞給城市，也傳遞給人們，更傳遞給彼此。
+
+現在轎班的成員並不特別，有工程師、有社工、有學生，大家四散各地，甚至遠在他鄉，平日各有工作。但總像候鳥，時間一到，就會出現！
+
+我們不是受過正規訓練的表演者，不是大家想像的，可以表現出美麗肢體動作的舞者，也不是接觸過廟會體系的人。
+
+但如果你問我，成為轎班要有什麼樣的資質？那我會說：只要認真面對自己的生活、認真看待與自己有連結的人們，你就擁有成為轎班的基礎條件。
+
+.
+
+轎子在我們文化中一直是個「高」的存在，我們會將尊貴的東西放進那個空間，舉起並守護。就像神轎中的神明，花轎中的新人。
+
+我們這次在文轎中放入的，是文字與願望。
+
+在這資訊爆炸的年代，觸控螢幕、鍵盤代替我們的一筆一劃。說來慚愧，我在寫願望箋時，甚至覺得寫字有點生疏了。何況再將文字紡成語句，再將語句織成文章？
+
+不過，既然意識到有什麼東西正在悄悄消失，那就好好守護她吧！文轎之於我，就是這樣值得守護的存在。
+
+.
+
+雖然扛轎子很苦，但我想轎手這個角色，也許是上元節中，感受最多的一群人吧！畢竟扛著大家的願望、文字，我們是第一線感受大家的喜悅、感受大家對未來的憧憬，被祝福包圍的人們。
+
+而且走在路上，無論如何都有彼此！身處同一艘船上，要苦要樂都是一起！
+
+如果想要在這城市中來一趟溫暖的苦旅就來吧！
+
+文／政諺
+
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5fm_8L1exgrnuetJQBiQDhN7v0b2rKtShykHjNjT7S1PlpKcDcBXu-I4H8Vw_aem_pQFl5yWg-dckFLUqyUNuFw&h=AT73Y-vlrYd0pievCT0D-f2jwsRvXoX2tr2mImBsh_5copK7-J9qYQ5Ot_DvsKM-8Apb4a-IGbbM7dF4jsUP5Vil34s_SX10XkyK9dAh-tZ-9vNw9KPdQis2RKbuWda_lybo27V7-k6kjIm2bDKs4NchLmCl70uRU6PFOQ&__tn__=-UK-R&c%5B0%5D=AT5Dxtfo8Oi-1NmeA2VL0EiENreOVIZfNQ17z3q5EIfH3HksRUjbkK6PGiUxs-t8jON8ViPYaycvSqpdjYGVIr09odfVncTAh4p6y5FpakWbCOadpjvlMKfQBQMswr0LkB-aQe3y3Ahu0O7e2bfvXvpe8_MA-OkTOZ3-0M8kVZXkkjMDv6IxXxM0aHnD7ClJBgQY-7YGBObT_nWUL0b8HS7xZwUeP95wDwsGIg)
+
+▍丙午上元正日
+
+∆ 小春鬧｜2026年02月28日（六）｜蟬雨越讀周邊
+
+▍遊庄點燈系列活動
+
+∆ 舊左營至建業｜2026年02月20日（五）
+
+∆ 鹽埕周邊｜2026年02月21日（六）`},
+
+  { id: 14, title: "【2026丙午上元：復始】", date: "2026-02-04", url: "https://www.facebook.com/semishigurebooks/posts/pfbid0DQYiJ7uArDXiLhbYmm5u4DPdTWsEgaRRnBbzXAE8KKmMpuptXk61etTYb633FSz2l", body: `來喔！花燈欲入巷仔裡囉！
+
+拍鑼摃鼓，新的春天欲來囉！
+
+———丙午新作〈上元曲·花燈入巷〉
+
+.
+
+二〇二一年，也就是第一年上元。當時學到了「遶境」這個概念，就想著：如果帶著燈車去拜訪各個文藝店家，會不會藉由燈節走出一條屬於高雄的「文藝境」？
+
+如此從舊書店出發，經新興區的「七号閱覽室」、前金區的「乙木」、再過中正橋到鹽埕的「廢墟bar」與「野無境」。
+
+其實也不知道要怎麼「交陪」。我們就是見了面、打聲招呼，述說做的燈車，最後拍張合照。那年上元也就過完了。
+
+沒有表演、甚至沒有開場儀式，我們只是做好燈車、聯絡四位店主會等我們到來。如此而已。
+
+.
+
+後來，「七号閱覽室」和「野無境」相繼結束了空間，我們也將路線定為五福路為主，並從四五十人變成了兩三百人，鮮少再走入巷子裡。
+
+然而，始終沒忘的，是走過中東街的民宅時，幾位老者聞聲開了家門，靜靜地看著燈車並露出了笑容——不是陌生人闖入的驚恐，而是一種見到熟悉事物的喜悅。
+
+我想，巷子或許有著獨特的節奏，那是更慢的、卻也是更親近人的——因為它是那麼地貼近「生活」。
+
+.
+
+丙午上元，海報的副標定為「復始」，不是要重頭來過的意思，而是想要問一些很「初衷」的事。
+
+———如果不談規模大小、路線長短、人數多寡⋯⋯。「上元」依然不變的，究竟是什麼？
+
+如此，我們決定再從書店出發，繞行周圍的街區，並走入一個個巷口，拜訪周圍的店家朋友，看能不能在最日常的風景中「也好好春鬧一回」。
+
+說起來，這正好很接近第一年———但又不太一樣，因為我們多學了一點「表演」、多理解了什麼是「文化」、以及再多一點對「儀式」的認識。
+
+知道走新的路線也意味著新的不確定性，包含交通與居民的反應。但仍期待在這樣的「復始」之上，能持續保持對「遠方」的想像。或許有一天，也會像張祜詩句「千家開鎖萬燈明」——上元就在我們生活的巷子門口，年復一年地如花盛放。
+
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5MouiHZUobHg3wSNz4iKchlaFx7cFANGIanaDjpJMwIIID4pu9V-oWJ4kVfw_aem_lcL9EnvKlCys2JLku18vQg&h=AT5ovE8tbYHRbgMS5bEXTQ_gXwTe6klxisABXgEMURkFPt0Macp4uVItpKOaKN52dsdFMk81X2E_RqBUTG1uUocWrdKOXaNZ9zM49lFLcjUkfmk1UaxF67y5vgYTMaG3ZgGq6CthUNtZ5y3GHq2qx1kreqVZEHG_X1ycbg&__tn__=-UK-R&c%5B0%5D=AT6QsUV6KBYeN5210X7uVf2Gnexrg72pj3RGhN-qRBpP_6CAtTHy55BlL6jtwXlYUIQx6fCGBeC-UqvSuxqVXSAK6zdJTB2vflhBHrwogtff2yi_NV5_eBleW4mEqGFWA02lnvV8GOuNNxWaL0Lv5HhPqGqNOi-jcXmnTBOd-P5wM8H7zx5U-txRKrD0pD0kKK8qvCXi5y7iR72uvn28TRVA0g)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點
+
+▍遊庄點燈系列活動
+
+∆ 舊城｜2026年02月20日（五）
+
+➤ 路線：北門⭢左營下路⭢廖家古厝⭢鳳凰美髮（林家舊宅）⭢建業新村
+
+➤ 流程：
+
+▫︎小遊燈｜舊城北門出發｜六點
+
+▫︎群藝演出｜建業新村・植月｜預計八點抵達
+
+∆ 鹽埕｜2026年02月21日（六）
+
+➤ 路線：鹽埕埔⭢新樂街⭢大溝頂⭢國際商場（銀座聚場）⭢侯宅⭢新豐代天府
+
+➤ 流程：
+
+▫︎小遊燈｜鹽埕捷運站出發｜六點
+
+▫︎群藝演出｜新豐代天府前｜預計八點抵達`},
+
+  { id: 15, title: "【2026丙午上元：馬燈誕生記——命名】", date: "2026-02-05", url: "https://www.instagram.com/p/DUYRHuoD4LA/", body: `丙午馬年想做盞立體生肖燈。
+
+本來已經偷偷內定，要致敬店裡的書，叫他「馬克思」。
+
+沒想到投票結果出來，開玩笑加進去的「馬邦德」，居然勇奪第一。我們一邊覺得好笑，一邊決定從善如流：沒錯，這盞馬燈，就叫馬邦德。雖然名字很鬧，但馬燈帶來的想像依舊，甚至活潑起來。
+
+當大家圍著他一起修改調整，一起想「過年到底要怎麼把這個馬燈帶出門」，這顆燈籠就成為一群人共同完成的節日浪漫。從模型製作、調整骨架，到完成配電，看到在歡笑中誕生的邦德，在電工組的巧手下點亮，我們熱烈歡呼，宛如見證馬燈踏出新生的第一步。
+
+接下來，馬燈仍在持續進化中。如果你看完影片，也喜歡上邦德，歡迎來書店一起動手製作，或者在活動當天跟我們一起上街遛馬。期待馬燈能讓丙午開春熱熱鬧鬧，眾人一齊在路上——馬不停蹄、馬到成功。
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜https://forms.gle/uLJqWacfDNcQrMAy9
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點
+
+▍遊庄點燈系列活動
+
+∆ 舊城｜2026年02月20日（五）
+
+➤ 路線：北門⭢左營下路⭢廖家古厝⭢鳳凰美髮（林家舊宅）⭢建業新村
+
+➤ 流程：
+
+▫︎小遊燈｜舊城北門出發｜六點
+
+▫︎群藝演出｜建業新村・植月｜預計八點抵達
+
+∆ 鹽埕｜2026年02月21日（六）
+
+➤ 路線：鹽埕埔⭢新樂街⭢大溝頂⭢國際商場（銀座聚場）⭢侯宅⭢新豐代天府
+
+➤ 流程：
+
+▫︎小遊燈｜鹽埕捷運站出發｜六點
+
+▫︎群藝演出｜新豐代天府前｜預計八點抵達`},
+
+  { id: 16, title: "【2026丙午上元・遊庄點燈】", date: "2026-02-06", url: "https://www.facebook.com/semishigurebooks/posts/pfbid0jhX8HsiUJJGmBSXZLSW8R4YkWqBjSk2s8PeGVBqYpS5JgMapxZT2hexhx19uB5HLl", body: `走進舊城，經過老三合院，進入了建業新村；
+
+走進鹽埕，經過了新樂街，進入了塩一公有市場。
+
+
+大約是在一年前，興起了「遊庄點燈」的想法。當時正逢書店空間的結束，就思考著「我們如何以『人』為核心，重新建構我們在上元節的主動性？」
+
+如此想起了「藝陣」的文化，是因為「藝陣」可以移動、可以突破場地的限制。讓我們即使沒有空間，也能用「身上的藝」維繫上元的火苗。可以說「群藝新傳」的規劃也是從這個脈絡上開始的———我們得試著從「身外的藝」轉往「身上的藝」。
+
+說起來，雖然有這樣冠冕堂皇的理由，但後來聊起「遊庄點燈」時，其實都是「欸，如果可以在三合院遊燈不覺得很漂亮嗎？」、「說起來，政諺你老家剛好在舊城齁」、「啊！言叡跑到建業新村開店了！」
+
+而同樣的想法，在取消五福路遊街的時候，也冒出來「欸但鹽埕還是很有歷史意義欸」、「文婷妳說妳阿嬤家旁邊的代天府又要煮關東煮給我們吃喔！？」、「好久沒去銀座那段玩了欸」。
+
+如此，這幾天又去了一趟舊城和鹽埕場勘，從城隍廟旁的傳統臭豆腐到塩一的創意臭豆腐，從建業新村的人蔘高粱酒到大溝頂的沖繩泡盛。
+
+雖說是「場勘」，卻也是吃吃喝喝，跟認識的店家朋友聊天，而關於上元的計畫什麼的，其實也就是說「我們在初四初五，會帶個二三十人帶著花燈、打著鼓經過這裡喔，到時候會停下來鬧一下之類的，歡迎出來一起玩～」
+
+確實沒有太詳盡的規劃，連文輿進去塩一會不會卡住都還不確定。但每當遊走在那別於文化中心一帶的「風景」，交互著不同的人情、不同的歷史痕跡，即使規模再小，都還是帶著一份「說不定會很有趣」的熱情。
+
+到底是喜歡「文化」、喜歡「歷史」的私心多一點，還是那個「希望祭典可以遍地開花」的大願多一點？總之，還期待在正日之外，藉由「遊庄點燈」這個計畫，創造出另類的燈節記憶。
+
+- 歡迎各位朋友於初四初五參與「遊庄」，集合地點與路程規劃如下：
+
+▍遊庄點燈系列活動
+
+∆ 舊城｜2026年02月20日（五）
+
+➤ 路線：北門⭢左營下路⭢廖家古厝⭢鳳凰美髮（林家舊宅）⭢建業新村
+
+➤ 流程：
+
+▫︎小遊燈｜舊城北門出發｜六點
+
+▫︎群藝演出｜建業新村・植月｜預計八點抵達
+
+∆ 鹽埕｜2026年02月21日（六）
+
+➤ 路線：鹽埕埔⭢新樂街⭢大溝頂⭢國際商場（銀座聚場）⭢侯宅⭢新豐代天府
+
+➤ 流程：
+
+▫︎小遊燈｜鹽埕捷運站出發｜六點
+
+▫︎群藝演出｜新豐代天府前｜預計八點抵達
+
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://forms.gle/uLJqWacfDNcQrMAy9?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR7oFx6ff9dFS5JP7xV1l_3y31b_vsnqG_FUQ__fI3hOxLP9e4rVlw_ryUfH7g_aem_YCm_DRFk1F52YQLIZpqyPA)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點
+
+加強推廣這則貼文，為**蟬雨越讀**觸及更多用戶。
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+[**蟬雨越讀**](https://www.facebook.com/semishigurebooks?__cft__%5B0%5D=AZauezSXlyrG5n6hY27-r9pnRxGKz5KSTDrmDuHYf9dOvT0bWdAMGc2AEKSAXtv2dze6tNC8dG447aWRZNmE3xaL6pY0Upjx-t1PL_Y3rXELeRU9wO62XWJHx8u5NJJvUwGRfOrNeiU74_B6RzEMRAuW1E-3MI4PeaWcCO_HXN9KP-zL0bCpyxsl-C2Vpi4ja8k&__tn__=-%5DC%2CP-R)**──和 **[**niennien.jieji**](https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.instagram.com%2F_u%2Fniennien.jieji%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR7oFx6ff9dFS5JP7xV1l_3y31b_vsnqG_FUQ__fI3hOxLP9e4rVlw_ryUfH7g_aem_YCm_DRFk1F52YQLIZpqyPA&h=AT4Xyq4HR_CANPSGwzvUWrd90zd5WOAsobOavX_fdy-FlWdraxIVi_Y2HTpgX80EOb29S7ivsTxuDC-3iHSgEl8tPfQPZQGe7KQwspyjeQ9XO6OtbgYjccFcHAqHcm5dMZmHoM7nuV4XJAYlTU8-qJO4hw&__tn__=C%2CP-R&c%5B0%5D=AT6QsUV6KBYeN5210X7uVf2Gnexrg72pj3RGhN-qRBpP_6CAtTHy55BlL6jtwXlYUIQx6fCGBeC-UqvSuxqVXSAK6zdJTB2vflhBHrwogtff2yi_NV5_eBleW4mEqGFWA02lnvV8GOuNNxWaL0Lv5HhPqGqNOi-jcXmnTBOd-P5wM8H7zx5U-txRKrD0pD0kKK8qvCXi5y7iR72uvn28TRVA0g)**，在**[**蟬雨越讀**](https://www.facebook.com/semishigurebooks?__cft__%5B0%5D=AZauezSXlyrG5n6hY27-r9pnRxGKz5KSTDrmDuHYf9dOvT0bWdAMGc2AEKSAXtv2dze6tNC8dG447aWRZNmE3xaL6pY0Upjx-t1PL_Y3rXELeRU9wO62XWJHx8u5NJJvUwGRfOrNeiU74_B6RzEMRAuW1E-3MI4PeaWcCO_HXN9KP-zL0bCpyxsl-C2Vpi4ja8k&__tn__=-%5DC%2CP-R)**。**
+
+![[star_filled_24_fds-gray-70.png]]
+
+**最愛**
+
+·
+
+[**estrSoondpmlf5a019u19430月15u8cc6h1fiau午90t0日u962:下127g4948u3**](https://www.facebook.com/semishigurebooks?__cft__%5B0%5D=AZauezSXlyrG5n6hY27-r9pnRxGKz5KSTDrmDuHYf9dOvT0bWdAMGc2AEKSAXtv2dze6tNC8dG447aWRZNmE3xaL6pY0Upjx-t1PL_Y3rXELeRU9wO62XWJHx8u5NJJvUwGRfOrNeiU74_B6RzEMRAuW1E-3MI4PeaWcCO_HXN9KP-zL0bCpyxsl-C2Vpi4ja8k&__tn__=%2CO%2CP-R#?kji)
+
+·
+
+[**高雄市**](https://www.facebook.com/pages/%E9%AB%98%E9%9B%84%E5%B8%82/114511591898165?__cft__%5B0%5D=AZauezSXlyrG5n6hY27-r9pnRxGKz5KSTDrmDuHYf9dOvT0bWdAMGc2AEKSAXtv2dze6tNC8dG447aWRZNmE3xaL6pY0Upjx-t1PL_Y3rXELeRU9wO62XWJHx8u5NJJvUwGRfOrNeiU74_B6RzEMRAuW1E-3MI4PeaWcCO_HXN9KP-zL0bCpyxsl-C2Vpi4ja8k&__tn__=%2CP-R)
+
+·
+
+【[**#2026丙午上元**](https://www.facebook.com/hashtag/2026%E4%B8%99%E5%8D%88%E4%B8%8A%E5%85%83?__eep__=6&__cft__%5B0%5D=AZauezSXlyrG5n6hY27-r9pnRxGKz5KSTDrmDuHYf9dOvT0bWdAMGc2AEKSAXtv2dze6tNC8dG447aWRZNmE3xaL6pY0Upjx-t1PL_Y3rXELeRU9wO62XWJHx8u5NJJvUwGRfOrNeiU74_B6RzEMRAuW1E-3MI4PeaWcCO_HXN9KP-zL0bCpyxsl-C2Vpi4ja8k&__tn__=*NK-R)：復始】
+
+…… **查看更多**
+
+加強推廣這則貼文，為**蟬雨越讀**觸及更多用戶。
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+Facebook
+
+- 
+你的網路連線已恢復。`},
+
+  { id: 17, title: "【2026丙午上元・群藝新傳課程小結】", date: "2026-02-10", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02QYR4Ai9FdpxdYzhVUUPugDcNYHypmdvDguvXpDmftRN54m6fjscNrF4AZZ7dPvUgl", body: `拉了三個月的筋、也數了三個月的拍子，群奏與舞蹈課程終於告下了一段落。
+
+威豪說「練習讓我開始在日常中留意身體狀態，理解舞蹈其實是一種與空間與他人共存的方式。」
+
+承勲覺得「在結構即興的寬容度下，我可以更大膽、安心的探索自身的可能性」。
+
+光平說「第一組節奏開始，節奏就進入了生活，廚房裡的鍋碗瓢盆都成了演奏的樂器，拿起來就忍不住敲個幾下」。
+
+文婷提到「重新發現舞蹈中潛藏的文化性，並試著融入日常坐臥在即興演出中」。
+
+而容禎則覺得「慢慢能感受音樂世界中的『同樂』，共同享受音樂。」。
+
+我想，能做的已經做了，剩下就等待上場的時候吧。
+
+但在這之前，還是想聊聊「群藝新傳」背後的故事。
+
+.
+
+其實從甲辰年開始，我們便興起「藉由上元開些藝術課程，慢慢使更多的人接觸藝術」的想法，畢竟回到作節慶最早的初衷「如何讓美落實於生活？」，我們相信文化真正的價值，不在欣賞了多精緻的藝術、或體驗了多特別的事物，而是讓人真正地能「擁有」美、乃至於以美「互動」、能以美「創造」。
+
+然而，這樣的想法實行起來卻格外地困難，甲辰年的課程就以無人報名黯然落幕。所以在乙巳年時，我們仍舊以「素人推廣」和「專業招才」作為發展「演出」的主要方式，比方在文化中心廣場的「鬧上元」，作為帶來場域熱鬧的舞蹈，便交由只需要來幾次練習的素人們；而作為維持場域核心的樂曲，則交由專業的樂手負責。
+
+雖然創造出了不錯的結果，回想起來也餘韻留存，但卻更認識了其中的難題：「素人推廣」的「體驗性」，容易讓參與者覺得只是來體驗而非耕耘。而「專業招才」的「任務性」，則可能使演出者遺漏了節慶的共慶本質。
+
+如此丙午年，決定再次啟動甲辰年的未盡之事，也就是「群藝新傳」的開始：用更長一點的時間，在「素人」與「專業」之間搭起橋樑。
+
+然而，論市場，我們自然跟不上流行；而論價格，我們也不可能低於社大。加上教學本身都還有若干實驗性在裡頭，誰又甘願付必須承擔不確定性的錢呢？
+
+一路上，招生也磕磕絆絆，只能說至少的至少，課程總算開成了。以三個月的時間，與丹丹、蔡秉合作，分別開了舞蹈課與群奏課。我們從基本的肌肉運用、拍子穩定度、到如何感知彼此、嘗試即興。不敢說能呈現多完整的演出，但確實在零和一之間，踏出了嶄新的一步。
+
+.
+
+這次「群藝」的成果表演，主要會發生在兩天遊庄的結尾，以及正日的開場、部分店家的門前。還邀請對這個計畫有興趣的朋友來看看，關於一群來自各行各業的人，如何為了再次「好好過節」，而從頭開始學習跳舞、學習打鼓，並嘗試在眾人面前表現。
+
+如此今年上元的表演，自然沒有去年浩大的場面，且也還稱不上專業，但我相信仍然是前進的，因為我們確實傳遞了一個過去沒有的訊息：「學習藝術永遠不嫌太晚，只要我們夠清楚自己要的是什麼。」
+
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR41gN_mJTI_JpwK2YYeQbyh1lUQUyq-kUy1Morx53sK2R2sQd9fs4HCq-XlUg_aem_Jb37PsDm0uFgICVq0CUnbA&h=AT61V9PUCcjW7o2RBjvUun2ng-j0CVi06Y2ucrZde3B0g4vtAgexABlDNGVEuIOPmkfo2Nzhoeb3sy2-pj36z-cug8iEaFoZccEn3ch4CWZHZ-EPcXLRReAOretrY6sIPn5LxDmIg8KXDaEpRhIb-ySoyt94alzi0Oqm_g&__tn__=-UK-R&c%5B0%5D=AT6gAPu3kRj3SBrv8QGP0k0PWApjQAwWjADnQz4J5nwsjcE1gMxnXX1Sg9EdPQYJD1JlaT4S6aVnrJbdoEpRMTrKUliu8YeCz8wHOeBjUQVYltVqZD_Tve6CsxG7DMOiT2-HTVkZgGLVD2cVhfm1YKmg88lP1_XcFd5e86Ych3Q-dtyZGnvM8kEkYvokcB6kb-NaSf52wyf_GJQ1IFpVOw4k9A)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點
+
+▍遊庄點燈系列活動
+
+∆ 舊城｜2026年02月20日（五）
+
+➤ 路線：北門⭢左營下路⭢廖家古厝⭢鳳凰美髮（林家舊宅）⭢建業新村
+
+➤ 流程：
+
+▫︎小遊燈｜舊城北門出發｜六點
+
+▫︎群藝演出｜建業新村・植月｜預計八點抵達
+
+∆ 鹽埕｜2026年02月21日（六）
+
+➤ 路線：鹽埕埔⭢新樂街⭢大溝頂⭢國際商場（銀座聚場）⭢侯宅⭢新豐代天府
+
+➤ 流程：
+
+▫︎小遊燈｜鹽埕捷運站出發｜六點
+
+▫︎群藝演出｜新豐代天府前｜預計八點抵達`},
+
+  { id: 18, title: "【2026丙午上元：舊左營】", date: "2026-02-15", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02QYR4Ai9FdpxdYzhVUUPugDcNYHypmdvDguvXpDmftRN54m6fjscNrF4AZZ7dPvUgl", body: `如果有機會去爬半屏山，站在山頂，往東方望去便是新左營。大樓與百貨拔地而起，繁忙的人們在高鐵站穿梭，一旁的國道十號總是塞車，計程車之多，彷彿全高雄的小黃都聚集在此。學校、商場、醫院與交通設施完善，很難想像這是近十五年才發展起來的都會區。
+
+若往西望去，映入眼簾的是台灣海峽、海軍軍港以及舊左營。過去軍港的樓高限制，舊左營多為平房以及眷村，唯一聳立的大樓是區公所。曾經繁華一時的左營大路，擁有夜市、銀樓、劇場及電影院。隨著美軍離開，國軍縮減部隊規模，如今只能看見凋零冷清的街區，人們搬遷，舊左營只剩下孤寂。
+
+我的老家就在舊左營，一間軍校路底巷子中的理髮廳。回憶中，理髮廳客人絡繹不絕，吹風機的聲音不曾停過，即使鐵捲門拉下來，仍可聞到一股洗髮精味。隨著舊左營的沒落，理髮廳在前幾年就不再營業。偶爾回去見到許久不見的鄰居，發現他們又老得許多，我雖長大不少，但仍是長輩眼中那位調皮的少年。
+
+.
+
+乙巳年清明，友人們浩浩蕩蕩來拜訪左營老家，當鐵門拉開，一股寒風吹來，透露房子許久無人來訪。大家一同掃除後，便在客廳吃起我熬夜費心製作的春捲，見到一行人轉眼功夫，就將食物吞噬，覺得不可思議之餘，更多的是開心！
+
+告別老家，我們從軍校路走進西陵街，鑽進小巷經過我父親兒時買教科書的書店，再從左營大路鑽出，深入左營下路後，再往舊城方向前進。
+
+被遺忘的三合院、打不出水的水拹仔、龜裂的咾咕石牆、生鏽的鐵窗花、沒有家燕寶寶的土燕窩。
+
+每看到一個景象心中就累積更多的不捨，故鄉老去，人去樓空，發現自己無能為力，只能將不捨化為歌聲：「我來唸歌囉厚恁聽哩！」讓歌聲迴盪在寂靜的小巷。
+
+就在悵然若失的時候，一個吆喝聲打斷了我的思緒，那是我出生以來聽過最宏亮的讚賞：「水喔！按呢就著矣！」
+
+左營下路的一群老爺爺，聽見了我們的月琴與歌聲，開心地笑了出來，高聲唱著勸世歌獻給這些長輩，此刻惆悵被拋至雲霄，只剩下歡喜。
+
+就是這麼簡單的一句話讓我找到答案！面對消失，最好的方式就是創造些什麼。
+
+它可以是單純的記憶，可以是一個小小的活動，也可以是一間暖心的杏仁茶店，也可以是眷村老屋新生，那復古的選物店⋯⋯
+
+.
+
+如果問我，想要如何行動？那今年，就來為老家做一盞燈吧！若乙巳清明到舊城遊街踏青，是我對故鄉的重新認識，那丙午上元將會是我對這片土地最誠摯的祝福。面對即將消失的城區最好的方式，便是重新與這個地方連結。
+
+一群年輕人來了！來到這個舊左營，在老城牆邊唱歌，在老三合院旁嬉鬧，在黑漆漆的路上點燈，用洪亮的鑼鼓驅散孤寂，用優美的歌聲祝福眾人。
+
+在消失發生之前嘗試做一些掙扎，嘗試延續，嘗試把一些嶄新的記憶注入，嘗試多記得一些角落，最後將這些東西帶到未來。
+
+丙午年二月二十，來我兒時的街區看看吧！來去眷村裡見見故人吧！
+
+文／政諺
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://forms.gle/uLJqWacfDNcQrMAy9?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5MouiHZUobHg3wSNz4iKchlaFx7cFANGIanaDjpJMwIIID4pu9V-oWJ4kVfw_aem_lcL9EnvKlCys2JLku18vQg)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點
+
+▍遊庄點燈系列活動
+
+∆ 舊城｜2026年02月20日（五）
+
+➤ 路線：北門⭢左營下路⭢廖家古厝⭢鳳凰美髮（林家舊宅）⭢建業新村
+
+➤ 流程：
+
+▫︎小遊燈｜舊城北門出發｜六點
+
+▫︎群藝演出｜建業新村・植月｜預計八點抵達
+
+∆ 鹽埕｜2026年02月21日（六）
+
+➤ 路線：鹽埕埔⭢新樂街⭢大溝頂⭢國際商場（銀座聚場）⭢侯宅⭢新豐代天府
+
+➤ 流程：
+
+▫︎小遊燈｜鹽埕捷運站出發｜六點
+
+▫︎群藝演出｜新豐代天府前｜預計八點抵達`},
+
+  { id: 19, title: "【2026丙午上元・除夕】", date: "2026-02-16", url: "https://www.facebook.com/semishigurebooks/posts/pfbid0iGjnh1zCkjnwArfAyBaYoWwXrrdj3GJwLGuut1bQey2vNXgc6VEqjAavKZ8kG2fdl", body: `隨著彩排結束，馬燈完工，各人也各自準備回家過年。
+
+即使還有船燈、鼓車要畫，且不少現場的細節還要再確認，但大體上，丙午上元的籌備已經告一段落了。
+
+回首向來，練習了群藝的表演、玩了幾場竿燈的舞蹈、延續了《慶津梁》的歌唱、討論了轎輿的儀式、研發了上色上蠟的剪紙技術、重修了文輿的屋頂、完成兩座立體花燈和一台鼓車、與周邊乃至鹽埕左營的店家朋友交陪。
+
+是完成的、或未完成的，總之時節將至。待下次大夥集合之時，便是初四的舊城北門下了。
+
+- 
+
+說起來，這陣子常閒聊「過年會回家嗎？」「有什麼特別活動嗎？」竟發現人人各異，即使有人還是傳統的大家族團圓，但更多卻是小家庭各自的「應對」。
+
+是避免餐廳人潮而提早吃年夜飯的、正好當作可以出國旅遊的長假的、或因為家族成員各自規劃不同，而改成除夕「回娘家」的。
+
+也當然，有因為長輩過世而無法再回老家的、有即使家族破碎卻仍要訂年菜而難料理後續的、也有不想要徒具形式而乾脆不過年的。
+
+確實，時代總在改變，而在「過年」裏頭各人的心情，就是反映這份「改變」最真實的寫照了。
+
+總有懷念的什麼、或依然期待的什麼，總有好好珍惜的什麼、或悵然若失的什麼。
+
+如此想著，上元或許更是個別具意義的日子吧。作為「過年」的結尾，不管是因為豐餘而能慶餘「分享」，還是因為缺憾而需要放夜「償補」，都是個讓人們各自累積的心情能夠交會的時刻。
+
+所以，就讓我們等著吧，還期待在上元之時，不管遊庄還是正日，皆能好好地回應，關於那一句平凡卻其實深刻的「新年快樂」。
+
+——我們很快見！
+
+文／逸軒
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR78OwP6Hq8Gq3oreMEvJgZhQ7xltuUXBlxGrJnvcDwn-mlPfmAFGvmSSv6Wdg_aem_dMjvMKfYABifrjNGNhSPUQ&h=AT7CmJXeao4OpXsDpRGUOmEEXtjjjn18fs9CSmCBS_FwPa1DGpN1MgSY7a9K6QaSyacb0pVD1xvaNx1ziBrFYhdMNuq_ga_EQroXfG9BLzskOAKOmNgkQDDYlHQCmZNwsfxmo1-rnJsNgY2dJI4GhZNZMoZ5111agGIbPA&__tn__=-UK-R&c%5B0%5D=AT4TuiLmaG0EHNnmCwf4uCJgESzE4RI7OtSv1fEQTkej31nz2uK5lzlPOUgUIvGkDZ_xP_ndvoE6iQlaaW-W7Yxgg59i9SiE7ZfsXGNt7P3Yy41Bsk9-B5kilaNpJ1g6C5vN_93zClN-nNM1trEpups7aMQpiZaAZq8y-EyGiDXZU7enN1MA0T93KfIzKW9MLuiQOTuyMB0Zv3QmBaPwnte7Nw)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點
+
+▍遊庄點燈系列活動
+
+∆ 舊城｜2026年02月20日（五）
+
+➤ 路線：北門⭢左營下路⭢廖家古厝⭢鳳凰美髮（林家舊宅）⭢建業新村
+
+➤ 流程：
+
+▫︎小遊燈｜舊城北門出發｜六點
+
+▫︎群藝演出｜建業新村・植月｜預計八點抵達
+
+∆ 鹽埕｜2026年02月21日（六）
+
+➤ 路線：鹽埕埔⭢新樂街⭢大溝頂⭢國際商場（銀座聚場）⭢侯宅⭢新豐代天府
+
+➤ 流程：
+
+▫︎小遊燈｜鹽埕捷運站出發｜六點
+
+▫︎群藝演出｜新豐代天府前｜預計八點抵達`},
+
+  { id: 20, title: "【2026丙午上元・遊鹽埕新豐】", date: "2026-02-18", url: "https://www.facebook.com/semishigurebooks/posts/pfbid0VrwC4UAjiB9u4NUmtpFEQbd6Dbs99vNADekaf2kJJJo5Uadh6Sg4mtTeHqyX1zAAl", body: `幾年前，要在鹽埕區替癸卯上元尋找一處可供燈車過夜落腳的所在，我馬上想到位於建國四路尾端的新豐里。
+
+那裡位處道路盡頭，沒有車輛往來，前方又有夜市人潮，若是招搖過市，想必可以和大夥歡慶新年，況且我自小在那社區長大，要說動住在那邊的幾位長輩，還是有些信心，不久就將事情敲定下來。
+
+雖說如此，但當隊伍推著兩台燈車抵達，我也不確定居民會有什麼反應，是否嫌棄隊伍吵鬧？或是覺得無趣便閉門緊鎖？沒想到經過一夜鬧騰，隔夜擺出拔河繩的時候，周圍幾個從小看到大的叔叔伯伯，都相繼帶著孩子加入拔河隊伍，用盡全身力氣大喊大笑著拔河，好像這件事沒有什麼好奇怪的，大家就該這樣盡興同樂。
+
+於是，之後幾年，隊伍到鹽埕，總會行經新豐里。一提拔河遊燈，鄰里鄉親都能瞬間回憶起上元夜。代天府的副主委與當地里長看到我拜訪，也馬上知道肯定是為元宵而來，後來在活動現場，甚至願意煮湯圓、關東煮，或是包個紅包、借鼓對陣，和我們這些看起來完全不同世界的年輕人交陪。
+
+.
+
+這樣的緣分總令我驚嘆奇妙，於是有次就和夥伴容禎去問，為何如此情意相挺？副主委聽了，只豪爽回答——「因為促味（tshù-bī，有趣）啊！」
+
+他對著我們細數兒時過節的記憶，說以前年節會有舞獅行經各社區雜耍，大家放鞭炮，拿起奶粉鐵罐做的燈籠四界冒險。但隨著時代變遷，傳統好像正在漸漸消失，讓他無奈說著，「現在過節不好耍（hó-sńg，好玩）了」。
+
+聽到這些故事，也開始明白，在這個還居住著港邊移民的舊聚落，確實藏著對於熱鬧的渴望。
+
+.
+
+其實，這些叔伯阿姨都和我爸一樣，來自嘉義、台南一帶，依港為生多年，做慣了五金買賣或貨櫃工人的工作，日復一日燒香拜神敬祖先，心中祈求平安與富貴。
+
+雖然五金產業蕭條，讓這個社區幾乎只留下年邁的長者，我的爺爺也十幾年前過世。但同為他鄉移民，這些鄰居見我，總稱我是坤仔的孫女，就像是舊有的聚落紐帶沒有消散，讓我久不住此地，依然能夠被指認、被相信，一句「阿婷」就讓我又重新變回五、六歲的孩子。
+
+父親今年搬回必信街以後，這樣的關係似乎又被接上，泡茶聊天的街口成為家人的日常。回到新豐里，對我也更像是真正意義上回家過年。
+
+所以，今年遊庄，想邀請大家一起來鹽埕過節。
+
+當我們穿過代表「新年快樂」的新樂街，走進風華一時的鹽一市場、國際商場，穿過紅橋夜市與新豐廟埕，這裡將不只是一個被人觀光數千回的鹽埕，而是有機會穿插著在地人的記憶，成為新的鹽埕過節印象。
+
+一起點顆燈籠、喝點粥吧！我也持香允諾，今年要在這裡鬧熱一場。
+
+文／文婷
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR74xJlELQGj4-yr-1PRWz_EPFsIKW63rdXyLIfzYLwD-XJEIfpV5rGDEwclUQ_aem_DMZ67DWb-joyqIZgbGEJ4g&h=AT5vcy-JwjMgISYm_kcGgUORVXfoH1Ms7IcmhAWvpAVaSfk3AVsMX0-llDc8z0eaqKYFkBcV0SiU8NMsyOdUujVlwMcVaD2uUZc8inLBggQBDKd6Hj5bUYNBkCaVduVqGdfF5DEl23eDWCiteBdlhPf4bVkaLLvGwBrTvg&__tn__=-UK-R&c%5B0%5D=AT6wUk84llcBSGWJQa_P2DUlaQluBwZzyXqVa5GOiXmnSCSsV3NQXLMND7hKreexOnOPM4JG0rBQmUUhcHIBj6YL5gWQ77CDCE3b44iS4mhXfTgApFRXS77ATmBzRBrMxkL1j3NwZ6ZXceRqCdei8hLADEPOip4i5-n8HjYLrP35drXppu4WN3R4uHE5dzDbopzEfG7zSkhKuswzgkudPSNeNQ)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點
+
+▍遊庄點燈系列活動
+
+∆ 舊城｜2026年02月20日（五）
+
+➤ 路線：北門⭢左營下路⭢廖家古厝⭢鳳凰美髮（林家舊宅）⭢建業新村
+
+➤ 流程：
+
+▫︎小遊燈｜舊城北門出發｜六點
+
+▫︎群藝演出｜建業新村・植月｜預計八點抵達
+
+∆ 鹽埕｜2026年02月21日（六）
+
+➤ 路線：鹽埕埔⭢新樂街⭢大溝頂⭢國際商場（銀座聚場）⭢侯宅⭢新豐代天府
+
+➤ 流程：
+
+▫︎小遊燈｜鹽埕捷運站出發｜六點
+
+▫︎群藝演出｜新豐代天府前｜預計八點抵達`},
+
+  { id: 21, title: "【2026丙午上元・遊庄點燈：行前通知】", date: "2026-02-19", url: "https://www.facebook.com/semishigurebooks/posts/pfbid0ZqhKvhvXMYsHsvypHahNuCNQEaHVWBFqvuBeePsefoR7yngydBGxfNZXyakb7w6Kl", body: `最初，有「遊庄點燈」構想時，曾許下三個願望。
+
+一、走過朋友的住家，讓上元與「家」的概念連結。
+
+二、走過歷史的街區，讓燈火和城市的脈絡連結。
+
+三、走過未知的巷弄，讓不同生活的人們得以因為美而連結。
+
+雖然只是起頭，但仍希望這小小的「上元前拜年」，能讓我們見識不曾有過的「美」的發生。
+
+就祝福明天上路順利，迎接所有未知，在正日之前，讓燈火先傳到稍微遠一點的地方。
+
+🁢 出發時間，逾時不候
+
+▻ 02月20日（五）18:00＠舊城北門（多那之左營門市旁）
+
+▻ 02月21日（六）18:00＠鹽埕埔捷運站三號出口
+
+🁢 注意事項，敬請遵守
+
+1. 參與活動，歡迎攜帶自製燈籠或小型樂器。
+
+2. 為響應環保，請自備飲用水，並穿著舒適好走衣鞋、輕便隨身行李。
+
+3. 兩日活動結束後皆直接原地解散，請注意附近大眾交通運輸時間，主辦單位不負責接駁。
+
+4. 活動中若製造垃圾，請自行帶回處理，並保持活動現場整潔，不破壞公用設備。
+
+5. 活動過程請配合主辦單位指引，全程遵守交通規範，若有不配合規定者，主辦單位將派員請離。
+
+6. 本活動為公益引導性質，參與活動前，請評估自身體力與狀況。活動過程中，如有任何不適，請立即聯絡工作人員。非因活動之意外造成個人身體遭受傷害、疾病或身故，概與主辦單位無關。建議如有需要，請自行投保個人意外險。
+
+7. 若有呼吸道症狀或疑慮時，請在家休息。
+
+▍遊庄點燈系列活動
+
+∆ 舊城｜大年初四｜2026年02月20日（五）
+
+➤ 流程：
+
+![[【2026丙午上元・遊庄點燈：行前通知】_01.png]]
+
+小遊燈｜舊城北門出發｜六點
+
+![[【2026丙午上元・遊庄點燈：行前通知】_01.png]]
+
+群藝演出｜建業新村・植月｜預計八點抵達
+
+➤ 路線：北門（多那之左營門市旁）⭢左營下路⭢廖家古厝（杏福巷子）⭢鳳凰美髮（林家舊宅）⭢建業新村（植月）
+
+————
+
+∆ 鹽埕｜大年初五｜2026年02月21日（六）
+
+➤ 流程：
+
+![[【2026丙午上元・遊庄點燈：行前通知】_01.png]]
+
+小遊燈｜鹽埕捷運站三號出口出發｜六點
+
+![[【2026丙午上元・遊庄點燈：行前通知】_01.png]]
+
+群藝演出｜新豐代天府前｜預計八點抵達
+
+➤ 路線：鹽埕埔三號出口⭢新樂街（有木田）⭢鹽埕街（春福）⭢大溝頂（空腹蟲）⭢國際商場（銀座聚場）⭢侯宅（必信街16號）⭢新豐代天府
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5MouiHZUobHg3wSNz4iKchlaFx7cFANGIanaDjpJMwIIID4pu9V-oWJ4kVfw_aem_lcL9EnvKlCys2JLku18vQg&h=AT7TpV4pVGLxY1CNPZMYZy56W2yyeRf4n8dA0D0jIbHF-iVYq1cx45vA4u1lhHWNskM7mBrMD4iPGBdNyYZJmvHsN7XA225ZUbc2vwv9oYLNDp07_TEAPw0rqbXSm6u14rw5yJ4iKhJQ8HLoNsSdkZXRIRgg9gmqBaS1uw&__tn__=-UK-R&c%5B0%5D=AT6zPbI-wZtHEeF_qCT1sDs6ilXS-8rN00r860CrCRjNW0rbg8WFk-ufjPJBwtzU23X3SULP7pgxi7uX1sTPVAQBrvvlXbRNpBFLR4uNQpu7tM1NM4i3WRlJd9l7kuSmNqWEiJkM2Gqv_YtRqw0jdqT0M35TLvBKIyl1w93z4vVRAtOvpcNS5iJ0n0ZwIHJW5_oF88Qt3Fb41QX30LNl0QXL9g)`},
+
+  { id: 32, title: "〈花燈入巷〉", date: "2026-02-20", url: "", body: `來喔，花燈欲入巷仔裡囉
+拍鑼摃鼓新的春天欲來囉
+
+一個人提一葩燈，百蕊燈火百事興
+一個人鉸一枝花，百蕊紅花百年留
+
+一個人跳一支舞，曲痀阿婆搖啊搖
+一個人食一粒糖，硬鼻阿公激話仁
+
+一個人提一葩燈，百蕊燈火百事興
+一個人鉸一枝花，百蕊紅花百年留
+
+一個人跳一支舞，活骨阿弟仔跋一倒
+一個人食一粒糖，恬靜阿妹仔衝第一
+
+來喔，咱欲來點燈囉
+厝邊隔壁作伙來看鬧熱囉
+
+來喔，花燈欲出巷仔囉
+縖上願望綴咱作伙行囉`},
+
+  { id: 33, title: "二月二十日簡易流程", date: "2026-02-20", url: "", body: `六點
+在舊城門開場，由政諺代表講幾句話，後以起轎為訊號，花燈入巷口號起，隨後鼓聲出發。
+
+預計六點二十
+到廖家古厝，在那裡停留一下，可能表演亮相，或僅簡單停留交陪（需要報馬仔跑去確認狀況，因為僅有口頭談，不確定我們場域氣氛是否適合表演）
+
+預計七點十五
+在政諺家巷子換電池，會稍作停留，吃一下政諺準備的食物，以及廁所（有限需排隊）。
+（到左營大路時政諺會先離隊準備）
+
+預計七點半出發
+*往建業新村的路上可以放鬆走，不用維持遊行能量
+
+預計七點四十五到建業新村前（如圖入口處）
+整個建業可互動店家相對多，可在開始前由各組長預告，維持在新村的能量一路到最後表演結束。
+
+預計八點半總體結束，跟言叡喝酒聊天，政諺代表可發表個感言（政諺可邀請爺爺）`},
+
+  { id: 34, title: "二月廿一日簡易流程", date: "2026-02-21", url: "", body: `六點
+在鹽埕三號出口開場，由文婷代表講幾句話，後以起轎為訊號，花燈入巷口號起，隨後鼓聲出發。
+
+預計六點十分
+到達有木田，進行拜年活動，希望各組在集合時間再次確認一次拜年演出方式
+*
+馬燈-需要多一點律動，讓活力出現
+竿燈-需要多一點秩序，以防打架
+群奏-由光平代表頗好，但要注意，此方法只有光平特別顯眼，確認有無想像是其他人也希望有展現機會（我覺得其實容禎也可以試試）
+轎班-轉圈頗好，穩定度若可強化佳
+
+預計六點三十
+到達春福（如上行拜年禮）
+
+預計六點四十
+到達鹽一公有市場，竿燈組、鼓隊、馬燈進入亂繞（需兩隊長帶領，馬燈請文婷甚或多個誰維護安全，且記得保持活力），而轎輿若可放置在空腹蟲前佳，但仍得先確認是否可以進入（我會負責引導，並作即時判斷。）
+
+預計七點十五分
+到達銀座聚場，分兩隊進行「對陣」，由文婷帶領從新樂街方位進場，由我帶領從五福四路方位進場。
+
+- 銀座為一個狹長形十字架空間，原則上以：
+定位：轎左、馬右
+輪流對陣：舞組>音樂組>竿燈組
+
+＊但要請文婷確認一下店家前是否有交陪需求，還是只要在那裡進行對陣都符合？
+
+預計七點三十五分
+到公園路之鹽埕堀江商場，上廁所加更換電池。
+
+預計七點五十分
+到達文婷宅，進行小拜年，隨後聽文婷講故事。
+
+預計八點
+重新進入鹽埕夜市，可與週邊互動，並在吉貝武聖殿與烏龜對陣。
+
+預計八點十五在新豐代天府前作表演
+定位：馬左、群奏右、轎子正後、竿燈Ｕ字型
+（進場配合群藝演出彩排流程）
+
+預計八點半
+結束遊庄點燈-鹽埕，大家吃粥，隨後找個地方可以混混聊聊。
+
+啊，然後忘記提醒一下政諺，經過今天討論，原則上遊庄點燈「喊願望」的環節先暫時限於結尾（代天府），所以這次過程中，雖然有其他店家寫願望箋，但我們皆先以「收」為主（還麻煩文婷協助），就不特別安排「喊」的環節了。（若有特殊狀況再現場調整，總之原則上不發生）`},
+
+  { id: 22, title: "【2026丙午上元・遊庄點燈後】", date: "2026-02-24", url: "https://www.facebook.com/semishigurebooks/posts/pfbid0SFUDqkb16oCheQrG4J6F5973dHBDfXqi1XJHU8BHxRddKNbSj4PYp9j2YTz1vLqGl", body: `.
+
+走過老合院，在百年的磚牆前舞起了竿燈。
+
+走過老眷村，和有院落的家家戶戶拜年互賀。
+
+走過老商場，文輿和馬燈在窄巷中玩起了對陣。
+
+走過老廟埕，待炮響之後我們便唱起了歌。
+
+.
+
+結束了兩天的遊庄點燈，從左營到鹽埕，是實現了積累已久的想望：不只讓花燈走入了歷史的場域，還讓轎輿真的進入了日常的「人家」！
+
+確實久違了多時，上元的燈火得以緩慢而鬆弛，任溫暖的黃光駐足在阿公阿嬤和藹的面孔上，同時獲得了一份餘裕，使家裏的孩子開始向眾人說起了鄉里的故事。
+
+在這場規模不大的上元，卻彷彿碰觸到這世界很大的什麼。讓我們在公與私之間、在「表演」與「分享」之間，得以重新思索「祭典」之所以是「祭典」，而不是一場「活動」的理由。
+
+或許能開始像傳統遶境那般「接地」，即使我們如此地「嶄新」。也或許能像拜年那般「親切」，即使我們沒有血緣關係。如此一群人，相伴著上路，不為神佛不為利害，可能只是天真地相信：所謂「點燈」，不過是為了點亮生活純真的笑容、點亮人們彼此的信任、點亮習以為常的房舍、點亮那些落寞的、老去的、即將被遺忘的事物。
+
+兩天遊庄，還發生了很多美麗的故事，但就留給未來再聊吧。畢竟再過幾天就是「正日」了。我們還得回到書店所在的街區，回到屬於我們的「主場」，試著將能量延續下去，以一起慶祝對美的追求、共同傳遞對生命的熱情。
+
+還邀請朋友們來見證上元火苗的延續，也期待朋友們能捎來祝福，在書店新址的門前、在作為代表「復始」的第六年上元，讓我們一起迎接丙午，迎接彼此即將的未來。
+
+文／逸軒
+
+圖／余慈宣、蔡睿軒、阿東、廖章甫
+
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://forms.gle/uLJqWacfDNcQrMAy9?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5MouiHZUobHg3wSNz4iKchlaFx7cFANGIanaDjpJMwIIID4pu9V-oWJ4kVfw_aem_lcL9EnvKlCys2JLku18vQg)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢御書房⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點`},
+
+  { id: 23, title: "【2026丙午上元・正日路線】", date: "2026-02-26", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02jJUZ3tZrytvmAAVKacNn81Boy4rbsqFN64Nuhuh21jH17aPrbbzbgwGnKHhk6CRFl", body: `➤ 蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢御書房⭢蟬雨書店
+
+- 
+
+乙巳年時候，夥伴容禎、士倫等人在文化中心一帶做了田野，才知道1981年的時候，鄰近書店的「廣州一街」也被稱作為「藝術街」。
+
+很難想像，不只藝廊、茶藝館、書局林立，附近的露天民歌店還貼著大大的標語「致力藝文活動，告別文化沙漠」。
+
+然而，高雄的變化仍太急促了。兩千年初開始住在這裡的我，見證的不只是政府文藝重心的轉移，更是租金飆漲、商業化的加劇。
+
+惋嘆開始成為一種過於基本的情緒，畢竟年少時熟悉的小店一間間被連鎖店、新建案所取代，書局、漫畫店的消失更不在話下。而更讓人感觸良多的是：「文藝」逐漸失去了創造力，彷彿宣告了「文化中心」已然名存實亡。
+
+- 
+
+然而，記得有一遭，我問幾個住在附近、但並不怎麼關心文藝的小學同學：你對文化中心有什麼印象、或感觸嗎？
+
+幾個人竟給了我類似的回答：也說不上來，但就覺得蠻放鬆的，會喜歡在附近走走、或去個咖啡廳坐坐。
+
+除此之外，更有已經搬離這裡，但要約的時候仍指定在文化中心的朋友。雖然都說不上具體的吸引原因，卻讓我相信，在文藝之上，前人的耕耘一定有留下了些什麼——關於所謂「更有文化的生活」的想像。
+
+- 
+
+也記得，某天士倫曾興致勃勃地說起最新查到的資料，「嘿你知道嗎？這裡其實是小孩子比例極高的社區喔」。
+
+這讓我想起，每當我們在圓形廣場練習舞蹈、練習音樂時，總有孩子帶著好奇的眼光靠近我們。而跟一些家長聊天後，也才發現這裡作為高雄的「文教區」的印象仍舊存在。
+
+如此的丙午年上元，選擇留在文化中心一帶作「春鬧」，即使沒有鹽埕的熱鬧、也沒有左營的古老，但或許更符合我們想要「新傳」的願望吧，畢竟，「上元春鬧」總得從最日常的生活開始，且還是一個從小孩到青年、從大人到老者，都齊聚的「日常」才有意義。
+
+- 
+
+另外，這陣子負責洽談合作對象的店主楊詠，不只聯繫上去年一起製作蛇燈的大前輩「御書房」，還跟「小樹的家」、「阿貴食堂」、「柴魚町」等等有了連結。
+
+她說「今年確實就是個起頭，能做的事不多，畢竟深耕得花更長的時間。但可以想像，若繼續前進，未來一定可以在這裡創造出極美的上元風景」。
+
+即使如此，經營「御書房」四十多年的簡姐承諾我們要號招朋友們一起上街，且這幾天「小樹的家」的瓊文，還自發地來書店做竹編燈籠。雖然書店在林泉街才剛開始，但小小的芽苗，確實已經開始生長了呢。
+
+- 
+
+今年的「上元春鬧」，確實只繞行文化中心的周邊，且還因為行政申請問題無法進入文化中心裡頭。但這樣短短的路徑，從林泉街、林德街到廣州一街，仍帶著我們的想望。不只為發生在這裡的歷史多添一份柴火，更是一年一年，祝福我們都能使「美」能愈加蓬勃，而不只是惋嘆著沒落。
+
+文／逸軒
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5MouiHZUobHg3wSNz4iKchlaFx7cFANGIanaDjpJMwIIID4pu9V-oWJ4kVfw_aem_lcL9EnvKlCys2JLku18vQg&h=AT53sThXtSIFCUlBTLecF-xDDsAKaKtJfE8KpxANsnRHrGP8KQqMuEJ2WdFDdTvou2keDbSz14cK7q_Ou-VtJD8Ta8HRImchWqA75BqjPQ-HHEQZJxx6o_4IA8fEwTy-KmlXot_42V69jpFShe3dcBlJxA8rfxvGCcvaZg&__tn__=-UK-R&c%5B0%5D=AT4I-qEJe2TtAKdw2ZkcWGr9XVfqvpjlZ6JSqU2T0WRI0isPw4E2PAuzKlAWC1mRt0gM7tQoLU0z3oP2iBcrcm5t6Dene9wX7UdDCgSGhx46dV2CYMIq2keMQeocSCxKwpb2ZKB0CnDxsCBtXuoq5J1mlY85GnHP0VuRSpKpKVW5FU9Ua69_fIcYVFWZQ93gbCSbJzB3aZ0-7DeKcpsyOCAIdw)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點`},
+
+  { id: 24, title: "【2026丙午上元・正日：行前通知】", date: "2026-02-27", url: "https://www.facebook.com/reel/902576499363913", body: `「看燈十五，月半是元宵」
+
+齊聚籌備數月，
+
+歷經左營與鹽埕的遊庄後，
+
+終於要在書店所在的文化中心遊街春鬧。
+
+過去一週，夥伴仍然一起微調細節，
+
+將那船燈的立面，以剪紙、圖繪裝飾地更精緻些，
+
+將那鼓車的四角，用古早燈籠點綴地更樸質些。
+
+那頭的書房與街邊的商店也加入進來，
+
+手編燈籠、共邀好友，只待月圓十分，獻上給彼此的祝福！
+
+第六年上元，談「復始」，
+
+是走一條既是新的，同時也是舊的路，
+
+是相信一人一盞燈，終將聚集百蕊燈火百事興。
+
+所以期盼明晚一起望着明月，共許一個百年久長！
+
+🁢 出發時間，逾時不候
+
+▻ 02月28日（六）18:00＠蟬雨越讀（林泉街38巷3號）
+
+🁢 注意事項，敬請遵守
+
+1. 參與活動，歡迎攜帶自製燈籠或小型樂器。
+
+2. 為響應環保，請自備飲用水，並穿著舒適好走衣鞋、輕便隨身行李。
+
+3. 兩日活動結束後皆直接原地解散，請注意附近大眾交通運輸時間，主辦單位不負責接駁。
+
+4. 活動中若製造垃圾，請自行帶回處理，並保持活動現場整潔，不破壞公用設備。
+
+5. 活動過程請配合主辦單位指引，全程遵守交通規範，若有不配合規定者，主辦單位將派員請離。
+
+6. 本活動為公益引導性質，參與活動前，請評估自身體力與狀況。活動過程中，如有任何不適，請立即聯絡工作人員。非因活動之意外造成個人身體遭受傷害、疾病或身故，概與主辦單位無關。建議如有需要，請自行投保個人意外險。
+
+7. 若有呼吸道症狀或疑慮時，請在家休息。
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 路線：蟬雨書店⭢御書房⭢林泉街⭢林德街⭢柴魚町⭢小樹的家⭢自來水公園⭢五福商場⭢阿貴食堂⭢廣州一街⭢御書房⭢蟬雨書店
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR7oFx6ff9dFS5JP7xV1l_3y31b_vsnqG_FUQ__fI3hOxLP9e4rVlw_ryUfH7g_aem_YCm_DRFk1F52YQLIZpqyPA&h=AT5WRa60TG4QkLA9PNqDhw5rYWaMOLj7PTnG9cewbg16vqHqvrCBTHWRe6P5ITUz5jx4OJp7wH1VZVA1v9H2nTaDlScxQ_J3LZq6-LoqXtZ_PXWL0XgvvUGZAfxbheaLstpCwc3QR6xYQHG5MPhHJtvSa5KERp8MNwwcsw&__tn__=-UK-R&c%5B0%5D=AT5WyQmCqr1nhMKBiQJ4dFR_xTvZ435r-5eW5JBVyfxauvqDlLAg6hef4Dfrb7JR_kXzkQfoxujF1ArbtEHeXNIe8VRjaoV03U4Sx4pOMAsN-BNz6zw-Yt6RY7vYq3Wkbuhu2N6aKeROKMxNx7wARue5dl8dKBuJTGsobbuhGm9sVVwH8XDiigt5j3XD5hKStFY2l2GzVqOdkhZ9VGLf3UKZxB8_Tf4Hh9THBw)`},
+
+  { id: 25, title: "【2026丙午上元・正日裝置、謠曲簡介】", date: "2026-02-27", url: "https://www.facebook.com/semishigurebooks/posts/pfbid03618bc287Uf7rVABY6ATThC4JJANes8deLFehfpje7oxoTY8g2wAgU8BcxxLQozWvl", body: `關於「上元春鬧」，絕不止於一場遊行、一場歡鬧。在每一盞花燈、每一首歌的背後，都蘊藏了我們創造的豐富世界。還期待人們參加的同時，也能試著理解背後的故事：
+
+
+❏ 文輿——
+
+剪了夸夫追日、剪了野人獻曝、剪了西園雅集、剪了書齋千萬間。作爲「文」的象徵，亦是書店所追求的精神：永遠相信文學、相信藝術、相信知識的力量。
+
+❏ 慶津梁——
+
+作為一首書寫家鄉的歌，以多層歷史的觀點，跨度移民史、閩南史、台灣史、高雄史等，不只希望讓人們理解到「我們的文化」是多麽地豐富且複雜，更希望表達：即使複雜，但仍然可以一起共慶美好。
+
+❏ 馬燈——
+
+因為投票的結果，馬燈的名字變成了「馬邦德」。作為丙午年的生肖燈，不管是馬到成功還是馬不停蹄，希望人們皆能收到來自馬兒的祝福。
+
+❏ 入陣舞＆上路鼓奏——
+
+作為「群藝新傳」第一屆的成果發展，期望未來越來越多的人可以參與上元的藝術課程，讓藝術可以於日常蓬勃發展。
+
+❏ 鼓車——
+
+延續往年「山車」的意象，保留了縮小版的「門神繪」，並妝點花磚與有和合二仙的剪紙團花，另外也寫上了今年的大字：「復始」。希望讓門神繼續守護上元的隊伍，並藉由鼓的聲音，一起喚醒大地回春。
+
+❏ 干支燈——
+
+俗稱「竿燈」。以天干地支象徵著時間的流轉與循環，造型分別取自古厝的書卷圖與船燈的福船。期許人們記得歲月的力量，並學習如花朵歲歲年年地綻放。
+
+❏ 船燈——
+
+延續去年「福船」的意象，象徵著「追尋未知的事物」與「迎接來自異地的祝福」。希望上元永遠保持著與「外部世界」交流的活力，絕不凝滯於自身的侷限。
+
+- 知識補充：「王船」的造型也是來自於「福船」，是早年閩南人遠航的主要船種，從鄭和、鄭成功到台灣郊商，並不只限於宗教。
+
+❏ 十二月令——
+
+從陳三五娘到蘇坡東，以和元宵節相關的詩文與故事為題，不只作為歡慶跳舞的歌曲，也想告訴人們：「跟上元有關的文學作品實在豐富，如果每個月每個月講下去，都還沒講完就又要上元了！」
+
+❏ 看燈十五——
+
+改編自南管的曲目，不只寫下了元宵單純而美好的景象，更祈求天下能夠太平——因為只有太平，我們才能如此自在而快樂地慶祝節日。
+
+
+文／逸軒
+
+✦——2026丙午上元：延續過節火苗——✦
+
+▍燈火贊助｜蟬雨越讀社・華南銀行（008）7531-0006-2055
+
+▍志工招募｜[**https://forms.gle/uLJqWacfDNcQrMAy9**](https://l.facebook.com/l.php?u=https%3A%2F%2Fforms.gle%2FuLJqWacfDNcQrMAy9%3Ffbclid%3DIwZXh0bgNhZW0CMTAAYnJpZBExWVRkQzZ4VkVyVjA2czhVTXNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR5fm_8L1exgrnuetJQBiQDhN7v0b2rKtShykHjNjT7S1PlpKcDcBXu-I4H8Vw_aem_pQFl5yWg-dckFLUqyUNuFw&h=AT52RQTQteH4Qb8nQylNKveqULElSiqlb6LC5QDcsRsLzbwYOW6VeKN0SEBFbnV-5esKiO5qhSq-ub7BDAxBN5k3NIZFs08T18CKF2ff3pA4vnTpglfl69FbN_jAdt8Sg9WVBrEWQ77byc236ZtzkW7cQTTlZBo0m4VjMA&__tn__=-UK-R&c%5B0%5D=AT61XmF-Tcjv387EVOvxPcH_tPMyt2NR-W2FIr5jJw7qgM9dbEO2a5XOrSzzafvG8CK2fEN7NKr7NrFIxz8qFFgYTlOoUMMy_GOb0KsvCJUBglguRFV6mwl0_s-ec8eIoWJymiSQELozCbU5IoiI-i6i9p15WbgRQmXdqLk7L1_3R9Nku-0zCO-ic9Q1n3JHmPEtRClWdT58YxgV2NAgWoWubw)
+
+▍丙午上元正日｜2026年02月28日（六）
+
+➤ 流程：
+
+▫︎蟬雨書店集合｜五點
+
+▫︎迎燈儀式／開幕演出｜六時
+
+▫︎小春鬧／點燈｜六時半
+
+▫︎送燈儀式｜九點`},
+
+  { id: 26, title: "【2026丙午上元・正日後記】", date: "2026-03-03", url: "https://www.facebook.com/semishigurebooks/posts/pfbid02ppgPS7T4xdGRRaP9cX3q1MyEGQ2PsVxXj7hugQwqVRZg9qCLCpqrWQZD4hZZxfMEl", body: `丙午上元，回到書店的新址開始，唱著《慶津梁》的我們，遊著燈籠、跳起了群藝的舞、並藉由文輿，重新喊出了節慶的大願———希望，上元能夠陪伴人們的記憶，由小孩轉大人，大人又帶著小孩。十年、十年、又十年。
+
+我們走過林泉街，人們帶著笑容向我們揮手，有從小到大，配眼鏡的、剪頭髮的、炸鹹酥雞的、煎鍋貼的。也有近年開張，作越南菜的、煮拉麵的、賣新加坡飲品的⋯⋯。
+
+又走過林南街，一條面著水塔、小小的巷子。雖然雨天，卻看到兩側公寓的窗戶一扇扇被打開，人們探出頭來、或走到陽台，跟著大喊新年快樂。
+
+而進了「小樹的家」，大家圍圈坐下，聽瓊文跟我們分享了一個名為《雨》的繪本——關於一個人默默地堅持著什麼的故事，也是十年、十年、又十年。
+
+進了御書房，彈著月琴唱起〈看燈十五〉，簡姐則用閩南語回唱〈定風波〉，聲音恬淡優雅，彷彿一首籤詩———即使「誰怕，一簑煙雨任平生」，仍然「歸去，也無風雨也無晴」。
+
+最後回到書店———是六年來第一次在書店作結。不喧鬧地，我們拿下了上頭的願望箋，彼此交換念誦，僅僅祝福彼此，在新的一年開始之際，能好好地實踐所望。
+
+- 
+
+然而，本以為這次的「縮小規模」會相應的「輕鬆」，但實質上，「小」和「大」有著根本上不同的邏輯。
+
+包含，怎麼跟店家互動？怎麼讓表演適應不同的舞台？怎麼讓住宅區的家戶，覺得是共慶而不是打擾？且在小場域進行儀式時，發現細節的問題會容易放大，詞窮、忘記打訊號、誤解彼此的指令等等。幾次回想犯的錯，都仍恨不得挖個洞鑽進去。
+
+當然，也是第一次遇到下雨，算終於做了壓力測試：嗯，平面燈畫居然都沒事，但立體花燈幾乎潰不成軍———可憐的邦德。
+
+自然有很多遺憾，除了〈十二月令〉沒有完整的演出，且還沒有走到「阿貴食堂」（感謝老闆諒解，期望明年能履行此未盡之約）。
+
+但聽到有人結束後跟我說「好久沒有這麼感覺到自己在過元宵節了」，也有夥伴說，這場雨反而帶來一種特別自在的開心，甚至還有路過的民眾，在網路發了自已速寫的隊伍圖，說自己哭得很激動⋯⋯
+
+是知道這場雨並沒有澆熄上元的火焰，反而讓很多想像默默地點燃了。
+
+——說不定林泉街能變成舉街共慶上元的一條街欸、感覺可以發展更多樣的拜年表演喔、如果這樣的規模也成立的話，那上元感覺真的能一直辦下去啊！
+
+如此作為「復始」的一年，重新奠定了一些很基礎的事情，包含鄰里關係、資金場地、成員狀況等等。而好消息是，比起預想的擔心，大多事情都往好的方向前進。如此幾乎已經預示了：未來一定能做得更好、也更踏實。
+
+且不管怎樣規模如何，今年確實感受到「意猶未盡」———果然「正日」還是辦個兩天比較好（笑）。
+
+——我們明年見啦。
+
+文／逸軒
+圖／晉宇（@216__612）、植月（@uetsuki549）`},
+
+  { id: 27, title: "【2026丙午上元：製作及感謝名單】", date: "2026-03-10", url: "https://www.facebook.com/semishigurebooks/posts/pfbid032DdTB4pRmPpNk6xnUw2jGyHFSteVMPHLdcondV58G4kGDtkK27ALack5CcujJfj1l", body: `🁢 總召／藝術統籌：莊逸軒
+
+🁢 公關／籌資：楊詠
+
+——現場演出——
+
+🁢 舞蹈指導：黃程尉
+
+🁢 舞蹈組：陳威豪、侯文婷、董光平、莊逸軒、鍾承勲
+
+🁢 群奏指導：蔡秉君
+
+🁢 群奏組：蔡容禎、董光平、曾家茗、孫子芸、羅雅文、劉翊辰、林耕宇、許筑婷
+
+🁢 文輿轎班：林政諺、陳怡潔、李唯謙、謝廷威、王碩偉、鄭皓允、陳群、歐子玄
+
+🁢 歌謠演出：柯濟昇、林琮竣、張韶文、蔡秉君
+
+🁢 竿燈組：陳威豪、鍾承勲、李茉孺、蔡佳洋、莊雅淇、黃佳瑜、黃遠君、張百州、黃暘尊、鍾岳昇、胡嘉蓁、董宥孜
+
+🁢 馬燈組：莊子緯、蔡睿軒、方宥鈞、林莆秦
+
+🁢 船燈組：劉玟伶、洪歆婷
+
+——裝置製作——
+
+🁢 中裝置／服飾：莊逸軒、曾家茗、黎思承、謝廷威、鄭皓允、蔡容禎、侯文婷
+
+🁢 竿燈修復：鍾承勲、陳威豪、王瓊儀、蔡睿軒、鍾岳昇、黃建箖、林玉純、黃遠君、郭登利、黃佳瑜、陳士豪、林靖詠
+
+🁢 木工配電：黃士倫、曾翔安、林政耀、高希菱
+
+——行政紀錄——
+
+🁢 宣傳：莊逸軒、侯文婷
+
+🁢 場控組：林政耀、高希菱、鍾政靜、李惠鈴、陳愷徽、莊璦禎
+
+🁢 攝影：黃柏淯、林晉宇、廖章甫、陳言叡、林炘潔、余慈宣
+
+🁢 左營遊庄代表：林政諺家、植月選物
+
+🁢 鹽埕遊庄代表：侯文婷家
+
+——活動協力——
+
+杏福巷子、梅琴洋行、丈引小院、嵐清音樂藝術工作室、博漢蔘業、有木田、瑞園食堂、春福、空腹蟲大酒家、醉魚、銀座聚場、新豐里長、新豐代天府、御書房、好椰、柴魚亭、九記食糖水、小樹的家、阿貴食堂、高雄市政府警察局苓雅分局、義交大隊、Gelatail五滴義式冰淇淋
+
+——贊助名單——
+
+王一帆、王鳳君、方宥鈞、何有廷、李耕豪、李雅菁、周美利、林美珍、林艾嘉、洪琮昱、侯佳榮、城珮慈、翁明輝、許瓊文、許棋禎、許立德、張圓媛、黃紋萍、黃雅芳、黃千芬、黃暘尊、黃羽彤、楊國煜、楊忠憲、趙慧如、陳淑芬、陳潔君、陳亮言、陳亮谷、蔡怡亭、簡秀芽、蘇千芳、吳南樺、三禾清豐、全心丼飯、阿貴食堂、香茗茶行、柴魚亭、新豐代天府、說給花聽花坊、欣律音樂藝術中心、林育生司機大哥、ARC專業燈光音響
+
+——特別感謝——
+
+陳塵、林亞彤
+
+以及，參與小額募資的各位贊助者、書店客人！
+
+和，無數在籌備過程給予協助的朋友、上街共同春鬧的市民們！
+
+期待 [**#2027丁未上元**](https://www.facebook.com/hashtag/2027%E4%B8%81%E6%9C%AA%E4%B8%8A%E5%85%83?__eep__=6&__cft__%5B0%5D=AZaJDxOgc6V4v5VHC4cbm3yiJsIRennWzbf8xj98i1K5wHB_yitznPfBZsHnLJoo2qp877NEbNm5XZ2zMvhAbDxXjliwNeYLkzDCn6enep11alvBCIF7TD_W4r2GoDmAhee6U6xwoqyhGSur7xX1z0gEbZ7QvT4Acr58877qs3qsEg9b2PRNGgv-7H78BDj6Au8&__tn__=*NK-R)，再次相見。`}
+];
+// BUILD:BW_ESSAYS_END
+
+// BUILD:BW_COLLAB_START
+const BW_COLLAB = [
+  {
+    author: "文婷",
+    role: "舞蹈副組長",
+    content: `這次參與舞蹈課程，給了我非常驚喜的體驗。
+
+一開始，由於相較同屆學員，我有舞蹈性社團的經驗，讓我以為前幾堂課會更像在陪跑。但實際上，在丹丹老師的課程裡面，我從一開始就被提供了新的視角，轉換平時看待舞蹈、身體的方法。
+
+過往接觸舞蹈，通常都更講求呈現的那一瞬間，於是上課更注重跟在節奏上，要求舞者對準節拍，而所有人的動作得像行軍般一致，於是手跟腳分別要用什麼角度擺，變成一個口令一個動作。
+
+但在丹丹老師的舞蹈課上，舞蹈更像是一種語言，所以每個人自然會有一套自己訴說的方式。只是老師會教你，為了說話，該如何掌握基本文法。例如說：自己的脊椎會如何牽動身體、其他肌肉會如何在改變重心時同步調整。這樣從根基開始的舞蹈課程，讓我明白身體是存在的，身體是自由的。
+
+過去在學校的舞蹈經驗，會只想著動作，像是在背誦句子，卻不知道筆畫如何形成，導致身體卡住的時候，只會用力去把動作擠出來，而不知道如何改變施力，讓動作更流暢。
+
+在這次的舞蹈課裡，我才覺得，自己更明白如何在空白的頁面上寫字。
+
+面對這樣類似自由書寫的舞蹈方式，丹丹老師又同時教導我們如何感應空間，特別是人跟空間的關係，使得每個人的表達，又有辦法可以收束在一起。
+
+即便同一套舞步，有屬於每個人的跳法，但這種空間的協調，使得竿燈、花鼓、面具跟旗子，能夠擺在同一個平面上，讓我覺得很不可思議。
+
+本來以為，要讓每個人都自由舞蹈，又不顯雜亂，是一件很困難的事。但在這次上課後我才發現，透過這樣一套身體方法，學員之間可以達到同步，實在是非常不可思議。
+
+所以很推薦，所有想要跳出自己的舞蹈，但還沒掌握身體語言的朋友一起來上課。`
+  },
+  {
+    author: "威豪",
+    role: "竿燈組長",
+    content: `一開始接觸舞蹈組時，我以為這會是一堂單純學動作、練節奏的課，但真正上過之後，才發現它帶給我的，比想像中還要多很多。這不只是學舞，而是一個重新認識自己身體、感受空間、也慢慢和他人建立連結的過程。
+
+在這幾次課程中，我最明顯的感受是，自己開始學著把注意力放回身體本身。從暖身、拉筋，到進入舞蹈練習與空間互動，整個上課過程不是急著把動作做對，而是讓身體慢慢進入狀態。老師會一直提醒我們去感受呼吸、重心、節奏與身體各部位的控制，而不是只用眼睛看、用腦袋記。這樣的練習讓我慢慢意識到，舞蹈不是把外在形式做出來，而是讓動作從身體裡自然發生。
+
+印象很深的還有道具練習，尤其是竿燈。原本我會覺得自己在「控制」道具，後來才慢慢明白，其實更重要的是先掌握自己的身體，讓身體去帶動道具，而不是反過來被道具牽著走。當竿燈在手中晃動、燈影在空中交錯時，整個空間會突然變得很有生命力。有人順著節奏回應，有人故意把高度拉開，有時候彼此之間不用多說什麼，只靠一個眼神、一個動作，就能產生一種很自然的互動。那種一起玩、一起笑、一起投入的感覺，真的很難用單純的「上課」來形容。
+
+我覺得這門課最珍貴的地方，是它不會只停留在教室裡。上完課之後，我開始更注意自己平常怎麼使用身體，也會在聽音樂、看表演的時候，把注意力放在呼吸、重心和節奏帶來的感受，而不只是用眼睛去理解動作。這些練習讓我慢慢培養出一種對身體與空間更敏銳的感知，也讓我重新理解，原來舞蹈不只是表現，而是一種和自己、和他人、和環境相處的方式。
+
+如果你跟以前的我一樣，覺得自己不一定很會跳舞，或者還不太知道什麼是「表演狀態」，我反而會很推薦你來試試看。因為這裡不會要求你一開始就做得多好，而是會陪著你從身體開始，慢慢找到自己的節奏，也在一次次互動中累積和他人的默契。對我來說，舞蹈組真正讓人喜歡的，不只是學會了哪些動作，而是那種一起摸索、一起投入、一起在空間裡建立連結的過程。
+
+---
+
+感謝竿燈組的大家！
+
+在高雄的街道上，即使雨水落下，大家仍與群眾熱情互動，那些平常難得的瞬間，在這一天全都發生了。雨沒有澆熄熱情，反而讓這份回憶更加深刻，把歡樂與祝福傳遞出去，也收穫了許多特別的片段。
+
+凝視著每一件竿燈作品，在街道上緩緩前行，每一道光、每一個細節，都承載著無數人的心血與努力。而這些作品能在雨中依然綻放光彩，更是因為彼此之間的互助與合作，才能順利完成。
+
+丙午上元，辛苦各位竿燈手～一路上有雨、有笑、有故事。
+
+攝影師：蔡睿軒、余慈宣、林晉宇`
+  },
+  {
+    author: "Apple",
+    role: "竿燈組員",
+    content: `去年在脆上才知道由蟬雨越讀書店主辦的春鬧活動，竟然在高雄已經辦了第五年。
+
+看著照片想說這麼有質感的文化活動，我怎麼現在才知？
+
+經過去年自辦微波巡迴展之後，對於各種自籌自辦的活動，又更 respect。
+
+所以就趁今年農曆年前，剛好有時間，就加入丙午上元點燈的行列。原本只是去幫忙修復燈籠，後來也一起上街。
+
+跟著在文化中心排練、遊庄點燈走入左營舊城和鹽埕市場，到上元正日在書店周圍雨中漫步。
+
+享受純粹當個參與者也是頗快樂。
+
+在下一年的春鬧來臨之前，書店開啟一系列群藝薪傳的課程計劃，高雄的朋有興趣可以前往 [@semishigurebooks](https://www.instagram.com/semishigurebooks/) 了解。
+
+感謝籌辦的大家，有這樣獨特的活動可以參與，還有看來很認真的照片紀錄。
+
+美的照片 by [@semishigurebooks](https://www.instagram.com/semishigurebooks/) [@wintinghou](https://www.instagram.com/wintinghou/)`
+  },
+  {
+    author: "光平",
+    role: "跳鼓舞者",
+    content: `記得乙巳上元結束之際夥伴世倫問到說：「明年上元想做些甚麼讓它在祭典中發生？」，我一時語塞不知如何回應是好。在得知「群藝新傳」的課程項目有「群奏」和「舞蹈」後便想到廟會常會出現的跳鼓陣，伴隨腳步的鑼鼓鈸聲搭配成員的陣型變化總能將氣氛帶到一個高點，開始想像在上元春鬧的遊行隊伍中有這樣一支隊伍該有多熱鬧，經過一番思考便同時報名了「群奏」和「舞蹈」課程。
+
+從節奏課的蔡秉老師教了第一組節奏開始，打節奏就成了日常，廚房裡的鍋鏟瓢盆都成了演奏的樂器，拿起來就忍不住敲個幾下，常被媽念說「又在ㄎ一ㄤ了，你是ㄎ一ㄤㄎ一ㄤ隊的嗎？」，料理時手在忙著，空著的嘴也沒閒著，用「嘴譜」的方式唸著腦袋中節奏。一次次的課堂練習慢慢抓住對節奏的感覺，和其他學員所打出的節奏漸漸能夠「咬」在一起，在籌備上元期間還得到了譜節奏的機會，聽到一段旋律會開始想能用甚麼節奏來合，身體跳著舞步時會思考該用甚麼節奏來搭配，上過「群藝新傳」的課程後越來越喜歡節奏所帶來的可能性與樂趣，節奏不僅是進入了生活，更是融入了生活。
+
+丹丹老師的舞蹈課帶領學員由認識自身開始，從如何伸展自己的肢體並且在移動時找到身體的重心，再到感知空間與人的關係進而和學員們能一起填滿整個空間，甚至進到一個難以言喻的表演狀態，即使沒有整齊劃一的舞步，各自拿個竿燈或旗子，甚至揹著一顆花鼓，但只要成員們都能夠進入同樣的狀態，一套表演就成了。本不知道背著鼓能配合學到的腳步打什麼節奏而有點抗拒進到舞蹈的陣型當中，在放棄打出複雜節奏進而解放縮在鼓面的雙手後，讓自己更接近舞者的狀態，體會到即使在揹著鼓的限制下仍能順著感覺自由的舞動身體，搭配手中揮舞的鼓棒在一次次的敲擊中釋放心中能量，才有了有別於傳統跳鼓陣，屬於丙午上元跳鼓的模樣。回想甲辰上元在文化中心後門排練時自己手舉著竿燈腳笨拙的踩著剛學的四方步，好羨慕舞蹈組圍著花轎如同飛舞的花瓣般跳著，在「群藝新傳」的課程中漸漸能體會舞蹈的樂趣，課程結束當下發現自己好像已經不用再那麼羨慕了。
+
+好久沒做為一個學生去學習新的技能，為期三個月的「群藝新傳」課程說長不長，說短也算不短，和伙伴就在學習與共創中度過了整個冬天，我們一起花了一季的時間去醞釀，在上元品得屬於自己的芳醇。
+
+---
+
+丙午上元正日天空不作美，不斷落下的雨滴雖淋壞了花燈卻沒有抹去大夥臉上的笑容。喜歡每個和伙伴相視而笑的時刻，不管是開場盡力與竿燈組的成員對眼後用鼓棒畫出微笑曲線提醒這是一個值得開心微笑的時刻，或是和舞蹈組成員深怕跳錯有默契地笑著大聲數出舞蹈動作現在是跳到底幾組，抑或是和群奏組的成員在歌曲結束前記得上課教的要對看再一起敲下最後一拍同時結束後彼此露出滿足的笑容，還有時不時轉頭看看轎班，即使轎子壓著肩膀痛，政諺仍能會用笑容回應我，今年能處在一個能夥伴對眼交流的位置真的很美好。
+
+「喜歡自己在上元裡的樣子」，夥伴容禎在去年上元結束時寫道，去年陷在好怕竿燈做不完的焦慮，湊不齊竿燈手的苦惱，舞竿燈沒時間練習的障礙下，就覺得好可惜為什麼自己沒法處在那樣的狀態。「喜歡自己在上元裡的樣子」，今年的我也能這麼說道，同時報名了「群藝新傳」的舞蹈組和群奏組，更深入的參與籌備的事務的同時也因參與課程讓心思能回到自己身上，在一次次的練習中長出屬於自己跳鼓的模樣，雖然還不成熟，但那份成長的深刻就好比看到嬰兒第一次抬頭，上元的跳鼓未來會長成甚麼模樣我不知道，未來搞不好會出現唱跳鼓手也說不定。
+
+喜歡今年上元海報的副標「復始」，書店在去年搬離時還說著上元「不過是五年的慶典」，今年很快在文化中心周邊迎來了第六年，儘管有些夥伴沒能參加了，慶典規模縮小了，但有新成員加入了行列，遊行隊伍走進了左營的巷弄內，走到了朋友家門前，上元還在繼續前行著，盼如轎班大聲喊出的願望：「希望上元能陪伴人們的記憶，從小孩變大人，大人又帶著小孩，十年、十年、又十年。」
+
+謝謝那位今年沒參與但仍不時被大夥提起的「鴻鈞」。
+
+圖／植月（@uetsuki549）、晉宇（@216__612）`
+  },
+  {
+    author: "政諺",
+    role: "左營爐主",
+    content: `丙午上元是個特別的一年，三天的日程，分別來到了舊左營、鹽埕以及文化中心周遭。在出發前沒有了往年上元的繁雜儀式，沒有了過多的擔憂躊躇。就只是對著舊左營的城牆，對著鹽埕大勇路的天空，對著林泉街樓與樓之間的空白，放聲吶喊。
+
+「舊左營是一個正在凋零的地方，面對消失這件事情，最好的方式就是與其重新互動，與其重新建立連結！讓燈重新點亮這個昏暗的街道巷弄，讓歌聲與鼓聲再次迴盪在每個角落！」
+
+「鹽埕，這個區域的變化很大，很劇烈，然而這些變化與在地人是割裂的。希望這次遊庄，我們不只是來觀光，不只作為一個過客，而是讓在地人回想起過節，並讓其變成他們的日常。」
+
+「希望上元可以陪伴人們的記憶，從小孩變大人，大人又帶著孩子！十年，十年，又十年！」
+
+這些話語仍然在我心中震盪，畢竟這片土地變化的太快太快，許多事物來不及悼念便消失於時代的洪流。尤其對我來說，長期在外地生活，每當回到高雄這片土地，城市彷彿又增添與刪除了某些什麼。
+
+好友文婷是土生土長的鹽埕人，記得她分享兒時在棧二庫嘻笑打鬧，在鹽埕的巷子內穿梭去上學，只要我們來到鹽埕她會帶我們走許多捷徑，又窄又暗的巷子她走起來倒是輕鬆。我非常羨慕鹽埕區的人，有那麼多的美食，有那麼美麗的海港，近年發展的又好。但今年造訪文婷家，她提到鹽埕區配合高雄市觀光發展，雖然帶來了一些經濟價值，但是許多空間變得商業化，不再親當地人，我才認知到這些光鮮亮麗的市景背後也有遺憾。
+
+好友逸軒，從小就在文化中心附近長大，常常聽到他說他在五福國中翻牆，常常與朋友穿越文化中心，一路打鬧直到回到他的家——林泉街。時常與逸軒在夜深人靜時喝酒，他感嘆著文化中心週六晚間的市集越來越少，感嘆著五福路上的小眷村變成了商場，抱怨著五福國中一旁的大樓擋住了天空，回憶著以前在大統百貨樓頂玩耍讀書。
+
+說起來，只要認真的問身邊每一個朋友，其實都能挖出一些遺憾，挖出一些對於消失的惆悵，但奇怪的是，似乎沒有人為此做出行動？也許是因為我們也不知道如何面對這件事吧？畢竟老話一句，時代洪流之中的我們，到底要如何抵擋變化的到來？
+
+從左營到鹽埕，再回到文化中心，扛著轎輿走進了我們兒時生活的街區，小小的入陣舞在小小的路上綻放，鼓聲響徹巷弄之間。看見巷弄之中仍有老人笑著與我們揮手，看見店家忙碌之餘，仍放下手中的鍋鏟出來為我們加油，看見大樓的窗被推開，給我們來自高處的祝福。
+
+上元正日下了一場大雨，卻未澆熄眾人為這座城市獻上祝福的心。比起以往大燈車，大陣仗，小小的我們卻比以往更堅強。畢竟我們真正意義上回到了「家」，也更有底氣**站起來吶喊！**「也許有人走了，也許事物變了！但我們還在！咱們再見！再見啊！」`
+  },
+  {
+    author: "容禎",
+    role: "群奏組長",
+    content: `參與上元的五年來，從一開始打醬油的志工，到場控後勤組、竿燈組，再到進入核心扛起花轎。
+
+去年上元結束後，被問到我還想在上元做什麼？我說我想在遊行隊伍中打鼓，而且是整個隊伍的大鼓。
+
+當時是一個大家酒後嘀咕嘀咕的場合，我說給我三年的時間，殊不知幸福來得太突然，這個夢隔年就成真了。
+
+---
+
+起因其實是書店在上元前開了一期節奏課，一群幾乎是純素人的學員（當然有些人或多或少學過一點音樂，但也非專業表演者），我們從最基本的節奏開始，一點一點慢慢學起。
+
+雖然還不足以推出一個精彩完整的演出，但我想這正是上元一直想傳遞的，學習一項技藝，是需要練習、琢磨的，但也並非完全高不可攀的。
+
+去理解文化、學習藝術、創造美，這是不分年齡階級、職業背景，日常中便可以親近的事。
+
+正如同活動尾聲時逸軒說的，即使今年規模縮小了，但相信我們確實仍在路上。
+
+沒有倒退。
+
+---
+
+最後一張圖是轎班大聲喊出的願望：
+
+「希望上元能陪伴人們的記憶，從小孩變大人，大人又帶著小孩，十年、十年、又十年。」
+
+活動：@semishigurebooks
+PC：@uetsuki549
+
+#丙午上元 #小春鬧`
+  }
+];
+// BUILD:BW_COLLAB_END
+
+// ── Collaborators ─────────────────────────────────────────────────────────────
+function renderBwCollabList() {
+  const list = document.getElementById('bw-collab-list');
+  if (!list) return;
+  list.innerHTML = BW_COLLAB.map((c, i) =>
+    `<div class="xz-essay-list-item" id="bw-cli-${i}" onclick="openBwCollab(${i})">
+       <div class="font-medium leading-snug">${c.author}</div>
+       <div class="text-[0.75rem] text-stone-400 mt-0.5" style="font-family:'Noto Sans TC'">${c.role}</div>
+     </div>`
+  ).join('');
+}
+
+function openBwCollab(idx) {
+  document.querySelectorAll('#bw-collab-list .xz-essay-list-item').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  const c = BW_COLLAB[idx];
+  const body = document.getElementById('bw-collab-body');
+  body.innerHTML = `
+    <h3 class="font-bold text-stone-800 text-xl mb-1">${c.author}</h3>
+    <p class="text-sm text-stone-400 mb-5" style="font-family:'Noto Sans TC'">${c.role}</p>
+    <div class="prose-content">${marked.parse(c.content)}</div>`;
+  body.scrollTop = 0;
+}
+
+// ── Carousel ────────────────────────────────────────────────────────────────
+let bwCarIdx = 0;
+let bwCarTimer = null;
+
+function bwGoSlide(n) {
+  const wrap = document.getElementById('bw-carousel-wrap');
+  if (!wrap) return;
+  const slides = wrap.querySelectorAll('.xz-cs-slide');
+  const dots   = document.getElementById('bw-cs-dots').querySelectorAll('button');
+  if (slides[bwCarIdx]) slides[bwCarIdx].className = 'xz-cs-slide xz-cs-inactive';
+  if (dots[bwCarIdx])   dots[bwCarIdx].className   = 'w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-all';
+  bwCarIdx = n;
+  if (slides[bwCarIdx]) slides[bwCarIdx].className = 'xz-cs-slide xz-cs-active';
+  if (dots[bwCarIdx])   dots[bwCarIdx].className   = 'w-6 h-2 rounded-full bg-amber-400 transition-all';
+}
+
+function initBwCarousel() {
+  const wrap = document.getElementById('bw-carousel-wrap');
+  if (!wrap || BW_PHOTOS.length === 0) return;
+  const shuffled = [...BW_PHOTOS].sort(() => Math.random() - 0.5);
+  const picks    = shuffled.slice(0, Math.min(5, shuffled.length));
+  picks.forEach((fname, i) => {
+    const div = document.createElement('div');
+    div.className = 'xz-cs-slide ' + (i === 0 ? 'xz-cs-active' : 'xz-cs-inactive');
+    const img = document.createElement('img');
+    img.src       = 'assets/歷年上元照片/丙午上元照片/' + fname;
+    img.className = 'w-full h-full object-cover';
+    img.alt       = '丙午上元照片';
+    div.appendChild(img);
+    wrap.insertBefore(div, wrap.firstChild);
+  });
+  const dotsWrap = document.getElementById('bw-cs-dots');
+  picks.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = i === 0
+      ? 'w-6 h-2 rounded-full bg-amber-400 transition-all'
+      : 'w-2 h-2 rounded-full bg-white/50 hover:bg-white/80 transition-all';
+    dot.onclick = () => { clearInterval(bwCarTimer); bwGoSlide(i); bwCarTimer = setInterval(() => bwGoSlide((bwCarIdx + 1) % picks.length), 4000); };
+    dotsWrap.appendChild(dot);
+  });
+  bwCarTimer = setInterval(() => bwGoSlide((bwCarIdx + 1) % picks.length), 4000);
+}
+
+// ── Flow line animation (adapted from 2024.html initJcFlowLines) ─────────────
+function initBwFlowLines() {
+  document.querySelectorAll('#page-bingwu .jc-flow-wrap').forEach(wrap => {
+    const bg = document.createElement('div');
+    bg.className = 'jc-flow-line-bg';
+    const fg = document.createElement('div');
+    fg.className = 'jc-flow-line-fg';
+    wrap.prepend(fg);
+    wrap.prepend(bg);
+  });
+  requestAnimationFrame(updateBwFlowLines);
+  window.addEventListener('scroll', updateBwFlowLines, {passive: true});
+}
+
+function updateBwFlowLines() {
+  document.querySelectorAll('#page-bingwu .jc-flow-wrap').forEach(wrap => {
+    const dots = wrap.querySelectorAll('.jc-flow-dot');
+    if (dots.length < 2) return;
+    const first    = dots[0].getBoundingClientRect();
+    const last     = dots[dots.length - 1].getBoundingClientRect();
+    const wrapRect = wrap.getBoundingClientRect();
+    const x        = first.left + first.width  / 2 - wrapRect.left;
+    const top      = first.top  + first.height / 2 - wrapRect.top;
+    const totalH   = (last.top  + last.height  / 2) - (first.top + first.height / 2);
+    const bg = wrap.querySelector('.jc-flow-line-bg');
+    const fg = wrap.querySelector('.jc-flow-line-fg');
+    if (!bg || !fg || totalH <= 0) return;
+    bg.style.left = fg.style.left = x + 'px';
+    bg.style.top  = fg.style.top  = top + 'px';
+    bg.style.height = totalH + 'px';
+    const progress = Math.min(1, Math.max(0,
+      (window.innerHeight * 0.65 - first.top - first.height / 2) / totalH
+    ));
+    fg.style.height = totalH * progress + 'px';
+  });
+}
+
+// ── Essay Navigator ──────────────────────────────────────────────────────────
+function renderBwEssayList() {
+  const list = document.getElementById('bw-essay-list');
+  if (!list) return;
+  list.innerHTML = BW_ESSAYS.map((e, i) =>
+    `<div class="xz-essay-list-item" id="bw-eli-${i}" onclick="openBwEssay(${e.id})">
+       <div class="font-medium leading-snug">${e.title}</div>
+       <div class="text-[0.75rem] text-stone-400 mt-0.5" style="font-family:'Noto Sans TC'">${e.date}</div>
+     </div>`
+  ).join('');
+}
+
+function openBwEssay(id) {
+  const e = BW_ESSAYS.find(x => x.id === id);
+  if (!e) return;
+  document.querySelectorAll('#bw-essay-list .xz-essay-list-item').forEach((el, i) => {
+    el.classList.toggle('active', BW_ESSAYS[i].id === id);
+  });
+  const urlHtml = e.url ? `<div class="mt-6 pt-4 border-t border-stone-100">
+      <a href="${e.url}" target="_blank" rel="noopener" class="xz-source-link">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        查看原始貼文
+      </a>
+    </div>` : '';
+  const body = document.getElementById('bw-essay-body');
+  body.innerHTML = `
+    <h3 class="font-bold text-stone-800 text-xl mb-1">${e.title}</h3>
+    <p class="text-sm text-stone-400 mb-5" style="font-family:'Noto Sans TC'">${e.date}</p>
+    ${marked.parse(e.body)}
+    ${urlHtml}`;
+  body.scrollTop = 0;
+}
+
+function initBwRouteMap() {
+  const wrap = document.getElementById('bw-map-wrap');
+  const routePath = document.getElementById('bw-route-path');
+  if (!wrap || !routePath) return;
+  const len = routePath.getTotalLength();
+  routePath.style.strokeDasharray = len;
+  routePath.style.strokeDashoffset = len;
+  wrap.style.height = '300vh';
+  function onScroll() {
+    const rect = wrap.getBoundingClientRect();
+    const scrollable = wrap.offsetHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    const sf = Math.min(1, Math.max(0, -rect.top / scrollable));
+    routePath.style.strokeDashoffset = len * (1 - sf);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+function initBwArtGallery() {
+  const track = document.getElementById('bw-art-gallery-track');
+  if (!track) return;
+  const outer = track.parentElement;
+  let paused = false, pos = 0, halfW = 0;
+  outer.addEventListener('mouseenter', () => { paused = true; });
+  outer.addEventListener('mouseleave', () => { paused = false; });
+  function computeHalfW() {
+    const figs = Array.from(track.querySelectorAll('.ys-gallery-figure')).slice(0, 4);
+    if (!figs[0] || figs[0].offsetWidth === 0) return 0;
+    const gap = parseFloat(getComputedStyle(track).gap) || 16;
+    return figs.reduce((s, f) => s + f.offsetWidth, 0) + gap * 4;
+  }
+  function tick() {
+    if (!paused) {
+      if (!halfW) halfW = computeHalfW();
+      if (halfW > 0) {
+        pos += 0.45;
+        if (pos >= halfW) pos -= halfW;
+        track.style.transform = 'translateX(-' + pos.toFixed(2) + 'px)';
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const SK_WEEKS = [
+  { n:1,  date:'11/1–9',    milestone:'開工籌備',         work:'組長會議、各組確認職責、課程前置規劃',       events:['11/1 丙午上元組長會','11/7 開工日・群奏組長會','11/9 舞蹈組長會'] },
+  { n:2,  date:'11/10–16',  milestone:'',                  work:'課程設計確認、空間規劃、宣傳前置',            events:['（備課準備週，無例行行事曆事件）'] },
+  { n:3,  date:'11/17–23',  milestone:'課程開始',          work:'群奏、舞燈、跳鼓開課',                       events:['11/17 舞蹈課','11/19 鼓課','11/22 課程行政會、舞蹈組討論'] },
+  { n:4,  date:'11/24–30',  milestone:'確認書店內部社群',  work:'展覽架構、爐主確認、冊子初稿',               events:['11/27 例會統整','11/29 社區初次討論（士倫、耀仔）'] },
+  { n:5,  date:'12/1–7',    milestone:'大跨組會',          work:'轎班見面會、大襟衫試做、計畫書簡報',         events:['12/2 策展及上元曲會議','12/4 策展檔案整理','12/6 祭典電影放映會'] },
+  { n:6,  date:'12/8–14',   milestone:'',                  work:'展覽論述',                                    events:['12/10 計畫書會議、群奏會議','12/11 社群組會議','12/13 政諺轎輿會、志工招募討論','12/14 言叡祝會'] },
+  { n:7,  date:'12/15–21',  milestone:'冬至開工',           work:'群奏舞蹈課堂創作、志工說明',                 events:['12/18 現場演出會議','12/19 上元曲討論、演出會議','12/21 冬至湯圓會、課程小成發'] },
+  { n:8,  date:'12/22–28',  milestone:'',                  work:'整理舊物、老泉山集訓、社區工作開始',         events:['12/22 社區／田野／交陪開始','12/27–28 轎班山上特訓'] },
+  { n:9,  date:'12/29–1/4', milestone:'',                  work:'木作完成、志工招募開始、服裝定版',            events:['1/2 志工招募開始','1/3 群藝新傳表演會'] },
+  { n:10, date:'1/5–11',    milestone:'',                  work:'計畫書完成、完成上元曲、縫製、場勘',          events:['1/6 立體馬燈模型、交陪計畫開會','1/8 行政會','1/9 跨組大會、文輿願望箋製作始','1/11 志工招募結束'] },
+  { n:11, date:'1/12–18',   milestone:'跨組綵排',           work:'志工說明會、圖文製作',                        events:['1/13 志工見面會','1/16 竿燈修復工作坊一','1/17 丙午上元說明會、轎輿口號討論','1/18 場控會議'] },
+  { n:12, date:'1/19–25',   milestone:'寒假開始',           work:'染布、轎班集訓、竿燈修復',                    events:['1/20 歌詞修正、交陪路線確認','1/21 拜訪鹽埕社區','1/22 行政例會各組進度更新','1/23 竿燈修復工作坊二','1/24 糊紙教學、轎班練習'] },
+  { n:13, date:'1/26–2/1',  milestone:'',                  work:'佈展、路權申請完成、轎班集訓',                events:['1/26 船燈、馬燈配電','1/30 大跨組會（細節）、竿燈修復工作坊三','1/31 送出路權申請、拜訪鹽埕店家'] },
+  { n:14, date:'2/2–8',     milestone:'小彩排',             work:'開展、衣服完成',                              events:['2/1 全體總彩、場控後勤會、發布海報','2/3 慶津梁丙午版定案','2/5 鹽埕店家場勘','2/6 竿燈修復工作坊四、左營交陪介紹'] },
+  { n:15, date:'2/9–15',    milestone:'總彩',               work:'遊庄後勤準備、轎班集訓',                      events:['2/9–13 燈籠繪畫（每日）','2/11 舞蹈＋群奏練習、左營交陪','2/12–13 鹽埕交陪','2/13 竿燈修復工作坊五','2/14 總排練'] },
+  { n:16, date:'2/16–22',   milestone:'遊庄點燈',            work:'左營（02/20）、鹽埕（02/21）、正日後勤',    events:['2/20–21 遊庄點燈－左營','2/21–22 遊庄點燈－鹽埕'] },
+  { n:17, date:'2/23–3/1',  milestone:'上元正日',            work:'02/28 丙午上元正日',                         events:['2/25 看燈十五練習','2/26 歌謠團練、正日會','2/28 丙午上元正日'] },
+  { n:18, date:'3/2–8',     milestone:'場復',               work:'閉展',                                        events:['3/2 場地租借歸還','3/8 群藝課後討論'] },
+  { n:19, date:'3/9–15',    milestone:'場後檢討',            work:'各組場後檢討、經驗文字整理',                 events:['3/11 歌謠團練','3/12 場控組檢討會','3/13 舞蹈檢討會','3/14 觀亞亞劇場'] },
+  { n:20, date:'3/16–22',   milestone:'裝置後製',            work:'裝置後製、藝術發展討論',                     events:['3/16 家茗裝置會','3/17 承勲裝置會','3/18 亞亞表演會','3/20 蔡秉節奏會','3/22 歌謠團練'] },
+  { n:21, date:'3/23–28',   milestone:'結案收尾',            work:'結案整理、慶功',                              events:['3/23 戲劇規劃討論','3/24 裝置課討論會一','3/28 丙午上元慶功宴'] }
+];
+
+function initSkWeeks() {
+  const LAB = '<p style="font-size:.65rem;font-weight:600;color:#292524;margin-bottom:.2rem;font-family:\'Noto Sans TC\'">';
+  const LAB2= '<p style="font-size:.65rem;font-weight:600;color:#292524;margin:.55rem 0 .2rem;font-family:\'Noto Sans TC\'">';
+  const ROW = 'font-size:.65rem;color:#57534e;line-height:1.85;font-family:\'Noto Sans TC\'';
+  const ROW2= 'font-size:.65rem;color:#78716c;line-height:1.85;font-family:\'Noto Sans TC\'';
+  document.querySelectorAll('.jc-sched-node').forEach(node => {
+    const w = SK_WEEKS[parseInt(node.dataset.week) - 1];
+    if (!w) return;
+    const dd = node.querySelector('.sk-card-detail');
+    const workHtml  = w.work.split('、').map(s => '・' + s).join('<br>');
+    const evHtml    = w.events.map(s => '・' + s).join('<br>');
+    dd.innerHTML = LAB + '核心工作</p><p style="' + ROW + '">' + workHtml + '</p>'
+                 + LAB2 + '重要行程</p><p style="' + ROW2 + '">' + evHtml + '</p>';
+    node.querySelector('.jc-flow-card').addEventListener('click', () => {
+      const isOpen = dd.classList.contains('open');
+      document.querySelectorAll('.sk-card-detail').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.jc-sched-node').forEach(n => n.classList.remove('sk-active'));
+      if (!isOpen) {
+        dd.classList.add('open');
+        node.classList.add('sk-active');
+      }
+    });
+  });
+}
+
+function initFlowScroll(zoneId, trackId) {
+  const zone = document.getElementById(zoneId);
+  const track = document.getElementById(trackId);
+  if (!zone || !track) return;
+  const sticky = track.parentElement;
+
+  const lineFg = document.createElement('div');
+  lineFg.style.cssText = 'position:absolute;top:2.1rem;left:.45rem;height:2px;background:#C8102E;z-index:1;pointer-events:none;width:0;transition:width .08s linear;';
+  track.appendChild(lineFg);
+
+  function getStickyTop() {
+    return parseFloat(getComputedStyle(sticky).top) || 80;
+  }
+  function setHeight() {
+    const extraW = Math.max(0, track.scrollWidth - zone.offsetWidth);
+    if (extraW <= 0) return;
+    zone.style.height = (sticky.offsetHeight + extraW + 120) + 'px';
+  }
+  function update() {
+    const extraW = Math.max(0, track.scrollWidth - zone.offsetWidth);
+    if (extraW <= 0) { track.style.transform = ''; return; }
+    const rect = zone.getBoundingClientRect();
+    const stickyTop = getStickyTop();
+    const scrolledIn = stickyTop - rect.top;
+    const totalScrollable = zone.offsetHeight - sticky.offsetHeight;
+    if (scrolledIn <= 0 || totalScrollable <= 0) {
+      track.style.transform = 'translateX(0)';
+      lineFg.style.width = '0';
+      return;
+    }
+    const progress = Math.min(1, scrolledIn / totalScrollable);
+    track.style.transform = `translateX(${-progress * extraW}px)`;
+    lineFg.style.width = (progress * track.scrollWidth) + 'px';
+  }
+  requestAnimationFrame(() => { setHeight(); update(); });
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', () => { setHeight(); update(); }, { passive: true });
+}
+
+function openBwFlowLightbox(img) {
+  document.getElementById('bw-art-lightbox-img').src = img.src;
+  document.getElementById('bw-art-lightbox-img').alt = img.alt;
+  document.getElementById('bw-art-lightbox').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function openBwArtLightbox(e) {
+  const img = e.target.closest('img');
+  if (!img || !img.dataset.src) return;
+  document.getElementById('bw-art-lightbox-img').src = img.dataset.src;
+  document.getElementById('bw-art-lightbox-img').alt = img.alt;
+  document.getElementById('bw-art-lightbox').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeBwArtLightbox() {
+  document.getElementById('bw-art-lightbox').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initBwCarousel();
+  renderBwEssayList();
+  openBwEssay(BW_ESSAYS[0].id);
+  renderBwCollabList();
+  openBwCollab(0);
+  initFlowScroll('sk-flow-zone', 'sk-flow-track');
+  initSkWeeks();
+  initFlowScroll('zy-flow-zone', 'zy-flow-track');
+  initFlowScroll('ye-flow-zone', 'ye-flow-track');
+  initFlowScroll('bw-flow-zone', 'bw-flow-track');
+  initBwRouteMap();
+  initBwArtGallery();
+});
+
+</script>
+</body>
+</html>
