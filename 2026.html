@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <link rel="stylesheet" href="style.css">
 <style>
-.jc-sched-node .jc-flow-card { cursor: pointer; transition: border-color .2s, background .2s; }
+.jc-sched-node .jc-flow-card { opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; cursor:pointer; transition:border-color .2s,background .2s; }
 .jc-sched-node.sk-active .jc-flow-card { border-color: #C8102E; background: #fff5f5; }
 .jc-sched-node[data-milestone="true"] .jc-flow-dot { background: #C8102E; }
 .sk-card-detail { display:none; margin-top:.75rem; padding-top:.75rem; border-top:1px solid #e8e2d9; }
@@ -248,22 +248,20 @@
                  onerror="this.style.display='none'">
           </div>
           <div class="flex flex-col gap-3 mt-auto">
-            <a href="https://docs.google.com/document/d/1patwbWWjIbccqtb8hzkQEsXtSV8UgBKAa6HSfvtgVHE/edit?tab=t.j4af4es1jcf0#heading=h.hcl8d7qz4l5s"
-               target="_blank" rel="noopener"
+            <button type="button" onclick="openQunzouModal()"
                class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-800 text-stone-100 text-xs font-medium hover:bg-stone-700 transition-all shadow-sm hover:shadow">
               <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
               </svg>
               群奏組課程紀錄
-            </a>
-            <a href="https://docs.google.com/document/d/1z4jgda8R2AA2eDPnjOD7JGs7V4ArF6Kdtzyt1ibzm6w/edit?tab=t.j4af4es1jcf0#heading=h.hcl8d7qz4l5s"
-               target="_blank" rel="noopener"
+            </button>
+            <button type="button" onclick="openWudaoModal()"
                class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-800 text-stone-100 text-xs font-medium hover:bg-stone-700 transition-all shadow-sm hover:shadow">
               <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
               </svg>
               舞蹈組課程紀錄
-            </a>
+            </button>
           </div>
         </div>
 
@@ -287,10 +285,6 @@
           <p class="section-eyebrow">PROGRAM</p>
           <h2 class="section-title text-2xl">活動流程</h2>
         </div>
-      </div>
-
-      <div class="mt-6">
-        <img src="assets/插圖/丙午/丙午隊伍圖.png" alt="丙午正日隊伍" class="w-full rounded-2xl" style="cursor:pointer" onclick="openBwFlowLightbox(this)">
       </div>
 
       <!-- 02/20 左營遊庄 -->
@@ -888,6 +882,9 @@
         <div class="jc-group-role mb-2">特別感謝</div>
         <p class="text-sm text-stone-600 leading-relaxed" style="font-family:'Noto Sans TC'">陳塵、林亞彤</p>
         <p class="text-sm text-stone-500 leading-relaxed mt-2" style="font-family:'Noto Serif TC'">以及，參與小額募資的各位贊助者、書店客人！<br>和，無數在籌備過程給予協助的朋友、上街共同春鬧的市民們！</p>
+      </div>
+      <div class="mt-8">
+        <img src="assets/插圖/丙午/丙午隊伍圖.png" alt="丙午正日隊伍" class="w-full rounded-2xl" style="cursor:pointer" onclick="openBwFlowLightbox(this)">
       </div>
 
     </section>
@@ -3559,9 +3556,67 @@ function initFlowScroll(zoneId, trackId) {
   if (!zone || !track) return;
   const sticky = track.parentElement;
 
+  // Move overflow-x:clip to inner wrapper so card panel is never clipped
+  sticky.style.overflowX = 'visible';
+  const trackClip = document.createElement('div');
+  trackClip.style.cssText = 'overflow-x:clip;overflow-y:visible;position:relative;';
+  sticky.insertBefore(trackClip, track);
+  trackClip.appendChild(track);
+
+  // Red progress line
   const lineFg = document.createElement('div');
-  lineFg.style.cssText = 'position:absolute;top:2.1rem;left:.45rem;height:2px;background:#C8102E;z-index:1;pointer-events:none;width:0;transition:width .08s linear;';
+  lineFg.style.cssText = 'position:absolute;top:2.1rem;left:.45rem;height:2px;background:#C8102E;z-index:1;pointer-events:none;width:0;';
   track.appendChild(lineFg);
+
+  const allItems = [...track.querySelectorAll('.jc-flow-h-item,.jc-flow-h-sec')];
+
+  // Name labels (before cards are moved; skip sched nodes which show week number above dot)
+  allItems.forEach(item => {
+    if (item.classList.contains('jc-sched-node')) return;
+    const dotEl = item.querySelector('.jc-flow-h-dot');
+    if (!dotEl || item.querySelector('.jc-flow-h-name')) return;
+    const ev = item.querySelector('.jc-flow-event');
+    if (!ev) return;
+    const d = document.createElement('div');
+    d.className = 'jc-flow-h-name';
+    d.textContent = ev.textContent.trim().replace(/^〔|〕$/g, '');
+    dotEl.after(d);
+  });
+
+  // Card panel (all tracks)
+  const cardPanel = document.createElement('div');
+  cardPanel.style.cssText = 'position:relative;margin:.75rem auto 0;width:70%;min-height:7rem;';
+  trackClip.after(cardPanel);
+
+  const panelCards = allItems.map(item => {
+    const c = item.querySelector('.jc-flow-card');
+    if (!c) return null;
+    c.remove();
+    c.style.cssText = 'position:absolute;top:0;left:0;right:0;opacity:0;transition:opacity .18s ease;pointer-events:none;transform:none;';
+    // For sched nodes: auto-expand the detail section so week info is visible in panel
+    const det = c.querySelector('.sk-card-detail');
+    if (det) det.classList.add('open');
+    cardPanel.appendChild(c);
+    return c;
+  });
+
+  let activeIdx = -1;
+
+  requestAnimationFrame(() => setTimeout(() => {
+    let h = 0;
+    panelCards.forEach(c => { if (c) h = Math.max(h, c.offsetHeight); });
+    if (h > 0) cardPanel.style.minHeight = h + 'px';
+  }, 200));
+
+  function updateActive(idx) {
+    if (idx === activeIdx) return;
+    activeIdx = idx;
+    panelCards.forEach((c, i) => {
+      if (!c) return;
+      c.style.opacity = i === idx ? '1' : '0';
+      c.style.pointerEvents = i === idx ? 'auto' : 'none';
+    });
+  }
 
   function getStickyTop() {
     return parseFloat(getComputedStyle(sticky).top) || 80;
@@ -3569,7 +3624,7 @@ function initFlowScroll(zoneId, trackId) {
   function setHeight() {
     const extraW = Math.max(0, track.scrollWidth - zone.offsetWidth);
     if (extraW <= 0) return;
-    zone.style.height = (sticky.offsetHeight + extraW + 120) + 'px';
+    zone.style.height = (extraW + Math.round(window.innerHeight * 1.5)) + 'px';
   }
   function update() {
     const extraW = Math.max(0, track.scrollWidth - zone.offsetWidth);
@@ -3577,16 +3632,24 @@ function initFlowScroll(zoneId, trackId) {
     const rect = zone.getBoundingClientRect();
     const stickyTop = getStickyTop();
     const scrolledIn = stickyTop - rect.top;
-    const totalScrollable = zone.offsetHeight - sticky.offsetHeight;
+    const totalScrollable = zone.offsetHeight - window.innerHeight + stickyTop - Math.round(window.innerHeight * 0.4);
     if (scrolledIn <= 0 || totalScrollable <= 0) {
       track.style.transform = 'translateX(0)';
       lineFg.style.width = '0';
+      updateActive(-1);
       return;
     }
     const progress = Math.min(1, scrolledIn / totalScrollable);
     track.style.transform = `translateX(${-progress * extraW}px)`;
-    lineFg.style.width = (progress * track.scrollWidth) + 'px';
+    const lineX = progress * track.scrollWidth;
+    lineFg.style.width = lineX + 'px';
+    let newActive = -1;
+    allItems.forEach((item, i) => {
+      if (lineX >= item.offsetLeft + item.offsetWidth / 2) newActive = i;
+    });
+    updateActive(newActive);
   }
+
   requestAnimationFrame(() => { setHeight(); update(); });
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', () => { setHeight(); update(); }, { passive: true });
@@ -3619,8 +3682,8 @@ document.addEventListener('DOMContentLoaded', () => {
   openBwEssay(BW_ESSAYS[0].id);
   renderBwCollabList();
   openBwCollab(0);
-  initFlowScroll('sk-flow-zone', 'sk-flow-track');
   initSkWeeks();
+  initFlowScroll('sk-flow-zone', 'sk-flow-track');
   initFlowScroll('zy-flow-zone', 'zy-flow-track');
   initFlowScroll('ye-flow-zone', 'ye-flow-track');
   initFlowScroll('bw-flow-zone', 'bw-flow-track');
@@ -3628,6 +3691,599 @@ document.addEventListener('DOMContentLoaded', () => {
   initBwArtGallery();
 });
 
+function openQunzouModal() {
+  document.getElementById('qunzou-modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeQunzouModal() {
+  document.getElementById('qunzou-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function openWudaoModal() {
+  document.getElementById('wudao-modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeWudaoModal() {
+  document.getElementById('wudao-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
 </script>
+      <!-- 舞蹈組課程紀錄 Modal -->
+      <div id="wudao-modal" class="gm-modal-overlay" style="display:none"
+           onclick="if(event.target===this)closeWudaoModal()">
+        <div class="gm-modal-box">
+          <div class="gm-modal-header">
+            <div class="gm-modal-title">舞蹈組課程紀錄</div>
+            <div class="gm-modal-meta">丙午年群藝新傳・2025/11–2026/03・共十二堂</div>
+            <button class="gm-modal-close" onclick="closeWudaoModal()">✕</button>
+          </div>
+          <div class="gm-modal-body" style="font-family:'Noto Sans TC',sans-serif;">
+
+            <h2>課程計畫</h2>
+            <p>舞蹈組共規劃十六週，前十二週為正課（含文化身體認識與舞蹈練習），後四週進入彩排與正日演出。</p>
+            <table style="width:100%;border-collapse:collapse;font-size:.85rem;margin:1rem 0;">
+              <thead>
+                <tr style="background:#f5ede0;">
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;white-space:nowrap;">週次</th>
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;white-space:nowrap;">日期</th>
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;">課程規劃</th>
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;">自主練習</th>
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;white-space:nowrap;">里程碑</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">1</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">11/17–23</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">身體感知、接觸即興</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">無</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">行政會</td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">2</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">11/24–30</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">上元身體/上街/空間感知</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">無</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">3</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/1–7</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">文化身體認識Ａ：為何說「台灣人沒有自己的身體」？從「民族舞」到「東方」的歷史想像</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">無</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">4</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/8–14</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">文化身體認識Ｂ：民間藝陣文化一/常見走陣方式</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">冬至小表演討論・12/13舞蹈練習</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">5</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/15–21</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">文化身體認識Ｃ：民間藝陣文化二/常見對陣方式</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">12/20 舞蹈練習</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">冬至小成發</td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">6</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/22–28</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">文化身體認識Ｄ：為什麼亞洲人的重心偏「下」？</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">12/27 舞蹈練習</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">7</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/29–1/4</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">〈春鬧曲〉裡物件的使用/竿燈</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">1/3 入陣舞練習</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">8</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">1/5–11</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">〈春鬧曲〉物件的使用/鼓/節奏樂器</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">1/7 入陣舞練習（拿道具）</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">9</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">1/12–18</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">〈春鬧曲〉對觀眾互動/關係的練習</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">1/16 入陣舞練習（拿道具）・練習開場與結尾</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">10</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">1/19–25</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">練習應用一〈春鬧曲〉＋〈自主創作環節〉</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">1/25 入陣舞共同練習開場與流程</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">11</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">1/26–2/1</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">練習應用二〈春鬧曲〉＋〈自主創作環節〉</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">1/31 入陣舞共同練習開場與流程</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">小彩排</td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">12</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">2/2–8</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">練習應用三〈春鬧曲〉＋〈自主創作環節〉・結業</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">—</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr style="background:#fdf8f4;"><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">13</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">2/9–15</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;" colspan="2">彩排階段</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">總彩 2/14</td></tr>
+                <tr style="background:#fdf8f4;"><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">14</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">2/16–22</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;" colspan="2">演出週</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">遊庄點燈 2/20–21</td></tr>
+                <tr style="background:#fdf8f4;"><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">15</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">2/23–3/1</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;" colspan="2">正日週</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">上元正日 2/28</td></tr>
+                <tr style="background:#fdf8f4;"><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">16</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">3/2–8</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;" colspan="2">散場・場地歸還</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+              </tbody>
+            </table>
+
+            <hr>
+            <h2>課程日誌</h2>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第一堂・11/17（一）・身體感知、接觸即興</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>自我介紹（10分鐘）</li><li>認識身體與脊椎控制（20分鐘）</li><li>接觸即興（60分鐘）</li></ul>
+                <h3>地點</h3><p>書店</p>
+                <h3>出席</h3><p>6／6人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>正坐、雙手放臀部兩側，從骨盆到頸椎放鬆挺直</li>
+                  <li>身體延伸練習：想像用不同部位指向特定位置</li>
+                  <li>扶手帶領練習：用雙手扶著同伴的手帶領做特定動作，比拉著更無侵略性</li>
+                  <li>推背帶領練習：推著閉眼同伴前進，測試信任度</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>首堂課以建立信任感與打開身體感知為主。部分成員初期較為拘謹，接觸即興的配對練習有助破冰。課程目標在於讓成員在有安全感的環境下開始探索身體的可能性。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第二堂・11/24（一）・上元身體/上街/空間感知</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>暖身（15分鐘）</li><li>舞蹈與節奏練習（45分鐘）</li><li>跟隨前人舞蹈與個人創作（30分鐘）</li><li>收操（10分鐘）</li></ul>
+                <h3>地點</h3><p>書店</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>練習善用下墜（drop）的技巧，減少多餘思考動作的時間，增加身體跟上節奏的拍子</li>
+                  <li>固定上半身，利用下半身做踩踏動作，熟悉單指令動作的控制</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>成員需要更熟悉動作、減少多餘思考，以增加肢體動作的流暢度，更穩定地跟上節奏。</p>
+                <h3>回家作業</h3><p>練習附件舞蹈動作並思考個人創作方向。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第三堂・12/1（一）・文化身體認識Ａ</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>主題</h3><p>為何說「台灣人沒有自己的身體」？從「民族舞」到「東方」的歷史想像</p>
+                <h3>課程安排</h3>
+                <ul><li>暖身＋骨盆運動（30分鐘）</li><li>手部動作練習（10分鐘）</li><li>訓練用想像觸碰事物（15分鐘）</li><li>舞蹈練習（30分鐘）</li></ul>
+                <h3>地點</h3><p>書店</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>控制骨盆，在下盤穩定的情況下練習善用上半身的技巧</li>
+                  <li>利用想像去創造表演空間，藉由想接觸的事物透過身體去執行</li>
+                  <li>舞蹈練習跟呼吸有關：透過調整呼吸可以更進入「狀態」，也就是沉浸在身體的使用上，而非透過思考去運動</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>成員開始將舞蹈呼吸法與既有的身體文化知識（如太極等）連結，在文化身體的脈絡下感受動作的意義。需持續練習善用想像來創作表演，減少視覺接收，多利用腦袋所想接觸的事物去執行。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第四堂・12/8（一）・文化身體認識Ｂ</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>主題</h3><p>民間藝陣文化一／常見走陣方式</p>
+                <h3>課程安排</h3>
+                <ul>
+                  <li>拉筋（20分鐘）</li><li>肌力練習（10分鐘）</li><li>與同伴腳步跟隨（10分鐘）</li>
+                  <li>腳步與傾倒同時配合（15分鐘）</li><li>無交流同步前進（5分鐘）</li>
+                  <li>拋接練習（15分鐘）</li><li>四方步＋傾倒＋儀式腳步同步（15分鐘）</li>
+                </ul>
+                <h3>地點</h3><p>書店</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>肌力訓練：利用雙手移動至下一個位置後雙腳再跟上，藉此畫一個圓，感受每個肢體的當下感觸</li>
+                  <li>與同伴同步進行某件事情而不使用語言：透過眼光餘光觀察並同時移動；在空間中進行拋接；用眼神感受拋的人要拋給誰</li>
+                  <li>舞蹈練習與同伴一起跳四方步，藉著節奏看是否能同時做傾倒或儀式動作</li>
+                  <li>目標：培養與同伴的默契與個人的觀察能力</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>成員體驗到不依賴語言溝通的身體默契挑戰：與同伴不同步時容易產生挫折感，或因刻意想發生互動反而更難自然發生。整體目標是訓練用反射動作下意識執行舞蹈，在有小失誤時腦袋仍能繼續執行下一步。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第五堂・12/18（四）・文化身體認識Ｃ</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>主題</h3><p>民間藝陣文化二／常見對陣方式</p>
+                <h3>課程安排</h3>
+                <ul><li>拉筋（30分鐘）</li><li>空間互動進入表演狀態（20分鐘）</li><li>舞蹈練習（70分鐘）</li></ul>
+                <h3>地點</h3><p>書店</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>引導進入表演狀態：彼此在自我的空間中與他人互動，產生出互不干擾的空間</li>
+                  <li>練習上元期間舞蹈動作，探索直視對方是否會使自己的舞蹈被帶走</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>默契在本堂開始有明顯感受，成員間的空間感知趨於自然，不再需要刻意去執行互動，而是順勢配合彼此的動向。整體空間意識與舞蹈生命力持續提升。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第六堂・12/22（一）・文化身體認識Ｄ</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>主題</h3><p>為什麼亞洲人的重心偏「下」？</p>
+                <h3>課程安排</h3>
+                <ul><li>拉筋（25分鐘）</li><li>空間互動進入表演狀態（35分鐘）</li><li>舞蹈練習（50分鐘）</li></ul>
+                <h3>地點</h3><p>書店</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>與上週訓練方式相同</li>
+                  <li>引導進入表演狀態：彼此在自我的空間中與他人互動，產生出互不干擾的空間</li>
+                  <li>練習上元期間新舞蹈動作</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>成員對空間感知的掌握持續深化：開始能感受到他人領域的邊界，主動尋找空白處填補，並嘗試利用氣場將整個空間擴展與掌控。各人以不同方式理解並實踐空間的運用。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第七堂・12/29（一）・〈春鬧曲〉裡物件的使用／竿燈</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>拉筋（25分鐘）</li><li>空間互動進入表演狀態（40分鐘）</li><li>舞蹈練習（60分鐘）</li></ul>
+                <h3>地點</h3><p>書店</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>與上週訓練方式相同</li>
+                  <li>引導進入表演狀態：彼此在自我的空間中與他人互動，產生互不干擾的空間</li>
+                  <li>練習上元期間新舞蹈動作，探索直視對方是否影響舞蹈</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>成員開始在固定結構之外加入更多個人探索，嘗試透過不同方式完成舞蹈動作，並在投入狀態後展現出更多變化。整體上，以執著的狀態跳舞能吸引他人的目光；與他人互動時可以更勇敢地進入對方的空間。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第八堂・1/5（一）・〈春鬧曲〉物件的使用／鼓、節奏樂器</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>相互不碰觸彼此做動作（40分鐘）</li><li>戶外進入表演狀態（40分鐘）</li><li>舞蹈練習（30分鐘）</li></ul>
+                <h3>地點</h3><p>書店・戶外公園</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>與上週訓練方式相同</li>
+                  <li>引導進入表演狀態：彼此在自我的空間中與他人互動，產生互不干擾的空間</li>
+                  <li>練習上元期間新舞蹈動作</li>
+                  <li>戶外練習：藉由戶外物件嘗試進入狀態，展現身體的自由度</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>轉移至戶外練習後，成員嘗試將空間感知延伸至更大的環境中。成員各自發展出對空間的不同理解與填充方式：從向外延伸、塑造不同形狀，到尋找讓整體串聯的空間。整體身體掌控度有所提升。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第九堂・1/12（一）・〈春鬧曲〉對觀眾互動／關係的練習</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>拉筋（15分鐘）</li><li>空間互動進入表演狀態（15分鐘）</li><li>道具練習＋舞蹈練習（60分鐘）</li></ul>
+                <h3>地點</h3><p>書店</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>與上週訓練方式相同</li>
+                  <li>上元入陣舞：訓練如何掌握道具的靈活度，展現自信心，使道具與自己合而為一</li>
+                  <li>新增開場與結尾舞蹈</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>成員在加入道具後，面臨如何讓道具成為身體延伸而非額外負擔的課題。部分成員意識到應先掌控自己的身體，再以身體去帶動道具，而非直接試圖控制道具本身。各人與不同道具（竿燈、財神面具、鼓）建立出各自的舞蹈關係。</p>
+                <h3>回家作業</h3><p>練習舞蹈動作並了解道具的重心在哪裡。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第十堂・1/19（一）・練習應用一〈春鬧曲〉＋自主創作</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>拉筋（15分鐘）</li><li>空間互動進入表演狀態（15分鐘）</li><li>道具練習＋舞蹈練習（60分鐘）</li></ul>
+                <h3>地點</h3><p>書店・文化中心後門</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>與上週訓練方式相同</li>
+                  <li>上元入陣舞：道具靈活度與自信心訓練，開場與結尾舞蹈</li>
+                  <li>自主創作環節</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第十一堂・1/26（一）・練習應用二〈春鬧曲〉＋自主創作</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>拉筋（15分鐘）</li><li>空間互動進入表演狀態（15分鐘）</li><li>道具練習＋舞蹈練習（60分鐘）</li></ul>
+                <h3>地點</h3><p>書店・文化中心後門</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>與上週訓練方式相同</li>
+                  <li>上元入陣舞：道具靈活度與自信心訓練，開場與結尾舞蹈</li>
+                  <li>自主創作環節</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第十二堂・2/2（一）・練習應用三〈春鬧曲〉＋自主創作・結業</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>拉筋（15分鐘）</li><li>道具練習＋舞蹈練習（45分鐘）</li></ul>
+                <h3>地點</h3><p>書店・文化中心後門</p>
+                <h3>出席</h3><p>4／4人</p>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>與上週訓練方式相同</li>
+                  <li>上元入陣舞：道具靈活度與自信心訓練，新增結尾舞蹈</li>
+                  <li>自主創作環節</li>
+                  <li>課程結業心得回饋</li>
+                </ul>
+                <h3>課程紀要・結業</h3>
+                <p>十二堂課程圓滿結業，老師對本堂課整體成果表示滿意。舞蹈組完整習得〈春鬧曲〉入陣舞，並在正日上陣演出。</p>
+              </div>
+            </details>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- 群奏組課程紀錄 Modal -->
+      <div id="qunzou-modal" class="gm-modal-overlay" style="display:none"
+           onclick="if(event.target===this)closeQunzouModal()">
+        <div class="gm-modal-box">
+          <div class="gm-modal-header">
+            <div class="gm-modal-title">群奏組課程紀錄</div>
+            <div class="gm-modal-meta">丙午年群藝新傳・2025/11–2026/03・共十二堂</div>
+            <button class="gm-modal-close" onclick="closeQunzouModal()">✕</button>
+          </div>
+          <div class="gm-modal-body" style="font-family:'Noto Sans TC',sans-serif;">
+
+            <h2>課程計畫</h2>
+            <p>群奏組共規劃十六週，前十一週為正課與自主練習，第十二週結業，後四週進入彩排與正日演出。</p>
+            <table style="width:100%;border-collapse:collapse;font-size:.85rem;margin:1rem 0;">
+              <thead>
+                <tr style="background:#f5ede0;">
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;white-space:nowrap;">週次</th>
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;white-space:nowrap;">日期</th>
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;">課程規劃</th>
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;">自主練習</th>
+                  <th style="padding:.4rem .7rem;border:1px solid #e8d8c0;white-space:nowrap;">里程碑</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">1</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">11/17–23</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">打開耳朵、基本節奏</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">無</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">行政會</td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">2</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">11/24–30</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">認識音符、長短拍加入空拍組合</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">節奏組合練習</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">3</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/1–7</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">導奏、鈸、反拍</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">正拍、反拍練習</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">4</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/8–14</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">行進基本節奏、加花正反拍</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">複習行進節奏、狀元樓歌曲</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">5</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/15–21</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">間奏</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">複習行進節奏、反拍</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">冬至小成發</td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">6</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/22–28</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">行進與間奏轉換、即興</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">間奏練習、嘗試跳鼓</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">7</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">12/29–1/4</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">十二月令</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">十二月令練習、嘗試跳鼓</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">8</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">1/5–11</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">十二月令</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">十二月令、轎班搭配行進節奏、入陣舞節奏譜寫</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">9</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">1/12–18</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">十二月令</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">十二月令、轎班搭配、舞蹈組搭配入陣舞</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">10</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">1/19–25</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">十二月令</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">舞蹈組搭配入陣舞</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">11</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">1/26–2/1</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">十二月令</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">轎班搭配、舞蹈組搭配入陣舞</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+                <tr><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">12</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">2/2–8</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">結業・竿燈搭配</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;">—</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">小彩排</td></tr>
+                <tr style="background:#fdf8f4;"><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">13</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">2/9–15</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;" colspan="2">彩排階段</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">總彩</td></tr>
+                <tr style="background:#fdf8f4;"><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">14</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">2/16–22</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;" colspan="2">演出週</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">遊庄點燈</td></tr>
+                <tr style="background:#fdf8f4;"><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">15</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">2/23–3/1</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;" colspan="2">正日週</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#C8102E;font-weight:600;">上元正日</td></tr>
+                <tr style="background:#fdf8f4;"><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;">16</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;white-space:nowrap;">3/2–8</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;" colspan="2">散場・場地歸還</td><td style="padding:.35rem .7rem;border:1px solid #e8d8c0;color:#78716c;"></td></tr>
+              </tbody>
+            </table>
+
+            <hr>
+            <h2>課程日誌</h2>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第一堂・11/19（三）・打開耳朵、基本節奏</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>自我介紹</li><li>打開耳朵聽周遭的聲音</li><li>基本節奏練習</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>60 BPM：一拍打一下、一拍打兩下、一拍打四下</li>
+                  <li>120 BPM：兩拍打一下、兩拍各打一下、兩拍各打兩下</li>
+                  <li>以拍手方式感受長短節奏在身體裡的律動</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <p>整體學習速度算快；12週內要完成一首曲子仍是挑戰，自主練習非常重要。</p>
+                <h3>回家作業</h3>
+                <p>移動途中（搭車、走路）多聆聽周遭聲音，感覺聲音如何在空間裡流動。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第二堂・11/26（三）・認識音符、長短拍加入空拍組合</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>認識音符</li><li>練習長拍子和短拍子的結合</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>認識節奏符號：4分、8分、16分音符的畫法，不同音色用不同符號標記</li>
+                  <li>學習第一組組合節奏：在四個16分音符中拿去幾個音做空拍變化，不同位置的空拍讓舞者有不同身體律動</li>
+                  <li>分兩組進行合奏：一組打基本節拍、一組照譜打節奏</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>節奏越打越快是常見傾向，需照著節拍器練習穩定節奏</li>
+                  <li>身體律動有助打出節奏感</li>
+                  <li>鼓棒持握與揮動方式一旦習慣錯誤後很難改正，需從基礎紮根</li>
+                </ul>
+                <h3>回家作業</h3>
+                <p>用竹筷綁成的鼓棒回家練習：長短拍加入空拍的節奏（BPM=70）。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第三堂・12/3（三）・導奏、鈸、反拍</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>複習行進基本節奏</li><li>導奏</li><li>鈸的介紹</li><li>正反拍練習</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>握鼓棒、揮鼓棒姿勢調整</li>
+                  <li>複習行進基本節奏並加入導奏：鼓、鈸、鑼分部合奏</li>
+                  <li>鈸的演奏方式：止音技巧（以大拇指或手腕接觸鈸內側面讓聲音瞬間停止）；可配合肢體改變聲音傳遞方向</li>
+                  <li>正反拍練習：以拍手方式，一組打正拍、一組打反拍</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>分部合奏時建議用視覺輔助聆聽，而非閉眼以耳朵感受</li>
+                  <li>正反拍同時練習時，節奏容易互相干擾，穩定性需持續加強</li>
+                </ul>
+                <h3>回家作業</h3>
+                <p>正拍練習、反拍練習、正反拍練習。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第四堂・12/10（三）・行進基本節奏、加花正反拍</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>複習行進基本節奏</li><li>以樂器打加花的正反拍</li><li>12/12 自主練習：以踏步、拍手找第一拍；練習喊聲</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>輪流使用鼓與鈸複習行進基本節奏</li>
+                  <li>加花反拍練習：鈸打拍子，其餘成員打鼓進行加花的反拍節奏</li>
+                  <li>12/12 自主練習：以踏步等方式讓學員更清楚分辨每小節的第一拍；嘗試在行進基本節奏的特定小節加入喊聲</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>合奏時，打底奏的人聲音最為明顯，整體需跟著底奏對齊節拍</li>
+                  <li>第二小節的兩個空拍停頓長度是常見的難點，需反覆練習</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第五堂・12/17（三）・間奏</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>行進基本節奏的間奏</li><li>行進、間奏段落的轉換</li><li>間奏的變化</li><li>12/21 自主練習：間奏練習</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>介紹間奏、bridge、過門的概念與差異</li>
+                  <li>行進段：鼓大鈸小；間奏段：鈸大鼓小——大小聲控制練習</li>
+                  <li>interlock（交織，印尼：kotekan）概念實作</li>
+                  <li>段落轉換前一拍加入喊聲「嘿」增加訊號感</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>行進與間奏之間的轉換普遍需要更多練習才能順暢</li>
+                  <li>各人樂器分配逐漸穩定下來</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第六堂・12/24（三）・行進與間奏轉換、個人即興</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>行進節奏與間奏節奏轉換</li><li>個人即興演奏</li><li>12/28 自主練習：間奏練習、第一次嘗試跳鼓</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>依據長Call訊號執行行進節奏與間奏節奏的切換</li>
+                  <li>加強鼓的間奏練習</li>
+                  <li>在不間斷節奏的狀態下輪流嘗試個人即興演奏</li>
+                  <li>12/28：間奏練習＋首次嘗試跳鼓</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>個人即興演奏對學員是全新挑戰；打鉦和鈸的演奏空間相對較大</li>
+                  <li>長Call訊號的熟悉度需持續練習</li>
+                </ul>
+                <h3>回家作業</h3>
+                <p>熟悉聽到長Call訊號時把行進節奏轉為間奏節奏的方式；間奏節奏的穩定性需特別練習。</p>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第七堂・12/31（三）・十二月令</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>十二月令練習</li><li>1/4 自主練習：十二月令練習、嘗試跳鼓</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>暖身：大拍打底奏，接著半拍、四分之一拍陸續疊加，練習互相咬住節奏</li>
+                  <li>十二月令分部練習（12個月中的9個月）</li>
+                  <li>樂器配置：小堂鼓（底奏）、扁鼓（高低音）、花鼓、鈸×2、鑼</li>
+                  <li>1/4 自主練習：十二月令延伸練習、首次嘗試跳鼓節奏</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>十二月令 bridge 段才加入鑼，段落結構需熟悉</li>
+                  <li>下週目標：教完 bridge 及另外三個月（含變奏），並確認 100 BPM 穩定度</li>
+                </ul>
+                <h3>待辦</h3>
+                <ul><li>以 100 BPM 練習十二月令（實際演出曲速約 113–115 BPM）</li><li>確認鼓的配置</li></ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第八堂・1/7（三）・十二月令＋轎班搭配</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>十二月令練習</li><li>1/10 自主練習：十二月令、打行進基本節奏幫助轎班練習</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>暖身後進行十二月令分部練習</li>
+                  <li>樂器配置：小堂鼓（底奏）、高音扁鼓、花鼓、鈸、鉦、鑼</li>
+                  <li>1/10 自主練習：群奏組打行進基本節奏，讓轎班能模擬上街後的行進情境</li>
+                  <li>延伸：部分成員自行前往觀摩優人神鼓演出，獲取演奏靈感</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>正式開始與轎班的跨組搭配練習</li>
+                  <li>花鼓的背負方式需調整，以確保上街行進時的穩定性</li>
+                </ul>
+                <h3>待辦</h3>
+                <ul><li>補買一顆花鼓</li><li>研究兩顆花鼓合奏時的跳鼓隊畫面感</li><li>編寫從竿燈擺陣到入陣舞所需搭配的節奏</li></ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第九堂・1/14（三）・十二月令＋入陣舞雛形</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>十二月令練習</li><li>1/18 自主練習：十二月令、轎班共同發想、舞蹈組搭配入陣舞</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>暖身後進行十二月令分部練習</li>
+                  <li>樂器配置：小堂鼓（底奏）、花鼓×2、鈸、鉦、鑼</li>
+                  <li>1/18 自主練習：<ul><li>十二月令練習</li><li>與轎班共同發想〈文輿號仔〉喊聲及大絕招大鼓節奏</li><li>首次與舞蹈組搭配〈入陣舞〉雛形</li></ul></li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>首次三組（群奏、轎班、舞蹈）交叉合作練習</li>
+                  <li>入陣舞節奏速度確認約需 115–120 BPM，太慢會讓舞蹈無法跳起來</li>
+                </ul>
+                <h3>待辦</h3>
+                <ul><li>入陣舞節奏細修、確定時長</li><li>扁鼓鼓架設計製作</li></ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第十堂・1/21（三）・十二月令＋入陣舞搭配</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>十二月令練習</li><li>1/25 共同自主練習：舞蹈組搭配入陣舞</li><li>1/28 自主練習：入陣舞節奏轉換</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>暖身後十二月令分部練習</li>
+                  <li>樂器配置：小堂鼓（底奏）、花鼓×2、鈸、鉦、鑼</li>
+                  <li>1/25 自主練習：與舞蹈組搭配〈入陣舞〉，根據節奏需要調整鑼的演奏分部</li>
+                  <li>1/28 自主練習：入陣舞節奏轉換細修</li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>入陣舞在節奏轉換時仍不夠順暢，需繼續練習</li>
+                  <li>建議學員製作個人小抄，不需每次看完整譜即可演奏</li>
+                </ul>
+                <h3>待辦</h3>
+                <ul><li>入陣舞節奏確定版本、確定時長</li><li>花鼓綁布：確定顏色、購買、纏繞</li><li>扁鼓鼓架製作</li></ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第十一堂・1/28（三）・十二月令＋月琴＋竿燈即興</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>十二月令正課</li><li>1/31 共同自主練習：入陣舞＋轎班搭配</li><li>1/31 竿燈練習：十二月令、嘗試即興</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>暖身後十二月令分部練習（首次與月琴整合）</li>
+                  <li>樂器配置：小堂鼓（底奏）、花鼓×2、鈸×2、鉦、鑼×2、月琴</li>
+                  <li>1/31 共同自主練習：<ul><li>與轎班搭配小三進鼓聲</li><li>與舞蹈組搭配〈入陣舞〉（節奏轉換仍需加強）</li></ul></li>
+                  <li>1/31 竿燈練習：<ul><li>十二月令合奏</li><li>嘗試即興演奏配合竿燈表演</li></ul></li>
+                </ul>
+                <h3>課程紀要</h3>
+                <ul>
+                  <li>首次與月琴整合，節奏設計需微調</li>
+                  <li>與舞蹈組、轎班的三方協作持續推進中</li>
+                  <li>即興演奏逐漸摸索出風格</li>
+                </ul>
+                <h3>待辦</h3>
+                <ul><li>入陣舞 ending pose 確定</li><li>入陣舞、轎班、十二月令銜接順序確定</li><li>回家作業：左右手同時個別打 1 or ½ or ¼ 拍（交叉互搏術）</li></ul>
+              </div>
+            </details>
+
+            <details class="budget-cat">
+              <summary><span class="tri">▶</span>第十二堂・2/4（三）・結業・課程心得分享</summary>
+              <div style="padding:1rem 1.25rem 1rem 2.5rem;">
+                <h3>課程安排</h3>
+                <ul><li>2/4 正課：十二月令練習、課程結業心得分享</li><li>2/7 竿燈練習：十二月令、亮相節奏</li></ul>
+                <h3>課程內容</h3>
+                <ul>
+                  <li>暖身：大拍底奏，接著半拍、四分之一拍陸續疊加</li>
+                  <li>十二月令練習（7人全員出席）</li>
+                  <li>樂器配置：小堂鼓（底奏）、花鼓×2、扁鼓、鈸×2、鉦、鑼、月琴</li>
+                  <li>課程結業心得分享</li>
+                  <li>2/7 竿燈搭配：<ul><li>跟著十二月令音檔打節奏</li><li>為竿燈亮相設計節奏組合：三組相同的基本八拍→一組豐富的八拍→一組過門八拍；竿燈成員在前四個八拍表演，於過門時交接下一位</li><li>即興演奏配合竿燈自由表演</li></ul></li>
+                </ul>
+                <h3>課程紀要・結業心得</h3>
+                <p>課程歷時十二堂，全員完成正課。學員在結業分享中回顧整個學習歷程：節奏逐漸從課堂進入日常生活，廚房、街道都成了練習的場域；學員期待未來能學習更多曲目、繼續與夥伴合奏，也希望能更靈活地配合舞者節奏演出。整體而言，群奏組成功習得十二月令，並在正日上陣演出。</p>
+                <h3>待辦（演出準備）</h3>
+                <ul><li>扁鼓肩背骨架修正</li><li>兩顆花鼓纏鼓巾</li><li>思考小堂鼓如何帶上街</li></ul>
+              </div>
+            </details>
+
+          </div>
+        </div>
+      </div>
+
 </body>
 </html>

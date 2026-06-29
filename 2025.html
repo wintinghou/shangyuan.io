@@ -505,7 +505,7 @@
           <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
           <div class="jc-flow-card">
             <div style="font-family:'Noto Serif TC',serif;font-size:1.5rem;font-weight:700;color:#C8102E;letter-spacing:.1em;margin-bottom:.75rem">迎燈</div>
-            <img src="assets/插圖/乙巳/day2_yingdeng.png" alt="迎燈示意圖" style="width:100%;border-radius:.5rem;margin-bottom:.75rem;mix-blend-mode:multiply">
+            <img src="assets/插圖/乙巳/day2_yingdeng.png" alt="迎燈示意圖" style="max-height:20rem;width:auto;max-width:100%;display:block;margin:0 auto .75rem;border-radius:.5rem;mix-blend-mode:multiply">
             <p class="jc-flow-desc mb-3">入夜，點燈高喊〈上元辭〉，二大鼓、文轎花輿、船燈山燈、竿燈枝燈，倆倆相迎，祝眾人和合團圓。</p>
             <ul class="text-xs text-stone-500 space-y-1 leading-[1.75]" style="font-family:'Noto Sans TC'">
               <li>18:00–18:45｜花燈、裝置點燈，讓花燈變主場，同心圓形式，面中心舞台</li>
@@ -536,7 +536,7 @@
           <div class="jc-flow-h-dot"><div class="jc-flow-dot"></div></div>
           <div class="jc-flow-card">
             <div style="font-family:'Noto Serif TC',serif;font-size:1.5rem;font-weight:700;color:#C8102E;letter-spacing:.1em;margin-bottom:.75rem">跳上元・大歲轉</div>
-            <img src="assets/插圖/乙巳/day2_tiaoshangyuan.png" alt="跳上元・大歲轉示意圖" style="width:100%;border-radius:.5rem;margin-bottom:.75rem;mix-blend-mode:multiply">
+            <img src="assets/插圖/乙巳/day2_tiaoshangyuan.png" alt="跳上元・大歲轉示意圖" style="max-height:20rem;width:auto;max-width:100%;display:block;margin:0 auto .75rem;border-radius:.5rem;mix-blend-mode:multiply">
             <p class="jc-flow-desc mb-3">回廣場，眾人和歌起舞，沁上元入身體記憶，願人人如花放夜。舞至環形，祭眾願，隆重敬別甲辰，轉動乙巳年。</p>
             <p class="text-xs text-stone-400 mb-2" style="font-family:'Noto Sans TC'">轎子領隊，暫定以A、B、A、B、C循環，節奏逐漸加速，轉成大歲轉圓形陣型，轎子回到中間</p>
             <ul class="text-xs text-stone-500 space-y-1 leading-[1.75]" style="font-family:'Noto Sans TC'">
@@ -878,6 +878,9 @@
         <span class="flex items-center gap-1.5"><span style="display:inline-block;padding:.05rem .4rem;border-radius:999px;background:#e8eeff;border:1px solid #b0bff5;color:#2a3faa;font-size:.7rem;font-weight:700;">姓名</span> 組長・統籌</span>
         <span class="flex items-center gap-1.5 text-stone-400">滑鼠移至名字標籤可見成員簡介</span>
       </div>
+      <div class="mt-8">
+        <img src="assets/插圖/乙巳/乙巳年隊伍圖.png" alt="乙巳年隊伍圖" class="w-full rounded-2xl">
+      </div>
     </section>
 
     <!-- 5. 策劃團隊 -->
@@ -963,9 +966,6 @@
         </div>
       </div>
       <div id="ys-content-body"></div>
-      <div class="mt-8">
-        <img src="assets/插圖/乙巳/乙巳年隊伍圖.png" alt="乙巳年隊伍圖" class="w-full rounded-2xl">
-      </div>
     </section>
 
     <!-- 6. 創作論述 -->
@@ -11006,36 +11006,95 @@ function initFlowScroll(zoneId, trackId) {
   if (!zone || !track) return;
   const sticky = track.parentElement;
 
-  // Red progress line inside track (moves with it; visible portion fills naturally)
+  // Move overflow-x:clip to inner wrapper so card panel below is never clipped
+  sticky.style.overflowX = 'visible';
+  const trackClip = document.createElement('div');
+  trackClip.style.cssText = 'overflow-x:clip;overflow-y:visible;position:relative;';
+  sticky.insertBefore(trackClip, track);
+  trackClip.appendChild(track);
+
+  // Red progress line inside track
   const lineFg = document.createElement('div');
-  lineFg.style.cssText = 'position:absolute;top:2.1rem;left:.45rem;height:2px;background:#C8102E;z-index:1;pointer-events:none;width:0;transition:width .08s linear;';
+  lineFg.style.cssText = 'position:absolute;top:2.1rem;left:.45rem;height:2px;background:#C8102E;z-index:1;pointer-events:none;width:0;';
   track.appendChild(lineFg);
+
+  const allItems = [...track.querySelectorAll('.jc-flow-h-item,.jc-flow-h-sec')];
+
+  // Add name labels before cards are moved
+  allItems.forEach(item => {
+    if (item.querySelector('.jc-flow-h-name')) return;
+    const dotEl = item.querySelector('.jc-flow-h-dot');
+    if (!dotEl) return;
+    const ev = item.querySelector('.jc-flow-event') || item.querySelector('.jc-flow-card > div:first-child');
+    if (!ev) return;
+    const d = document.createElement('div');
+    d.className = 'jc-flow-h-name';
+    d.textContent = ev.textContent.trim();
+    dotEl.after(d);
+  });
+
+  // Card panel below the track clip area (not inside overflow:clip)
+  const cardPanel = document.createElement('div');
+  cardPanel.style.cssText = 'position:relative;margin:.75rem auto 0;width:70%;min-height:7rem;';
+  trackClip.after(cardPanel);
+
+  const panelCards = allItems.map(item => {
+    const c = item.querySelector('.jc-flow-card');
+    if (!c) return null;
+    c.remove();
+    c.style.cssText = 'position:absolute;top:0;left:0;right:0;opacity:0;transition:opacity .18s ease;pointer-events:none;transform:none;';
+    cardPanel.appendChild(c);
+    return c;
+  });
+
+  // Measure actual panel height after render
+  requestAnimationFrame(() => setTimeout(() => {
+    let h = 0;
+    panelCards.forEach(c => { if (c) h = Math.max(h, c.offsetHeight); });
+    if (h > 0) cardPanel.style.minHeight = h + 'px';
+  }, 200));
+
+  let activeIdx = -1;
+  function updateActive(idx) {
+    if (idx === activeIdx) return;
+    activeIdx = idx;
+    panelCards.forEach((c, i) => {
+      if (!c) return;
+      c.style.opacity = i === idx ? '1' : '0';
+      c.style.pointerEvents = i === idx ? 'auto' : 'none';
+    });
+  }
 
   function getStickyTop() {
     return parseFloat(getComputedStyle(sticky).top) || 80;
   }
-
   function setHeight() {
     const extraW = Math.max(0, track.scrollWidth - zone.offsetWidth);
     if (extraW <= 0) return;
-    zone.style.height = (sticky.offsetHeight + extraW + 120) + 'px';
+    zone.style.height = (extraW + Math.round(window.innerHeight * 1.5)) + 'px';
   }
-
   function update() {
     const extraW = Math.max(0, track.scrollWidth - zone.offsetWidth);
     if (extraW <= 0) { track.style.transform = ''; return; }
     const rect = zone.getBoundingClientRect();
     const stickyTop = getStickyTop();
     const scrolledIn = stickyTop - rect.top;
-    const totalScrollable = zone.offsetHeight - sticky.offsetHeight;
+    const totalScrollable = zone.offsetHeight - window.innerHeight + stickyTop - Math.round(window.innerHeight * 0.4);
     if (scrolledIn <= 0 || totalScrollable <= 0) {
       track.style.transform = 'translateX(0)';
       lineFg.style.width = '0';
+      updateActive(-1);
       return;
     }
     const progress = Math.min(1, scrolledIn / totalScrollable);
     track.style.transform = `translateX(${-progress * extraW}px)`;
-    lineFg.style.width = (progress * track.scrollWidth) + 'px';
+    const lineX = progress * track.scrollWidth;
+    lineFg.style.width = lineX + 'px';
+    let newActive = -1;
+    allItems.forEach((item, i) => {
+      if (lineX >= item.offsetLeft + item.offsetWidth / 2) newActive = i;
+    });
+    updateActive(newActive);
   }
 
   requestAnimationFrame(() => { setHeight(); update(); });
@@ -11122,21 +11181,15 @@ function initYsRouteMaps() {
     var routePath = document.getElementById(pathId);
     if (!wrap || !routePath) return;
     var len = routePath.getTotalLength();
-    // Start with full white line (no dasharray yet); turn red + draw on scroll
-    var activated = false;
     wrap.style.height = '200vh';
+    routePath.setAttribute('stroke', 'rgb(200,16,46)');
+    routePath.style.strokeDasharray = len;
+    routePath.style.strokeDashoffset = len;
     function onScroll() {
       var rect = wrap.getBoundingClientRect();
       var scrollable = wrap.offsetHeight - window.innerHeight;
       if (scrollable <= 0) return;
       var sf = Math.min(1, Math.max(0, -rect.top / scrollable));
-      if (sf <= 0) return;
-      if (!activated) {
-        activated = true;
-        routePath.setAttribute('stroke', 'rgb(200,16,46)');
-        routePath.style.strokeDasharray = len;
-        routePath.style.strokeDashoffset = len;
-      }
       routePath.style.strokeDashoffset = len * (1 - sf);
     }
     window.addEventListener('scroll', onScroll, { passive: true });

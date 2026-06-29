@@ -43,12 +43,12 @@
   #modal-content p { font-family:'Noto Serif TC'; font-size:0.9rem; color:#b0a898; line-height:2.1; margin-bottom:0.85rem; }
   /* Team experience list: year + text on same row, text wraps under itself */
   .exp-list li { display:flex; align-items:baseline; }
-  .exp-list li > span:first-child { flex-shrink:0; white-space:nowrap; min-width:5rem; }
+  .exp-list li > span:first-child { flex-shrink:0; white-space:nowrap; min-width:6.5rem; margin-right:0.5rem; }
   .exp-list-sm li > span:first-child { min-width: 2.8rem; }
   /* Horizontal team carousel */
   .team-slide { flex-shrink:0; width:100%; height:100%; display:flex; }
-  .team-slide-photo { position:relative; overflow:hidden; width:40%; flex-shrink:0; }
-  .team-photo-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .team-slide-photo { overflow:hidden; width:40%; flex-shrink:0; display:flex; flex-direction:column; }
+  .team-photo-img { flex:1; min-height:0; width:100%; object-fit:cover; display:block; }
   .team-slide-text { padding:1.5rem 1.75rem; overflow-y:auto; display:flex; flex-direction:column; background:#FDFBF7; -webkit-overflow-scrolling:touch; flex:1; }
   @media (max-width:767px) {
     .team-slide { flex-direction:column; }
@@ -277,8 +277,8 @@
         </div>
 
         <!-- horizontal slide track -->
-        <div style="flex:1;overflow:hidden;position:relative">
-          <div id="team-track" style="display:flex;height:100%;will-change:transform">
+        <div style="flex:1;min-height:0;overflow:hidden;position:relative;display:flex;flex-direction:column">
+          <div id="team-track" style="display:flex;flex:1;min-height:0;will-change:transform">
 
             <!-- SLIDE 1: 莊逸軒 -->
             <div class="team-slide">
@@ -295,12 +295,15 @@
                 <div style="border-top:1px solid rgba(212,160,23,0.2);margin-bottom:0.75rem"></div>
                 <div style="font-family:'Noto Sans TC';font-size:0.63rem;font-weight:700;color:#a8a29e;letter-spacing:0.18em;margin-bottom:0.5rem">近期經歷</div>
                 <ul class="space-y-1 exp-list" style="font-family:'Noto Sans TC';font-size:0.82rem;color:#57534e;line-height:1.9">
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2021–2026</span>上元春鬧　藝術統籌</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2022–2023</span>蟬雨越讀「年秊－一家書店的節祭實驗」　總策劃</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2020–2021</span>蟬雨越讀「節・一元藝術計畫」　總策劃</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2018</span>出版長篇小說〈那天那天死去「的」與世紀初的世紀末〉</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2017</span>電影作品《長江街》入圍 myfone 行動創作獎</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2017</span>籌辦維克多影展　參展電影作品《航一—無人記得的真理實驗》</li>
+                  <li><span style="color:#a8a29e">2021–2026</span>上元春鬧　藝術統籌</li>
+                  <li><span style="color:#a8a29e">2025</span>棧貳沐居【2025年·入書市】動態文學沉浸體驗劇場</li>
+                  <li><span style="color:#a8a29e">2024</span>文化部113年 享讀福爾摩沙 Read Formosa 創新書市庄頭書展「入書市」</li>
+                  <li><span style="color:#a8a29e">2022–2023</span>蟬雨越讀「年秊－一家書店的節祭實驗」　總策劃</li>
+                  <li><span style="color:#a8a29e">2020–2021</span>蟬雨越讀「節・一元藝術計畫」　總策劃</li>
+                  <li><span style="color:#a8a29e">2019</span>完成短篇小說《林泉街人》</li>
+                  <li><span style="color:#a8a29e">2018</span>出版長篇小說〈那天那天死去「的」與世紀初的世紀末〉</li>
+                  <li><span style="color:#a8a29e">2017</span>電影作品《長江街》入圍 myfone 行動創作獎</li>
+                  <li><span style="color:#a8a29e">2017</span>籌辦維克多影展　參展電影作品《航一—無人記得的真理實驗》</li>
                 </ul>
               </div>
             </div>
@@ -312,15 +315,18 @@
               </div>
               <div class="team-slide-text">
                 <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin-bottom:0.3rem">行政統籌</p>
-                <h4 style="font-family:'Noto Serif TC';font-size:1.5rem;font-weight:700;color:#1a0c08;margin:0 0 0.75rem">侯文婷</h4>
+                <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem">
+                  <h4 style="font-family:'Noto Serif TC';font-size:1.5rem;font-weight:700;color:#1a0c08;margin:0">侯文婷</h4>
+                  <span style="font-family:'Noto Sans TC';font-size:0.62rem;font-weight:700;color:#C8102E;border:1px solid rgba(200,16,46,0.4);padding:0.1rem 0.5rem;border-radius:9999px;letter-spacing:0.06em">聯絡人</span>
+                </div>
                 <p style="color:#44403c;line-height:2.1;font-size:0.9rem;margin-bottom:1rem">高雄人，關心在地議題與社群協作。現為報導者特約攝影及《Today看世界》節目寫手，亦兼任製片與企劃。</p>
                 <div style="border-top:1px solid rgba(212,160,23,0.2);margin-bottom:0.75rem"></div>
                 <div style="font-family:'Noto Sans TC';font-size:0.63rem;font-weight:700;color:#a8a29e;letter-spacing:0.18em;margin-bottom:0.5rem">近期經歷</div>
                 <ul class="space-y-1 exp-list" style="font-family:'Noto Sans TC';font-size:0.82rem;color:#57534e;line-height:1.9">
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2023–2026</span>上元春鬧　行政統籌</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2022</span>《一個女人生命中的三小時》　製作人　高雄市電影館獎助短片・高雄電影節高雄拍單元放映</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2021</span>《情書》　製作人　國家人權博物館・高雄市電影館獎助短片・高雄電影節高雄拍單元放映</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2018–2021</span>中央社國際新聞編譯暨高雄駐地記者</li>
+                  <li><span style="color:#a8a29e">2023–2026</span>上元春鬧　行政統籌</li>
+                  <li><span style="color:#a8a29e">2022</span>《一個女人生命中的三小時》　製作人　高雄市電影館獎助短片・高雄電影節高雄拍單元放映</li>
+                  <li><span style="color:#a8a29e">2021</span>《情書》　製作人　國家人權博物館・高雄市電影館獎助短片・高雄電影節高雄拍單元放映</li>
+                  <li><span style="color:#a8a29e">2018–2021</span>中央社國際新聞編譯暨高雄駐地記者</li>
                 </ul>
               </div>
             </div>
@@ -332,7 +338,7 @@
               </div>
               <div class="team-slide-text">
                 <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem">
-                  <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin:0">節奏統籌</p>
+                  <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin:0">節奏指導</p>
                   <span style="font-family:'Noto Sans TC';font-size:0.62rem;color:#78716c;border:1px solid #d6d3d1;padding:0.05rem 0.45rem;border-radius:9999px">群藝新傳老師</span>
                 </div>
                 <h4 style="font-family:'Noto Serif TC';font-size:1.5rem;font-weight:700;color:#1a0c08;margin:0 0 0.75rem">蔡秉君</h4>
@@ -358,7 +364,7 @@
               </div>
               <div class="team-slide-text">
                 <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem">
-                  <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin:0">民謠統籌</p>
+                  <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin:0">民謠創作</p>
                   <span style="font-family:'Noto Sans TC';font-size:0.62rem;color:#78716c;border:1px solid #d6d3d1;padding:0.05rem 0.45rem;border-radius:9999px">群藝新傳老師</span>
                 </div>
                 <h4 style="font-family:'Noto Serif TC';font-size:1.5rem;font-weight:700;color:#1a0c08;margin:0 0 0.75rem">柯濟昇</h4>
@@ -366,12 +372,12 @@
                 <div style="border-top:1px solid rgba(212,160,23,0.2);margin-bottom:0.75rem"></div>
                 <div style="font-family:'Noto Sans TC';font-size:0.63rem;font-weight:700;color:#a8a29e;letter-spacing:0.18em;margin-bottom:0.5rem">近期經歷</div>
                 <ul class="space-y-1 exp-list exp-list-sm" style="font-family:'Noto Sans TC';font-size:0.82rem;color:#57534e;line-height:1.9">
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2026</span>「2026丙午上元」節祭行動　音樂統籌暨歌謠創作・策劃執行暨演出</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>「2025 乙巳上元」節祭行動　音樂統籌暨歌謠創作・策劃執行暨演出</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>「2025 入書市」　音樂統籌暨歌謠創作・策劃執行暨演出</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2023</span>「112年度基隆市太平山城藝術營造計畫」　專案執行</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2023</span>「地方說：10 Folk Songs about Post-regional」　策劃執行暨演出</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>「屏日曬書祭－潮州的廟口閱讀策」　演出</li>
+                  <li><span style="color:#a8a29e">2026</span>「2026丙午上元」節祭行動　音樂統籌暨歌謠創作・策劃執行暨演出</li>
+                  <li><span style="color:#a8a29e">2025</span>「2025 乙巳上元」節祭行動　音樂統籌暨歌謠創作・策劃執行暨演出</li>
+                  <li><span style="color:#a8a29e">2025</span>「2025 入書市」　音樂統籌暨歌謠創作・策劃執行暨演出</li>
+                  <li><span style="color:#a8a29e">2023</span>「112年度基隆市太平山城藝術營造計畫」　專案執行</li>
+                  <li><span style="color:#a8a29e">2023</span>「地方說：10 Folk Songs about Post-regional」　策劃執行暨演出</li>
+                  <li><span style="color:#a8a29e">2025</span>「屏日曬書祭－潮州的廟口閱讀策」　演出</li>
                 </ul>
               </div>
             </div>
@@ -383,7 +389,7 @@
               </div>
               <div class="team-slide-text">
                 <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem">
-                  <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin:0">舞蹈統籌</p>
+                  <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin:0">舞蹈指導</p>
                   <span style="font-family:'Noto Sans TC';font-size:0.62rem;color:#78716c;border:1px solid #d6d3d1;padding:0.05rem 0.45rem;border-radius:9999px">群藝新傳老師</span>
                 </div>
                 <h4 style="font-family:'Noto Serif TC';font-size:1.5rem;font-weight:700;color:#1a0c08;margin:0 0 0.75rem">黃程尉</h4>
@@ -391,13 +397,13 @@
                 <div style="border-top:1px solid rgba(212,160,23,0.2);margin-bottom:0.75rem"></div>
                 <div style="font-family:'Noto Sans TC';font-size:0.63rem;font-weight:700;color:#a8a29e;letter-spacing:0.18em;margin-bottom:0.5rem">近期演出與創作</div>
                 <ul class="space-y-1 exp-list exp-list-sm" style="font-family:'Noto Sans TC';font-size:0.82rem;color:#57534e;line-height:1.9">
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2026</span>重製版《舞者的奧德賽之旅》（南方跳實驗空間）　舞者</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2026</span>希舞集聚舞蹈劇場・高雄春天藝術節環境舞蹈《時空之埤・惟度》　舞者</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>大玩樂家4—《陳小霞 &amp; 簡文彬 &amp; 洪佩瑜 跨樂衛武營音樂會》　舞者</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2026</span>嵬舞劇場・高雄春天藝術節-蒔青《一個消失的房間》　舞蹈創作</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2026</span>南臺灣藝術舞蹈團・高雄春天藝術節環境舞蹈《山澗八里的故事－在山裡長大的孩子》　舞蹈創作</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>嵬舞劇場・高雄春天藝術節環境舞蹈《驛旅・打狗》　舞蹈創作</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>「2025 乙巳上元春鬧」　舞蹈設計</li>
+                  <li><span style="color:#a8a29e">2026</span>重製版《舞者的奧德賽之旅》（南方跳實驗空間）　舞者</li>
+                  <li><span style="color:#a8a29e">2026</span>希舞集聚舞蹈劇場・高雄春天藝術節環境舞蹈《時空之埤・惟度》　舞者</li>
+                  <li><span style="color:#a8a29e">2025</span>大玩樂家4—《陳小霞 &amp; 簡文彬 &amp; 洪佩瑜 跨樂衛武營音樂會》　舞者</li>
+                  <li><span style="color:#a8a29e">2026</span>嵬舞劇場・高雄春天藝術節-蒔青《一個消失的房間》　舞蹈創作</li>
+                  <li><span style="color:#a8a29e">2026</span>南臺灣藝術舞蹈團・高雄春天藝術節環境舞蹈《山澗八里的故事－在山裡長大的孩子》　舞蹈創作</li>
+                  <li><span style="color:#a8a29e">2025</span>嵬舞劇場・高雄春天藝術節環境舞蹈《驛旅・打狗》　舞蹈創作</li>
+                  <li><span style="color:#a8a29e">2025</span>「2025 乙巳上元春鬧」　舞蹈設計</li>
                 </ul>
               </div>
             </div>
@@ -409,7 +415,7 @@
               </div>
               <div class="team-slide-text">
                 <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem">
-                  <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin:0">戲劇統籌</p>
+                  <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin:0">戲劇指導</p>
                   <span style="font-family:'Noto Sans TC';font-size:0.62rem;color:#78716c;border:1px solid #d6d3d1;padding:0.05rem 0.45rem;border-radius:9999px">群藝新傳老師</span>
                 </div>
                 <h4 style="font-family:'Noto Serif TC';font-size:1.5rem;font-weight:700;color:#1a0c08;margin:0 0 0.75rem">林亞彤</h4>
@@ -417,12 +423,12 @@
                 <div style="border-top:1px solid rgba(212,160,23,0.2);margin-bottom:0.75rem"></div>
                 <div style="font-family:'Noto Sans TC';font-size:0.63rem;font-weight:700;color:#a8a29e;letter-spacing:0.18em;margin-bottom:0.5rem">近期創作</div>
                 <ul class="space-y-1 exp-list exp-list-sm" style="font-family:'Noto Sans TC';font-size:0.82rem;color:#57534e;line-height:1.9">
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>一起府城×四四拍《一起府城300：沈浸式復古散步》　導演・演員</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>心豐藝術節開幕《林亞彤 ft. 四四拍唱片行》　MC・文本創作</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2025</span>亞宇宙《維度魔女：夢想の房間》　創作者・占卜師・演員</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2024</span>台北藝穗節《元：r＝a維度魔女》　創作者・占卜師・演員</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2023</span>高雄承億酒店×亞宇宙《以里，予聲。-草本人 科技沉浸式劇場》　創作者・演員</li>
-                  <li><span style="color:#a8a29e;margin-right:0.3rem">2022</span>衛武營 管風琴導覽音樂會　專案節目主持（三場）</li>
+                  <li><span style="color:#a8a29e">2025</span>一起府城×四四拍《一起府城300：沈浸式復古散步》　導演・演員</li>
+                  <li><span style="color:#a8a29e">2025</span>心豐藝術節開幕《林亞彤 ft. 四四拍唱片行》　MC・文本創作</li>
+                  <li><span style="color:#a8a29e">2025</span>亞宇宙《維度魔女：夢想の房間》　創作者・占卜師・演員</li>
+                  <li><span style="color:#a8a29e">2024</span>台北藝穗節《元：r＝a維度魔女》　創作者・占卜師・演員</li>
+                  <li><span style="color:#a8a29e">2023</span>高雄承億酒店×亞宇宙《以里，予聲。-草本人 科技沉浸式劇場》　創作者・演員</li>
+                  <li><span style="color:#a8a29e">2022</span>衛武營 管風琴導覽音樂會　專案節目主持（三場）</li>
                 </ul>
               </div>
             </div>
@@ -433,16 +439,16 @@
                 <img src="assets/創作團隊/曾家茗.jpg" alt="曾家茗" class="team-photo-img" style="object-position:right center">
               </div>
               <div class="team-slide-text">
-                <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin-bottom:0.3rem">剪紙花轎</p>
+                <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin-bottom:0.3rem">剪紙創作</p>
                 <h4 style="font-family:'Noto Serif TC';font-size:1.5rem;font-weight:700;color:#1a0c08;margin:0 0 0.75rem">曾家茗</h4>
                 <p style="color:#44403c;line-height:2.1;font-size:0.9rem;margin-bottom:1rem">高雄人，關心台灣本土文學與藝術。成大台灣文學系畢業，準備就讀北藝大文學跨域創作研究所。從事華語與台語新詩創作，曾與古意唸歌團團長羅士哲學習唸歌。</p>
                 <div style="border-top:1px solid rgba(212,160,23,0.2);margin-bottom:0.75rem"></div>
                 <div style="font-family:'Noto Sans TC';font-size:0.63rem;font-weight:700;color:#a8a29e;letter-spacing:0.18em;margin-bottom:0.5rem">近期經歷</div>
                 <ul class="space-y-1 exp-list" style="font-family:'Noto Sans TC';font-size:0.82rem;color:#57534e;line-height:1.9">
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2023–2026</span>上元春鬧　轎子剪紙製作人之一</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2022</span>高雄青年文學獎 19-30 歲組新詩類二獎</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2022</span>與鄉土文學作家吳晟對談　刊登於聯合文學「八月駐站作家」網站</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">認證</span>教育部臺灣台語語言能力中高級・全民台語 B2</li>
+                  <li><span style="color:#a8a29e">2023–2026</span>上元春鬧　轎子剪紙製作人之一</li>
+                  <li><span style="color:#a8a29e">2022</span>高雄青年文學獎 19-30 歲組新詩類二獎</li>
+                  <li><span style="color:#a8a29e">2022</span>與鄉土文學作家吳晟對談　刊登於聯合文學「八月駐站作家」網站</li>
+                  <li><span style="color:#a8a29e">認證</span>教育部臺灣台語語言能力中高級・全民台語 B2</li>
                 </ul>
               </div>
             </div>
@@ -453,19 +459,19 @@
                 <img src="assets/創作團隊/楊詠欣.jpg" alt="楊詠欣" class="team-photo-img" style="object-position:left center">
               </div>
               <div class="team-slide-text">
-                <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin-bottom:0.3rem">蟬雨越讀負責人</p>
+                <p class="section-eyebrow" style="color:#C8102E;letter-spacing:0.25em;font-size:0.65rem;margin-bottom:0.3rem">場地提供</p>
                 <h4 style="font-family:'Noto Serif TC';font-size:1.5rem;font-weight:700;color:#1a0c08;margin:0 0 0.75rem">楊詠欣</h4>
                 <p style="color:#44403c;line-height:2.1;font-size:0.9rem;margin-bottom:1rem">蟬雨越讀獨立書店主理人，致力透過閱讀引導與分享，讓文學藝術進入生命視野，陪伴孩子與讀者在人文素養中找到自我實現的方向。</p>
                 <div style="border-top:1px solid rgba(212,160,23,0.2);margin-bottom:0.75rem"></div>
                 <div style="font-family:'Noto Sans TC';font-size:0.63rem;font-weight:700;color:#a8a29e;letter-spacing:0.18em;margin-bottom:0.5rem">近期經歷</div>
                 <ul class="space-y-1 exp-list" style="font-family:'Noto Sans TC';font-size:0.82rem;color:#57534e;line-height:1.9">
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2024–2025</span>上元春鬧　總召</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2020–2026</span>蟬雨越讀獨立書店　主理人</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">2003–2021</span>愛閱兒童青少年讀書會工作坊　資深導讀老師暨負責人</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">曾任</span>漢聲廣播電台　讀書會節目主持人</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">曾任</span>高雄文化中心　藝術協同策展人</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">曾任</span>台南社區大學　兒童讀書會課程講師</li>
-                  <li><span style="color:#a8a29e;margin-right:0.6rem">曾任</span>偏遠小學・社區　兒童讀書會推廣講師</li>
+                  <li><span style="color:#a8a29e">2024–2025</span>上元春鬧　總召</li>
+                  <li><span style="color:#a8a29e">2020–2026</span>蟬雨越讀獨立書店　主理人</li>
+                  <li><span style="color:#a8a29e">2003–2021</span>愛閱兒童青少年讀書會工作坊　資深導讀老師暨負責人</li>
+                  <li><span style="color:#a8a29e">曾任</span>漢聲廣播電台　讀書會節目主持人</li>
+                  <li><span style="color:#a8a29e">曾任</span>高雄文化中心　藝術協同策展人</li>
+                  <li><span style="color:#a8a29e">曾任</span>台南社區大學　兒童讀書會課程講師</li>
+                  <li><span style="color:#a8a29e">曾任</span>偏遠小學・社區　兒童讀書會推廣講師</li>
                 </ul>
               </div>
             </div>
@@ -1018,6 +1024,7 @@
       <h4 class="text-lg font-semibold text-[#3a2a1a] mt-8 mb-2" style="font-family:'Noto Serif TC'">初步作品設計</h4>
       <img src="assets/插圖/丁未/丁未燈車.png" alt="丁未燈車" class="w-full h-auto rounded-xl mb-4">
       <img src="assets/插圖/丁未/文輿剪紙構想.png" alt="文輿剪紙構想" class="w-full h-auto rounded-xl mb-4">
+      <img src="assets/插圖/丁未/脊堵.png" alt="脊堵" class="w-full h-auto rounded-xl mb-4">
 
       <!-- 民謠聆聽 -->
       <audio id="fp-audio" preload="none"></audio>
