@@ -1,0 +1,5 @@
+exclude:
+  - content/
+  - zine/
+  - 節一元/
+  - "*.py"
