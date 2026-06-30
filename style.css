@@ -638,6 +638,10 @@ details.ys-fold .fold-body{padding:.125rem 1.125rem 1rem;font-size:.875rem;line-
   pointer-events: none;
   z-index: 1;
 }
+.team-slide-photo.skel-loaded,
+.jc-flow-event.skel-loaded,
+#modal-img-wrap.skel-loaded,
+.img-skel.skel-loaded { background: transparent; }
 .team-slide-photo.skel-loaded::after,
 .jc-flow-event.skel-loaded::after,
 #modal-img-wrap.skel-loaded::after,
